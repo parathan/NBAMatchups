@@ -40,20 +40,38 @@ for row in soup_teamStats.find_all('tr')[1:31]:
     team['Points'] = row.find('td', {'data-stat' : 'pts'}).text
     teamStats.append(team)
 
-# soup_advancedStats = soup.find(name='table', attrs={'id': 'advanced-team'})
-# for row in soup_advancedStats.find_all('tr')[2:32]:
-#     name = row.find('a').text
-#     index = -1
-#     for idx, team in enumerate(teamStats):
-#         if team["Name"] == name:
-#             index = idx
-#             break
-#     teamStats[index]['Age'] = row.find('td', {'data-stat' : 'age'}).text
-#     teamStats[index]['Wins'] = row.find('td', {'data-stat' : 'wins'}).text
-#     teamStats[index]['Losses'] = row.find('td', {'data-stat' : 'losses'}).text
-#     teamStats[index]['Pythagorean Wins'] = row.find('td', {'data-stat' : 'wins_pyth'}).text
-#     teamStats[index]['Pythagorean Losses'] = row.find('td', {'data-stat' : 'losses_pyth'}).text
-#     teamStats[index]['Margin of Victory'] = row.find('td', {'data-stat' : 'mov'}).text
+soup_advancedStats = soup.find(name='table', attrs={'id': 'advanced-team'})
+for row in soup_advancedStats.find_all('tr')[2:32]:
+    name = row.find('a').text
+    index = -1
+    for idx, team in enumerate(teamStats):
+        if team["Name"] == name:
+            index = idx
+            break
+    teamStats[index]['Age'] = row.find('td', {'data-stat' : 'age'}).text
+    teamStats[index]['Wins'] = row.find('td', {'data-stat' : 'wins'}).text
+    teamStats[index]['Losses'] = row.find('td', {'data-stat' : 'losses'}).text
+    teamStats[index]['Pythagorean Wins'] = row.find('td', {'data-stat' : 'wins_pyth'}).text
+    teamStats[index]['Pythagorean Losses'] = row.find('td', {'data-stat' : 'losses_pyth'}).text
+    teamStats[index]['Margin of Victory'] = row.find('td', {'data-stat' : 'mov'}).text
+    teamStats[index]['Strength of Schedule'] = row.find('td', {'data-stat' : 'sos'}).text
+    teamStats[index]['Simple Rating System'] = row.find('td', {'data-stat' : 'srs'}).text
+    teamStats[index]['Offensive Rating'] = row.find('td', {'data-stat' : 'off_rtg'}).text
+    teamStats[index]['Defensive Rating'] = row.find('td', {'data-stat' : 'def_rtg'}).text
+    teamStats[index]['Net Rating'] = row.find('td', {'data-stat' : 'net_rtg'}).text
+    teamStats[index]['Pace'] = row.find('td', {'data-stat' : 'pace'}).text
+    teamStats[index]['Free Throw Attempt Rate'] = row.find('td', {'data-stat' : 'fta_per_fga_pct'}).text
+    teamStats[index]['3-Point Attempt Rate'] = row.find('td', {'data-stat' : 'fg3a_per_fga_pct'}).text
+    teamStats[index]['True Shooting Percentage'] = row.find('td', {'data-stat' : 'ts_pct'}).text
+    teamStats[index]['Effective Field Goal Percentage'] = row.find('td', {'data-stat' : 'efg_pct'}).text
+    teamStats[index]['Turnover Percentage'] = row.find('td', {'data-stat' : 'tov_pct'}).text
+    teamStats[index]['Offensive Rebound Percentage'] = row.find('td', {'data-stat' : 'orb_pct'}).text
+    teamStats[index]['Free Throws Per Field Goal Attempt'] = row.find('td', {'data-stat' : 'ft_rate'}).text
+    teamStats[index]['OPponent effective Field Goal Percentage'] = row.find('td', {'data-stat' : 'opp_efg_pct'}).text
+    teamStats[index]['Opponent Turnover Percentage'] = row.find('td', {'data-stat' : 'opp_tov_pct'}).text
+    teamStats[index]['Defensive Rebound Percentage'] = row.find('td', {'data-stat' : 'drb_pct'}).text
+    teamStats[index]['Opponent Free Throws Per Field Goal Attempt'] = row.find('td', {'data-stat' : 'opp_ft_rate'}).text
+    
             
 df = pd.DataFrame(teamStats)
 df.to_csv('teamStats.xlsx', index=False)
