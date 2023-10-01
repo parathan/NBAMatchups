@@ -2,7 +2,9 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 import re
-from pymongo import MongoClient
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+from urllib.parse import quote_plus
 
 url = (f'https://www.basketball-reference.com/leagues/NBA_2023.html')
 
@@ -79,14 +81,28 @@ for row in soup_advancedStats.find_all('tr')[2:32]:
     teamStats[index]['Defensive Rebound Percentage'] = row.find('td', {'data-stat' : 'drb_pct'}).text
     teamStats[index]['Opponent Free Throws Per Field Goal Attempt'] = row.find('td', {'data-stat' : 'opp_ft_rate'}).text
     
-            
+# converts list to dataframe            
 df = pd.DataFrame(teamStats)
-# documents = df.to_dict(orient="Name")
+documents = df.to_dict('records')
 
-# client = MongoClient('mongodb+srv://parathan:Para7&than@nbamatchups.ygk98ot.mongodb.net/')
-# db = client['mydatabase']
-# collection = db['mycollection']
-# collection.insert_many(documents)
+# Connection to MongoDB
+user = "testUser"
+password = "cRgLeYtTEnBMXMZr"
+mongoUri = "mongodb+srv://" + user + ":" + password + "@nbamatchups.ygk98ot.mongodb.net/?retryWrites=true&w=majority"
+client = MongoClient(mongoUri, server_api=ServerApi('1'))
+
+# try:
+#     client.admin.command('ping')
+#     print("Pinged your deployment. You successfully connected to MongoDB!")
+# except Exception as e:
+#     print(e)
+
+# Clear Collection and Add new data for mongoDB data.
+db = client['NBAMatchups']
+collection = db['NbaTeamStats']
+collection.drop()
+collection.insert_many(documents)
+
 # df.to_csv('teamStats.xlsx', index=False)
 
 
