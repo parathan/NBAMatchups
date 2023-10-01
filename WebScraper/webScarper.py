@@ -98,11 +98,15 @@ client = MongoClient(mongoUri, server_api=ServerApi('1'))
 #     print(e)
 
 # Clear Collection and Add new data for mongoDB data.
-db = client['NBAMatchups']
-collection = db['NbaTeamStats']
-collection.drop()
-collection.insert_many(documents)
 
+try:
+    db = client['NBAMatchups']
+    collection = db['NbaTeamStats']
+    collection.drop()
+    collection.insert_many(documents)
+    print("Successfully updated NBA Team Stat Data")
+except Exception as e:
+    print(e)
 # df.to_csv('teamStats.xlsx', index=False)
 
 
