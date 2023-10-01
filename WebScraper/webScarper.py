@@ -2,17 +2,20 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 import re
+from pymongo import MongoClient
 
 url = (f'https://www.basketball-reference.com/leagues/NBA_2023.html')
 
 res = requests.get(url)
 
+# Getting html document using beautiful soup
 soup = BeautifulSoup(res.content, 'lxml')
 soup_teamStats = soup.find(name='table', attrs = {'id': 'per_game-team'})
 teamStats = []
 
 for row in soup_teamStats.find_all('tr')[1:31]:
 
+    # Add Traditional Stats
     team = {}
     team['Name'] = row.find('a').text
     team['Games Played'] = row.find('td', {'data-stat' : 'g'}).text
@@ -42,12 +45,16 @@ for row in soup_teamStats.find_all('tr')[1:31]:
 
 soup_advancedStats = soup.find(name='table', attrs={'id': 'advanced-team'})
 for row in soup_advancedStats.find_all('tr')[2:32]:
+    # Finds team object from table based on name found in the advanced table
+    # to add data to the right row
     name = row.find('a').text
     index = -1
     for idx, team in enumerate(teamStats):
         if team["Name"] == name:
             index = idx
             break
+    
+    # Add Advanced Stats
     teamStats[index]['Age'] = row.find('td', {'data-stat' : 'age'}).text
     teamStats[index]['Wins'] = row.find('td', {'data-stat' : 'wins'}).text
     teamStats[index]['Losses'] = row.find('td', {'data-stat' : 'losses'}).text
@@ -74,6 +81,12 @@ for row in soup_advancedStats.find_all('tr')[2:32]:
     
             
 df = pd.DataFrame(teamStats)
-df.to_csv('teamStats.xlsx', index=False)
+# documents = df.to_dict(orient="Name")
+
+# client = MongoClient('mongodb+srv://parathan:Para7&than@nbamatchups.ygk98ot.mongodb.net/')
+# db = client['mydatabase']
+# collection = db['mycollection']
+# collection.insert_many(documents)
+# df.to_csv('teamStats.xlsx', index=False)
 
 
