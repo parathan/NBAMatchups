@@ -5,6 +5,7 @@ import re
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from urllib.parse import quote_plus
+from util import *
 
 def webScraper(year: str):
 
@@ -47,17 +48,13 @@ def webScraper(year: str):
         team['Personal Fouls'] = row.find('td', {'data-stat' : 'pf'}).text
         team['Points'] = row.find('td', {'data-stat' : 'pts'}).text
         teamStats.append(team)
-
+    
     soup_teamStatsOpp = soup.find(name='table', attrs = {'id': 'per_game-opponent'})
     for row in soup_teamStatsOpp.find_all('tr')[1:31]:
         # Finds team object from table based on name found in the advanced table
         # to add data to the right row
         name = row.find('a').text
-        index = -1
-        for idx, team in enumerate(teamStats):
-            if team["Name"] == name:
-                index = idx
-                break
+        index = findIndex(teamStats, name)
         # Add Opponent Traditional Stats
         team['Opponent Field Goals'] = row.find('td', {'data-stat' :  'opp_fg'}).text
         team['Opponent Field Goals Attempted'] = row.find('td', {'data-stat' : 'opp_fga'}).text
@@ -86,11 +83,7 @@ def webScraper(year: str):
         # Finds team object from table based on name found in the advanced table
         # to add data to the right row
         name = row.find('a').text
-        index = -1
-        for idx, team in enumerate(teamStats):
-            if team["Name"] == name:
-                index = idx
-                break
+        index = findIndex(teamStats, name)
         
         # Add Advanced Stats
         teamStats[index]['Age'] = row.find('td', {'data-stat' : 'age'}).text
@@ -120,11 +113,7 @@ def webScraper(year: str):
     soup_shootingStats = soup.find(name='table', attrs={'id' : 'shooting-team'})
     for row in soup_shootingStats.find_all('tr')[2:32]:
         name = row.find('a').text
-        index = -1
-        for idx, team in enumerate(teamStats):
-            if team["Name"] == name:
-                index = idx
-                break
+        index = findIndex(teamStats, name)
         
         # Add Team Shooting Stats
         teamStats[index]['Average Distance of FGA'] = row.find('td', {'data-stat' : 'avg_dist'}).text
@@ -150,11 +139,7 @@ def webScraper(year: str):
     soup_opponentShootingStats = soup.find(name='table', attrs={'id' : 'shooting-opponent'})
     for row in soup_opponentShootingStats.find_all('tr')[2:32]:
         name = row.find('a').text
-        index = -1
-        for idx, team in enumerate(teamStats):
-            if team["Name"] == name:
-                index = idx
-                break
+        index = findIndex(teamStats, name)
 
         teamStats[index]['Opponent Average Distance of FGA'] = row.find('td', {'data-stat' : 'opp_avg_dist'}).text
         teamStats[index]['Opponent Percentage of FGA that are 2-Pt FGAs'] = row.find('td', {'data-stat' : 'opp_pct_fga_fg2a'}).text
@@ -186,14 +171,8 @@ def webScraper(year: str):
     mongoUri = "mongodb+srv://" + user + ":" + password + "@nbamatchups.ygk98ot.mongodb.net/?retryWrites=true&w=majority"
     client = MongoClient(mongoUri, server_api=ServerApi('1'))
 
-    # try:
-    #     client.admin.command('ping')
-    #     print("Pinged your deployment. You successfully connected to MongoDB!")
-    # except Exception as e:
-    #     print(e)
 
     # Clear Collection and Add new data for mongoDB data.
-
     try:
         db = client['NBAMatchups']
         collection = db['NbaTeamStats_' + year]
@@ -202,6 +181,5 @@ def webScraper(year: str):
         print("Successfully updated NBA Team Stat Data for " + year)
     except Exception as e:
         print(e)
-    # df.to_csv('teamStats.xlsx', index=False)
-
+    
 
