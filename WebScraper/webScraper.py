@@ -8,6 +8,16 @@ from urllib.parse import quote_plus
 from util import *
 
 def webScraper(year: str):
+    '''
+    Scrapes data from basketball reference from the given year.
+    Saves Data to MongoDB
+
+    Args:
+        year (str): the year that the data will be taken from
+    
+    Returns:
+        Nothing
+    '''
 
     url = (f'https://www.basketball-reference.com/leagues/NBA_' + year + '.html')
 
@@ -65,12 +75,26 @@ def webScraper(year: str):
     except Exception as e:
         print(e)
 
-def fieldAdder(soup: BeautifulSoup, tableName: str, start: int, end: int, fields, fieldExists: bool, teamStats: list):
+def fieldAdder(soup: BeautifulSoup, tableName: str, start: int, end: int, fields, teamExists: bool, teamStats: list):
+    '''
+    Data is scraped from the given tables and added/updated to the teamStats list
+
+    Args:
+        soup (BeautifulSoup): BeautifulSoup object that contains page html data
+        tableName (str): Name of the table id that needs to be extracted from the soup
+        start (int): Starting row of the table where the data begins
+        end (int): Ending row of the table where the data ends
+        teamExists (bool): whether teamExists within teamStats list
+        teamStats (list): List of team objects where data is updated to
+    
+    Returns:
+        Nothing
+    '''
     soup_stats = soup.find(name='table', attrs = {'id': tableName})
     for row in soup_stats.find_all('tr')[start:end]:
         team = {}
         name = row.find('a').text
-        if not fieldExists:
+        if not teamExists:
             team["Name"] = name
             for field in fields:
                 team[field] = row.find('td', {'data-stat' : field}).text
