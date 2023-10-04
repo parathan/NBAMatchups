@@ -6,6 +6,7 @@ from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from urllib.parse import quote_plus
 from util import *
+from decouple import config
 
 def webScraper(year: str):
     '''
@@ -59,8 +60,9 @@ def webScraper(year: str):
     documents = df.to_dict('records')
 
     # Connection to MongoDB
-    user = "testUser"
-    password = "cRgLeYtTEnBMXMZr"
+    user = config('MONGO_USERNAME')
+    password = config('MONGO_PASSWORD')
+    
     mongoUri = "mongodb+srv://" + user + ":" + password + "@nbamatchups.ygk98ot.mongodb.net/?retryWrites=true&w=majority"
     client = MongoClient(mongoUri, server_api=ServerApi('1'))
 
