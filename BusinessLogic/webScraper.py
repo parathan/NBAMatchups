@@ -8,7 +8,7 @@ from urllib.parse import quote_plus
 from util import *
 from decouple import config
 
-def webScraper(year: str):
+def webScraper(year: str) -> pd.DataFrame:
     '''
     Scrapes data from basketball reference from the given year.
     Saves Data to MongoDB
@@ -17,7 +17,7 @@ def webScraper(year: str):
         year (str): the year that the data will be taken from
     
     Returns:
-        Nothing
+        panda dataframe
     '''
 
     url = (f'https://www.basketball-reference.com/leagues/NBA_' + year + '.html')
@@ -57,25 +57,7 @@ def webScraper(year: str):
 
     # converts list to dataframe            
     df = pd.DataFrame(teamStats)
-    documents = df.to_dict('records')
-
-    # Connection to MongoDB
-    user = config('MONGO_USERNAME')
-    password = config('MONGO_PASSWORD')
-    
-    mongoUri = "mongodb+srv://" + user + ":" + password + "@nbamatchups.ygk98ot.mongodb.net/?retryWrites=true&w=majority"
-    client = MongoClient(mongoUri, server_api=ServerApi('1'))
-
-
-    # Clear Collection and Add new data for mongoDB data.
-    try:
-        db = client['NBAMatchups']
-        collection = db['NbaTeamStats_' + year]
-        collection.drop()
-        collection.insert_many(documents)
-        print("Successfully updated NBA Team Stat Data for " + year)
-    except Exception as e:
-        print(e)
+    return df
 
 def fieldAdder(soup: BeautifulSoup, tableName: str, start: int, end: int, fields, teamExists: bool, teamStats: list):
     '''
@@ -99,12 +81,12 @@ def fieldAdder(soup: BeautifulSoup, tableName: str, start: int, end: int, fields
         if not teamExists:
             team["Name"] = name
             for field in fields:
-                team[field] = row.find('td', {'data-stat' : field}).text
+                team[field] = float(row.find('td', {'data-stat' : field}).text)
             teamStats.append(team)
         else:
             index = findIndex(teamStats, name)
             for field in fields:
-                teamStats[index][field] = row.find('td', {'data-stat' : field}).text
+                teamStats[index][field] = float(row.find('td', {'data-stat' : field}).text)
 
     
 
