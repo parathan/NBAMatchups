@@ -1,7 +1,10 @@
 from businessLogic import *
 
 def main():
-    useScraper()
+    testCalc()
+
+def testCalc():
+    calcData("2023")
 
 def useScraper():
     rawData("2023")
