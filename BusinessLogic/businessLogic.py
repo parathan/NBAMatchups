@@ -7,6 +7,8 @@ from webScraper import *
 from dbtransactions import *
 from scipy.stats import zscore
 
+# TODO: Can utilize multiprocessing to run calculations in parallel
+
 def rawData(year: str):
     '''
     Scrape data and writes it to database
@@ -24,38 +26,28 @@ def rawData(year: str):
 
 def calcData(year):
     df = webScraper(year)
-    newdf = calcStats(df)
-    database = 'NBAMatchupsCalc'
-    collection = 'NbaTeamStatsCalc'
-    writeData(newdf, year, database, collection)
+    writeStatsToDb('Zscore', calcZscore(df), year)
+    writeStatsToDb('Mean', calcMean(df), year)
+    writeStatsToDb('Std', calcStd(df), year)
 
-def calcStats(df: pd.DataFrame):
+def calcZscore(df: pd.DataFrame):
     col = df.pop('Name')
     df2 = df.apply(zscore)
     df2.insert(0, col.name, col)
     return df2
 
-def businessLogic(year: str):
-    CalculatedStats = []
+def calcMean(df: pd.DataFrame):
+    df2 = df.mean(numeric_only=True).to_frame().transpose()
+    return df2
 
-    user = config("MONGO_USERNAME")
-    password = config("MONGO_PASSWORD")
+def calcStd(df: pd.DataFrame):
+    df2 = df.std(numeric_only=True).to_frame().transpose()
+    return df2
 
-    mongoUri = "mongodb+srv://" + user + ":" + password + "@nbamatchups.ygk98ot.mongodb.net/?retryWrites=true&w=majority"
-    client = MongoClient(mongoUri, server_api=ServerApi('1'))
-
-    db = client["NBAMatchups"]
-    collection = db["NbaTeamStats_" + year]
-    result = list(collection.find())
-    mean_dict = {"Name": "Average"}
-    std_dict = {"Name": "Standard Deviation"}
-    for key in result[0].keys():
-        if key != "Name" and key != "_id":
-            mean_dict[key] = round(sum(team[key] for team in result) / len(result), 3)
-            std_dict[key] = round(np.std(list(team[key] for team in result)), 3)
-
-    df = pd.dataframe(result)
-    print(df)
+def writeStatsToDb(stat: str, df: pd.DataFrame, year: str):
+    database = 'NBAMatchups' + stat
+    collection = 'NbaTeamStats' + stat + "_"
+    writeData(df, year, database, collection)
     
     
     
