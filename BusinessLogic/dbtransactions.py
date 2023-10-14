@@ -13,9 +13,6 @@ def writeData(df: pd.DataFrame, year: str, database: str, collection: str):
         year (str): year of data taken to be used for name
         database (str): database written to
         collection (str): collection + year is collection written to
-    
-    Returns:
-        Nothing
     '''
     documents = df.to_dict('records')
 
