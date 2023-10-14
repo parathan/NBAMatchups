@@ -30,9 +30,10 @@ def writeData(df: pd.DataFrame, year: str, database: str, collection: str):
     # Clear Collection and Add new data for mongoDB data.
     try:
         db = client[database]
-        collection = db[collection + year]
+        collectionName = collection + year
+        collection = db[collectionName]
         collection.drop()
         collection.insert_many(documents)
-        print("Successfully updated NBA Team Stat Data for " + year)
+        print("Successfully updated " + collectionName + " in " + database)
     except Exception as e:
         print(e)

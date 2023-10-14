@@ -32,16 +32,16 @@ def calcData(year):
 
 def calcZscore(df: pd.DataFrame):
     col = df.pop('Name')
-    df2 = df.apply(zscore)
+    df2 = df.apply(zscore).round(3)
     df2.insert(0, col.name, col)
     return df2
 
 def calcMean(df: pd.DataFrame):
-    df2 = df.mean(numeric_only=True).to_frame().transpose()
+    df2 = df.mean(numeric_only=True).to_frame().transpose().round(3)
     return df2
 
 def calcStd(df: pd.DataFrame):
-    df2 = df.std(numeric_only=True).to_frame().transpose()
+    df2 = df.std(numeric_only=True).to_frame().transpose().round(3)
     return df2
 
 def writeStatsToDb(stat: str, df: pd.DataFrame, year: str):
