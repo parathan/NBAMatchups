@@ -11,4 +11,9 @@ try {
     console.error(e)
 }
 
-export default connection;
+let tradDb = connection.db("NBAMatchups")
+let meanDb = connection.db("NBAMatchupsMean")
+let stdDb = connection.db("NBAMatchupsStd")
+let zscoreDb = connection.db("NBAMatchupsZscore")
+
+export { tradDb, meanDb, stdDb, zscoreDb};
