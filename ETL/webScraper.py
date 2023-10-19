@@ -20,7 +20,7 @@ def webScraper(year: str) -> pd.DataFrame:
         panda dataframe
     '''
 
-    url = (f'https://www.basketball-reference.com/leagues/NBA_' + year + '.html')
+    url = bbrefUrl(year)
 
     res = requests.get(url)
 
