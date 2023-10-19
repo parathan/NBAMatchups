@@ -4,6 +4,13 @@ import "express-validator"
 
 const { validationResult } = new ExpressValidator
 
+/**
+ * 
+ * @param {*} req : request object
+ * @param {*} res : response object
+ * @param {*} next : next function
+ * @returns response with either error status and message or success status and data
+ */
 const findTwoTeams = async (req, res, next) => {
     try {
         const errors = validationResult(req);

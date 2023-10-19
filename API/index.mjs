@@ -6,6 +6,11 @@ import "express-async-errors"
 import "./loadEnvironment.mjs";
 import teams from "./routes/teams.mjs"
 
+/**
+ * Creates Express API that listens to port and uses routes
+ * from routes folder.
+ */
+
 const PORT = process.env.PORT || 5050;
 const app = express();
 

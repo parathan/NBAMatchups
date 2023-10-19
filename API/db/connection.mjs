@@ -1,4 +1,8 @@
 import { MongoClient } from "mongodb";
+/**
+ * This file creates the connection to Mongo,
+ * and creates the connection to the relevent databases to be used.
+ */
 
 const connectionString = process.env.MONGO_URI || "";
 

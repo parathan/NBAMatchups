@@ -1,3 +1,6 @@
+/**
+ * teamNames is a list of all teams to be used in validation checks.
+ */
 export const teamsNames = [
     "Sacramento Kings",
     "Golden State Warriors",
