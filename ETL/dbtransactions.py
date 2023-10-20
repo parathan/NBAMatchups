@@ -21,7 +21,10 @@ def writeData(df: pd.DataFrame, year: str, database: str, collection: str):
     password = config('MONGO_PASSWORD')
     
     mongoUri = "mongodb+srv://" + user + ":" + password + "@nbamatchups.ygk98ot.mongodb.net/?retryWrites=true&w=majority"
-    client = MongoClient(mongoUri, server_api=ServerApi('1'))
+    try:
+        client = MongoClient(mongoUri, server_api=ServerApi('1'))
+    except Exception as e:
+        print(e)
 
 
     # Clear Collection and Add new data for mongoDB data.
