@@ -1,6 +1,4 @@
 from decouple import config
-from pymongo.mongo_client import MongoClient
-from pymongo.server_api import ServerApi
 import numpy as np
 import pandas as pd
 from webScraper import *
@@ -15,6 +13,9 @@ def rawData(year: str):
     Args:
         year (str): year to scrape data from and write data to
     """
+    if type(year) is not str:
+        raise TypeError("year is not a string")
+    
     database = 'NBAMatchups'
     collection = 'NbaTeamStats_'
     df = webScraper(year)
@@ -26,6 +27,9 @@ def calcData(year: str):
     Args:
         year (str): year to scrape data from and write data to
     """
+    if type(year) is not str:
+        raise TypeError("year is not a string")
+
     df = webScraper(year)
     writeStatsToDb('Zscore', calcZscore(df), year)
     writeStatsToDb('Mean', calcMean(df), year)
@@ -40,6 +44,9 @@ def calcZscore(df: pd.DataFrame) -> pd.DataFrame:
     Returns:
         pd.DataFrame: 2d dataframe with z-scores from original dataframe
     """
+    if type(df) is not pd.DataFrame:
+        raise TypeError("df is not a dataframe")
+    
     col = df.pop('Name')
     df2 = df.apply(zscore).round(3)
     df2.insert(0, col.name, col)
@@ -54,6 +61,9 @@ def calcMean(df: pd.DataFrame) -> pd.DataFrame:
     Returns:
         pd.DataFrame: 1d dataframe with mean from original dataframe
     """
+    if type(df) is not pd.DataFrame:
+        raise TypeError("df is not a dataframe")
+
     df2 = df.mean(numeric_only=True).to_frame().transpose().round(3)
     return df2
 
@@ -66,6 +76,9 @@ def calcStd(df: pd.DataFrame) -> pd.DataFrame:
     Returns:
         pd.DataFrame: 1d dataframe with standard deviation from original dataframe
     """
+    if type(df) is not pd.DataFrame:
+        raise TypeError("df is not a dataframe")
+
     df2 = df.std(numeric_only=True).to_frame().transpose().round(3)
     return df2
 
@@ -77,6 +90,13 @@ def writeStatsToDb(stat: str, df: pd.DataFrame, year: str):
         df (pd.DataFrame): dataframe being written to db
         year (str): year the data is taken from and being written to
     """
+    if type(stat) is not str:
+        raise TypeError("stat is not a string")
+    if type(df) is not pd.DataFrame:
+        raise TypeError("df is not a dataframe")
+    if type(year) is not str:
+        raise TypeError("year is not a string")
+
     database = 'NBAMatchups' + stat
     collection = 'NbaTeamStats' + stat + "_"
     writeData(df, year, database, collection)

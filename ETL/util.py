@@ -8,6 +8,11 @@ def findIndex(teamStats: list, name: str) -> int:
         Returns:
             int: the index of the object
         """
+        if type(teamStats) is not list:
+             raise TypeError("teamStats is not a list")
+        if type(name) is not str:
+             raise TypeError("name is not a string")
+
         index = -1
         for idx, team in enumerate(teamStats):
             if team["Name"] == name:
@@ -24,4 +29,7 @@ def bbrefUrl(year: str) -> str:
     Returns:
         str: full basektballreference url with year.
     """
+    if type(year) is not str:
+         raise TypeError("year is not a string")
+
     return 'https://www.basketball-reference.com/leagues/NBA_' + year + '.html'

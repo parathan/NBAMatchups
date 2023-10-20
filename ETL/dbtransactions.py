@@ -14,6 +14,16 @@ def writeData(df: pd.DataFrame, year: str, database: str, collection: str):
         database (str): database written to
         collection (str): collection + year is collection written to
     '''
+
+    if type(df) is not pd.DataFrame:
+        raise TypeError("df is not a dataframe")
+    if type(year) is not str:
+        raise TypeError("year is not a string")
+    if type(database) is not str:
+        raise TypeError("database is not a string")
+    if type(collection) is not str:
+        raise TypeError("collection is not a string")
+
     documents = df.to_dict('records')
 
     # Connection to MongoDB

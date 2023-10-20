@@ -20,6 +20,8 @@ def webScraper(year: str) -> pd.DataFrame:
     Returns:
         panda dataframe
     '''
+    if type(year) is not str:
+        raise TypeError("year is not a string")
 
     url = bbrefUrl(year)
 
@@ -27,6 +29,9 @@ def webScraper(year: str) -> pd.DataFrame:
         res = requests.get(url)
     except:
         raise Exception(f"Error connecting to url:{url}")
+    
+    if res.status_code != 200:
+        raise Exception("Non 200 status code when retrieving webpage")
 
     # Getting html document using beautiful soup
     soup = BeautifulSoup(res.content, 'lxml')
