@@ -7,6 +7,7 @@ from pymongo.server_api import ServerApi
 from urllib.parse import quote_plus
 from util import *
 from decouple import config
+import sys
 
 def webScraper(year: str) -> pd.DataFrame:
     '''
@@ -22,7 +23,10 @@ def webScraper(year: str) -> pd.DataFrame:
 
     url = bbrefUrl(year)
 
-    res = requests.get(url)
+    try:
+        res = requests.get(url)
+    except:
+        raise Exception(f"Error connecting to url:{url}")
 
     # Getting html document using beautiful soup
     soup = BeautifulSoup(res.content, 'lxml')
@@ -49,11 +53,14 @@ def webScraper(year: str) -> pd.DataFrame:
                          'opp_fg_pct_16_xx', 'opp_pct_ast_fg2', 'opp_pct_ast_fg3', 'opp_pct_fga_dunk', 'opp_fg_dunk',
                          'opp_pct_fga_layup', 'opp_fg_layup', 'opp_pct_fg3a_corner', 'opp_fg3_pct_corner']
     
-    fieldAdder(soup, 'per_game-team', 1, 31, traditionalFields, False, teamStats)
-    fieldAdder(soup, 'per_game-opponent', 1, 31, oppTraditionalFields, True, teamStats)
-    fieldAdder(soup, 'advanced-team', 2, 32, advancedFields, True, teamStats)
-    fieldAdder(soup, 'shooting-team', 2, 32, shootingFields, True, teamStats)
-    fieldAdder(soup, 'shooting-opponent', 2, 32, oppShootingFields, True, teamStats)
+    try:
+        fieldAdder(soup, 'per_game-team', 1, 31, traditionalFields, False, teamStats)
+        fieldAdder(soup, 'per_game-opponent', 1, 31, oppTraditionalFields, True, teamStats)
+        fieldAdder(soup, 'advanced-team', 2, 32, advancedFields, True, teamStats)
+        fieldAdder(soup, 'shooting-team', 2, 32, shootingFields, True, teamStats)
+        fieldAdder(soup, 'shooting-opponent', 2, 32, oppShootingFields, True, teamStats)
+    except:
+        raise Exception("Error with web scraper")
 
     # converts list to dataframe            
     df = pd.DataFrame(teamStats)
@@ -85,8 +92,11 @@ def fieldAdder(soup: BeautifulSoup, tableName: str, start: int, end: int, fields
             teamStats.append(team)
         else:
             index = findIndex(teamStats, name)
-            for field in fields:
-                teamStats[index][field] = float(row.find('td', {'data-stat' : field}).text)
+            if index != -1:
+                for field in fields:
+                    teamStats[index][field] = float(row.find('td', {'data-stat' : field}).text)
+            else:
+                raise Exception("Could not find team")
 
     
 
