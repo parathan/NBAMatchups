@@ -4,6 +4,7 @@ import pandas as pd
 from webScraper import *
 from dbtransactions import *
 from scipy.stats import zscore
+from multiprocessing import Process
 
 # TODO: Can utilize multiprocessing to run calculations in parallel
 
@@ -34,6 +35,27 @@ def calcData(year: str):
     writeStatsToDb('Zscore', calcZscore(df), year)
     writeStatsToDb('Mean', calcMean(df), year)
     writeStatsToDb('Std', calcStd(df), year)
+
+# Function does not provide meaningful improvement in performance but is here for future reference/improvement
+def calcDataConcurrently(year: str):
+    """Scrape data and calculate statistics for it concurrenty and write it to database
+
+    Args:
+        year (str): year to scrape data from and write data to
+    """
+    if type(year) is not str:
+        raise TypeError("year is not a string")
+    
+    df = webScraper(year)
+    p1 = Process(target=writeStatsToDb('Zscore', calcZscore(df), year))
+    p1.start()
+    p2 = Process(target=writeStatsToDb('Mean', calcMean(df), year))
+    p2.start()
+    p3 = Process(writeStatsToDb('Std', calcStd(df), year))
+    p3.start()
+    p1.join()
+    p2.join()
+    p3.join()
 
 def calcZscore(df: pd.DataFrame) -> pd.DataFrame:
     """Calculates z-scores for dataframe given to it
