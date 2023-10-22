@@ -108,17 +108,16 @@ export const findTwoTeamsOrdered = async (req, res, next) => {
             ]
         )
 
-        let orderedTeam = orderedTeams(data[4][0], data[5][0])
+        let orderedTeam = orderedTeams(
+            data[0][0],
+            data[1][0],
+            data[2][0],
+            data[3][0],
+            data[4][0], 
+            data[5][0]
+        )
 
-        let concurResults = {
-            team1Traditional: data[0][0],
-            team2Traditional: data[1][0],
-            mean: data[2][0],
-            std: data[3][0],
-            orderedZscore: orderedTeam
-        }
-
-        return res.status(200).json(concurResults)
+        return res.status(200).json(orderedTeam)
     } catch (err) {
         console.log(err)
         next(err);

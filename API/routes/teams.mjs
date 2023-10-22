@@ -19,7 +19,7 @@ router.post(
 );
 
 router.post(
-    "/orderedZscore",
+    "/orderedStats",
     checkSchema(teamDataValidateSchemaBased),
     findTwoTeamsOrdered
 )
