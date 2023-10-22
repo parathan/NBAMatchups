@@ -1,5 +1,6 @@
 import { ExpressValidator } from "express-validator";
 import { tradDb, meanDb, stdDb, zscoreDb } from "../db/connection.mjs";
+import orderedTeams from "../util/util.mjs";
 import "express-validator"
 
 const { validationResult } = new ExpressValidator
@@ -11,7 +12,7 @@ const { validationResult } = new ExpressValidator
  * @param {*} next : next function
  * @returns response with either error status and message or success status and data
  */
-const findTwoTeams = async (req, res, next) => {
+export const findTwoTeams = async (req, res, next) => {
     try {
         const errors = validationResult(req);
 
@@ -43,10 +44,10 @@ const findTwoTeams = async (req, res, next) => {
         // Promise.all runs all promises concurrently.
         let data = await Promise.all(
             [
-                meanCollection.find({}).toArray(),
-                stdCollection.find({}).toArray(),
                 tradCollection.find({Name: team1name}).toArray(),
                 tradCollection.find({Name: team2name}).toArray(),
+                meanCollection.find({}).toArray(),
+                stdCollection.find({}).toArray(),
                 zscoreCollection.find({Name: team1name}).toArray(),
                 zscoreCollection.find({Name: team2name}).toArray()
             ]
@@ -62,12 +63,12 @@ const findTwoTeams = async (req, res, next) => {
         // }
 
         let concurResults = {
-            team1Traditional: data[0],
-            team2Traditional: data[1],
-            mean: data[2],
-            std: data[3],
-            team1Zscore: data[4],
-            team2Zscore: data[5]
+            team1Traditional: data[0][0],
+            team2Traditional: data[1][0],
+            mean: data[2][0],
+            std: data[3][0],
+            team1Zscore: data[4][0],
+            team2Zscore: data[5][0]
         }
 
         return res.status(200).json(concurResults)
@@ -76,4 +77,52 @@ const findTwoTeams = async (req, res, next) => {
     }
 };
 
-export default findTwoTeams;
+export const findTwoTeamsOrdered = async (req, res, next) => {
+    try {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                success: false,
+                errors: errors.array(),
+            })
+        }
+
+        let team1name = req.body.team1;
+        let team2name = req.body.team2;
+        let year = req.body.year;
+
+        let tradCollection = tradDb.collection("NbaTeamStats_" + year)
+        let meanCollection = meanDb.collection("NbaTeamStatsMean_" + year)
+        let stdCollection = stdDb.collection("NbaTeamStatsStd_" + year)
+        let zscoreCollection = zscoreDb.collection("NbaTeamStatsZscore_" + year)
+
+        let data = await Promise.all(
+            [
+                tradCollection.find({Name: team1name}).toArray(),
+                tradCollection.find({Name: team2name}).toArray(),
+                meanCollection.find({}).toArray(),
+                stdCollection.find({}).toArray(),
+                zscoreCollection.find({Name: team1name}).toArray(),
+                zscoreCollection.find({Name: team2name}).toArray()
+            ]
+        )
+
+        let orderedTeam = orderedTeams(data[4][0], data[5][0])
+
+        let concurResults = {
+            team1Traditional: data[0][0],
+            team2Traditional: data[1][0],
+            mean: data[2][0],
+            std: data[3][0],
+            orderedZscore: orderedTeam
+        }
+
+        return res.status(200).json(concurResults)
+    } catch (err) {
+        console.log(err)
+        next(err);
+    }
+}
+
+// export default findTwoTeams;

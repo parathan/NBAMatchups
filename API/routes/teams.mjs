@@ -1,6 +1,6 @@
 import express from "express";
-import findTwoTeams from "../controllers/teamController.mjs";
-import { checkSchema } from "express-validator";
+import { findTwoTeams, findTwoTeamsOrdered } from "../controllers/teamController.mjs";
+import { check, checkSchema } from "express-validator";
 import teamDataValidateSchemaBased from "../validations/teamValidations.mjs";
 
 const router = express.Router()
@@ -17,5 +17,11 @@ router.post(
     checkSchema(teamDataValidateSchemaBased),
     findTwoTeams
 );
+
+router.post(
+    "/orderedZscore",
+    checkSchema(teamDataValidateSchemaBased),
+    findTwoTeamsOrdered
+)
 
 export default router;
