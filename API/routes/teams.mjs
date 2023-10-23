@@ -24,4 +24,10 @@ router.post(
     findTwoTeamsOrdered
 )
 
+router.post(
+    "/cached",
+    checkSchema(teamDataValidateSchemaBased),
+    findTwoTeams
+)
+
 export default router;
