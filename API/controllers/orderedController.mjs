@@ -1,19 +1,12 @@
 import { ExpressValidator } from "express-validator";
 import { tradDb, meanDb, stdDb, zscoreDb } from "../db/connection.mjs";
 import orderedTeams from "../util/util.mjs";
-import { redisClient } from "../cache/cache.mjs";
 import "express-validator"
+import { redisClient } from "../cache/cache.mjs";
 
 const { validationResult } = new ExpressValidator
 
-/**
- * 
- * @param {*} req : request object
- * @param {*} res : response object
- * @param {*} next : next function
- * @returns response with either error status and message or success status and data
- */
-export const findTwoTeams = async (req, res, next) => {
+export const findTwoTeamsOrdered = async (req, res, next) => {
     try {
         const errors = validationResult(req);
 
@@ -45,24 +38,25 @@ export const findTwoTeams = async (req, res, next) => {
             ]
         )
 
-        let concurResults = {
-            team1Traditional: data[0][0],
-            team2Traditional: data[1][0],
-            mean: data[2][0],
-            std: data[3][0],
-            team1Zscore: data[4][0],
-            team2Zscore: data[5][0]
-        }
+        let orderedTeam = orderedTeams(
+            data[0][0],
+            data[1][0],
+            data[2][0],
+            data[3][0],
+            data[4][0], 
+            data[5][0]
+        )
 
-        return res.status(200).json(concurResults)
+        return res.status(200).json(orderedTeam)
     } catch (err) {
+        console.log(err)
         next(err);
     }
-};
+}
 
 // Doesn't improve performance, is here for reference.
 // Need to run redis-server from redis folder.
-export const findTwoTeamsCached = async (req, res, next) => {
+export const findTwoTeamsOrderedCached = async (req, res, next) => {
     try {
         const errors = validationResult(req);
 
@@ -118,20 +112,18 @@ export const findTwoTeamsCached = async (req, res, next) => {
             return team.Name === team2name
         })
 
-        let concurResults = {
-            team1Traditional: trad1Team,
-            team2Traditional: trad2Team,
-            mean: data[1][0],
-            std: data[2][0],
-            team1Zscore: Zscore1Team,
-            team2Zscore: Zscore2Team
-        }
+        let orderedTeam = orderedTeams(
+            trad1Team,
+            trad2Team,
+            data[1][0],
+            data[2][0],
+            Zscore1Team, 
+            Zscore2Team
+        )
 
-        return res.status(200).json(concurResults)
+        return res.status(200).json(orderedTeam)
     } catch (err) {
         console.log(err)
         next(err);
     }
 };
-
-// export default findTwoTeams;
