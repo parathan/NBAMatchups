@@ -1,6 +1,7 @@
 import { ExpressValidator } from "express-validator";
 import { tradDb, meanDb, stdDb, zscoreDb } from "../db/connection.mjs";
 import orderedTeams from "../util/util.mjs";
+// import { createClient } from "redis";
 import { redisClient } from "../cache/cache.mjs";
 import "express-validator"
 
@@ -127,6 +128,7 @@ export const findTwoTeamsOrdered = async (req, res, next) => {
 }
 
 // Doesn't improve performance, is here for reference.
+// Need to run redis-server from redis folder.
 export const findTwoTeamsCached = async (req, res, next) => {
     try {
         const errors = validationResult(req);
@@ -148,7 +150,7 @@ export const findTwoTeamsCached = async (req, res, next) => {
         let zscoreCollection = zscoreDb.collection("NbaTeamStatsZscore_" + year)
 
 
-        const redisKey = `AllCollections-${req.body.year}`;
+        const redisKey = `AllCollections-${year}`;
         let data;
         let isCached = false;
         const cachedResult = await redisClient.get(redisKey)
@@ -170,16 +172,16 @@ export const findTwoTeamsCached = async (req, res, next) => {
             await redisClient.set(redisKey, JSON.stringify(data))
         }
         
-        let trad1Team = data[0][0].find(team => {
+        let trad1Team = data[0].find(team => {
             return team.Name === team1name
         })
-        let trad2Team = data[0][0].find(team => {
+        let trad2Team = data[0].find(team => {
             return team.Name === team2name
         })
-        let Zscore1Team = data[3][0].find(team => {
+        let Zscore1Team = data[3].find(team => {
             return team.Name === team1name
         })
-        let Zscore2Team = data[3][0].find(team => {
+        let Zscore2Team = data[3].find(team => {
             return team.Name === team2name
         })
 
@@ -194,6 +196,7 @@ export const findTwoTeamsCached = async (req, res, next) => {
 
         return res.status(200).json(concurResults)
     } catch (err) {
+        console.log(err)
         next(err);
     }
 };

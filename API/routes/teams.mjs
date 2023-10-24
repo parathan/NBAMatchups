@@ -1,5 +1,5 @@
 import express from "express";
-import { findTwoTeams, findTwoTeamsOrdered } from "../controllers/teamController.mjs";
+import { findTwoTeams, findTwoTeamsCached, findTwoTeamsOrdered } from "../controllers/teamController.mjs";
 import { check, checkSchema } from "express-validator";
 import teamDataValidateSchemaBased from "../validations/teamValidations.mjs";
 
@@ -27,7 +27,7 @@ router.post(
 router.post(
     "/cached",
     checkSchema(teamDataValidateSchemaBased),
-    findTwoTeams
+    findTwoTeamsCached
 )
 
 export default router;
