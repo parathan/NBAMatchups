@@ -6,6 +6,18 @@ import { redisClient } from "../cache/cache.mjs";
 
 const { validationResult } = new ExpressValidator
 
+/* Returns data organized such that each element represents a field including the
+   following information for the field:
+    - team 1 traditional data
+    - team 2 traditional data
+    - difference between two fields
+    - mean for the field
+    - std for the field
+    - Zscore for team 1
+    - Zscore for team 2
+    - difference in Zscores
+   Array is ordered by difference in Zscores
+*/
 export const findTwoTeamsOrdered = async (req, res, next) => {
     try {
         const errors = validationResult(req);
@@ -54,8 +66,20 @@ export const findTwoTeamsOrdered = async (req, res, next) => {
     }
 }
 
-// Doesn't improve performance, is here for reference.
-// Need to run redis-server from redis folder.
+/* Returns data organized such that each element represents a field including the
+   following information for the field:
+    - team 1 traditional data
+    - team 2 traditional data
+    - difference between two fields
+    - mean for the field
+    - std for the field
+    - Zscore for team 1
+    - Zscore for team 2
+    - difference in Zscores
+   Array is ordered by difference in Zscores
+   Uses Redis caching to improve performance
+   Need to run redis-server from redis folder.
+*/
 export const findTwoTeamsOrderedCached = async (req, res, next) => {
     try {
         const errors = validationResult(req);

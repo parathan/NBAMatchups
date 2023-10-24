@@ -6,13 +6,10 @@ import "express-validator"
 
 const { validationResult } = new ExpressValidator
 
-/**
- * 
- * @param {*} req : request object
- * @param {*} res : response object
- * @param {*} next : next function
- * @returns response with either error status and message or success status and data
- */
+/*
+    returns different traditional and zscore data for both teams given
+    and mean and std for league in general.
+*/
 export const findTwoTeams = async (req, res, next) => {
     try {
         const errors = validationResult(req);
@@ -60,8 +57,12 @@ export const findTwoTeams = async (req, res, next) => {
     }
 };
 
-// Doesn't improve performance, is here for reference.
-// Need to run redis-server from redis folder.
+/*
+    returns different traditional and zscore data for both teams given
+    and mean and std for league in general.
+    Use Redis caching to improve performance.
+    Need to run redis-server from redis folder.
+*/
 export const findTwoTeamsCached = async (req, res, next) => {
     try {
         const errors = validationResult(req);

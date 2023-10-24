@@ -1,3 +1,22 @@
+/**
+ * 
+ * @param {Object} trad1 
+ * @param {Object} trad2 
+ * @param {Object} mean 
+ * @param {Object} std 
+ * @param {Object} Zscore1 
+ * @param {Object} Zscore2 
+ * @returns object containing fields team1 name, team2 name, and an array where each element contains:
+ *  - field name
+ *  - z score difference
+ *  - z score for team 1
+ *  - z score for team 2
+ *  - traditional data difference
+ *  - traditional data for team 1
+ *  - traditional data for team 2
+ *  - mean for the field
+ *  - std for the field
+ */
 function orderedTeams(trad1, trad2, mean, std, Zscore1, Zscore2) {
     let list = []
     for (const field in Zscore1) {
