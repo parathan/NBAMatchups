@@ -104,7 +104,12 @@ export const findTwoTeamsOrderedCached = async (req, res, next) => {
         const redisKey = `AllCollections-${year}`;
         let data;
         let isCached = false;
-        const cachedResult = await redisClient.get(redisKey)
+        var cachedResult;
+        try {
+            cachedResult = await redisClient.get(redisKey)
+        } catch (err) {
+            return res.status(500).json({error : "Redis server is not running"})
+        }
 
         if (cachedResult) {
             isCached = true;
