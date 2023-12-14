@@ -1,5 +1,5 @@
 import "express-validator"
-import { teamsNames } from "../strings/teamNames.mjs";
+import { teamsNames } from "../constants/teamNames.mjs";
 
 /**
  * Checks if year is within given range.
