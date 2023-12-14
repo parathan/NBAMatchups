@@ -4,6 +4,7 @@ import pandas as pd
 from webScraper import *
 from dbtransactions import *
 from scipy.stats import zscore
+from scipy.stats import percentileofscore
 from multiprocessing import Process
 
 # TODO: Can utilize multiprocessing to run calculations in parallel
@@ -32,7 +33,9 @@ def calcData(year: str):
         raise TypeError("year is not a string")
 
     df = webScraper(year)
-    writeStatsToDb('Zscore', calcZscore(df), year)
+    col = df.pop('Name')
+    writeStatsToDb('Percentile', calcPercentile(df, col), year)
+    writeStatsToDb('Zscore', calcZscore(df, col), year)
     writeStatsToDb('Mean', calcMean(df), year)
     writeStatsToDb('Std', calcStd(df), year)
 
@@ -57,7 +60,24 @@ def calcDataConcurrently(year: str):
     p2.join()
     p3.join()
 
-def calcZscore(df: pd.DataFrame) -> pd.DataFrame:
+def calcPercentile(df: pd.DataFrame, col: pd.Series) -> pd.DataFrame:
+    """Calculates percentiles for dataframe given to it
+
+    Args:
+        df (pd.DataFrame): scraped data dataframe to be calculated on
+
+    Returns:
+        pd.DataFrame: 2d dataframe with z-scores from original dataframe
+    """
+    if type(df) is not pd.DataFrame:
+        raise TypeError("df is not a dataframe")
+    
+
+    df2 = df.rank(numeric_only=True, pct=True).round(3)
+    df2.insert(0, col.name, col)
+    return df2
+
+def calcZscore(df: pd.DataFrame, col: pd.Series) -> pd.DataFrame:
     """Calculates z-scores for dataframe given to it
 
     Args:
@@ -69,7 +89,6 @@ def calcZscore(df: pd.DataFrame) -> pd.DataFrame:
     if type(df) is not pd.DataFrame:
         raise TypeError("df is not a dataframe")
     
-    col = df.pop('Name')
     df2 = df.apply(zscore).round(3)
     df2.insert(0, col.name, col)
     return df2
