@@ -1,6 +1,6 @@
 import express from "express";
 import { findTwoTeams, findTwoTeamsCached } from "../controllers/teamController.mjs";
-import { findTwoTeamsOrdered, findTwoTeamsOrderedCached, findTwoTeamsPercentileOrdered } from "../controllers/orderedController.mjs";
+import { findTwoTeamsOrdered, findTwoTeamsOrderedCached, findTwoTeamsPercentileOrdered, findTwoTeamsPercentileOrderedCached } from "../controllers/orderedController.mjs";
 import { check, checkSchema } from "express-validator";
 import teamDataValidateSchemaBased from "../validations/teamValidations.mjs";
 
@@ -81,7 +81,6 @@ router.post(
  *  post:
  *      summary: Retrieve data from two teams given from collection of year given ordered
  *          difference in percentiles from opposing fields.
- *          Uses redis caching to improve performance.
  *      request body: team1: string, team2: string, year: string
  *      returns: Gives array of data, with each element representing field, containing
  *          - traditional data
@@ -94,6 +93,26 @@ router.post(
     "/OrderedPercentile",
     checkSchema(teamDataValidateSchemaBased),
     findTwoTeamsPercentileOrdered
+)
+
+/**
+ * /teams:
+ *  post:
+ *      summary: Retrieve data from two teams given from collection of year given ordered
+ *          difference in percentiles from opposing fields.
+ *          Uses redis caching to improve performance.
+ *      request body: team1: string, team2: string, year: string
+ *      returns: Gives array of data, with each element representing field, containing
+ *          - traditional data
+ *          - percentile data
+ *          - difference in traditional data
+ *          - difference in percentile data
+ *          Orders data by difference in percentile
+ */
+router.post(
+    "/cachedOrderedPercentile",
+    checkSchema(teamDataValidateSchemaBased),
+    findTwoTeamsPercentileOrderedCached
 )
 
 export default router;
