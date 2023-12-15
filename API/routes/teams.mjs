@@ -1,6 +1,6 @@
 import express from "express";
 import { findTwoTeams, findTwoTeamsCached } from "../controllers/teamController.mjs";
-import { findTwoTeamsOrdered, findTwoTeamsOrderedCached } from "../controllers/orderedController.mjs";
+import { findTwoTeamsOrdered, findTwoTeamsOrderedCached, findTwoTeamsPercentileOrdered } from "../controllers/orderedController.mjs";
 import { check, checkSchema } from "express-validator";
 import teamDataValidateSchemaBased from "../validations/teamValidations.mjs";
 
@@ -74,6 +74,12 @@ router.post(
     "/cachedOrdered",
     checkSchema(teamDataValidateSchemaBased),
     findTwoTeamsOrderedCached
+)
+
+router.post(
+    "/OrderedPercentile",
+    checkSchema(teamDataValidateSchemaBased),
+    findTwoTeamsPercentileOrdered
 )
 
 export default router;

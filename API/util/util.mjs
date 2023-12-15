@@ -1,3 +1,4 @@
+import { opposingStats } from "../constants/opposingStats.mjs"
 /**
  * 
  * @param {Object} trad1 
@@ -17,7 +18,7 @@
  *  - mean for the field
  *  - std for the field
  */
-function orderedTeams(trad1, trad2, mean, std, Zscore1, Zscore2) {
+export function orderedTeams(trad1, trad2, mean, std, Zscore1, Zscore2) {
     let list = []
     for (const field in Zscore1) {
         if (field != "Name" && field != '_id' && field != 'g') {
@@ -50,4 +51,34 @@ function orderedTeams(trad1, trad2, mean, std, Zscore1, Zscore2) {
 
 }
 
-export default orderedTeams
+export function orderedPercentileTeams(trad1, trad2, Percentile1, Percentile2) {
+    let list = []
+    let opposingFields = opposingStats()
+
+    for (const field of opposingFields) {
+        let difference = trad1[field[0]] - trad2[field[1]]
+        let percentilediff = Percentile1[field[0]] - Percentile2[field[1]]
+        list.push({
+            field1: field[0],
+            field2: field[1],
+            PercentileDifference: percentilediff.toFixed(2),
+            absPercentileDifference: Math.abs(percentilediff.toFixed(2)),
+            team1Percentile1: Percentile1[field[0]],
+            team2Percentile: Percentile2[field[1]],
+            TraditionalDifference: difference.toFixed(2),
+            team1Trad: trad1[field[0]],
+            team2Trad: trad2[field[1]],
+        }) 
+    }
+
+    list.sort(function(a, b) {
+        return b.absPercentileDifference - a.absPercentileDifference
+    })
+    let returnValue = {
+        team1: trad1['Name'],
+        team2: trad2['Name'],
+        statistics: list
+    }
+
+    return returnValue
+}

@@ -19,5 +19,6 @@ let tradDb = connection.db("NBAMatchups")
 let meanDb = connection.db("NBAMatchupsMean")
 let stdDb = connection.db("NBAMatchupsStd")
 let zscoreDb = connection.db("NBAMatchupsZscore")
+let percentileDb = connection.db("NBAMatchupsPercentile")
 
-export { tradDb, meanDb, stdDb, zscoreDb};
+export { tradDb, meanDb, stdDb, zscoreDb, percentileDb};

@@ -1,6 +1,6 @@
 import { ExpressValidator } from "express-validator";
 import { tradDb, meanDb, stdDb, zscoreDb } from "../db/connection.mjs";
-import orderedTeams from "../util/util.mjs";
+import { orderedTeams } from "../util/util.mjs";
 import { redisClient } from "../cache/cache.mjs";
 import "express-validator"
 

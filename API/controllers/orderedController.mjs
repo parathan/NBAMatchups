@@ -1,6 +1,6 @@
 import { ExpressValidator } from "express-validator";
-import { tradDb, meanDb, stdDb, zscoreDb } from "../db/connection.mjs";
-import orderedTeams from "../util/util.mjs";
+import { tradDb, meanDb, stdDb, zscoreDb, percentileDb } from "../db/connection.mjs";
+import { orderedTeams, orderedPercentileTeams } from "../util/util.mjs";
 import "express-validator"
 import { redisClient } from "../cache/cache.mjs";
 
@@ -57,6 +57,48 @@ export const findTwoTeamsOrdered = async (req, res, next) => {
             data[3][0],
             data[4][0], 
             data[5][0]
+        )
+
+        return res.status(200).json(orderedTeam)
+    } catch (err) {
+        console.log(err)
+        next(err);
+    }
+}
+
+export const findTwoTeamsPercentileOrdered = async (req, res, next) => {
+    try {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                success: false,
+                errors: errors.array(),
+            })
+        }
+
+        let team1name = req.body.team1;
+        let team2name = req.body.team2;
+        let year = req.body.year;
+
+        let tradCollection = tradDb.collection("NbaTeamStats_" + year)
+        let percentileCollection = percentileDb.collection("NbaTeamStatsPercentile_" + year)
+
+        // Promise.all runs all promises concurrently.
+        let data = await Promise.all(
+            [
+                tradCollection.find({Name: team1name}).toArray(),
+                tradCollection.find({Name: team2name}).toArray(),
+                percentileCollection.find({Name: team1name}).toArray(),
+                percentileCollection.find({Name: team2name}).toArray()
+            ]
+        )
+
+        let orderedTeam = orderedPercentileTeams(
+            data[0][0],
+            data[1][0],
+            data[2][0],
+            data[3][0],
         )
 
         return res.status(200).json(orderedTeam)
