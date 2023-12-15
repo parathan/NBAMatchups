@@ -66,6 +66,18 @@ export const findTwoTeamsOrdered = async (req, res, next) => {
     }
 }
 
+/* Returns data organized such that each element represents a field including the
+   following information for the field:
+    - field1
+    - field2
+    - team 1 traditional data for field1
+    - team 2 traditional data for field2
+    - difference between two fields
+    - Percentile for team 1 for field1
+    - Percentile for team 2 for field2
+    - difference in percentiles
+   Array is ordered by difference in percentiles from opposing fields
+*/
 export const findTwoTeamsPercentileOrdered = async (req, res, next) => {
     try {
         const errors = validationResult(req);

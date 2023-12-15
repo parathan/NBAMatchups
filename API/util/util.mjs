@@ -51,6 +51,22 @@ export function orderedTeams(trad1, trad2, mean, std, Zscore1, Zscore2) {
 
 }
 
+/**
+ * 
+ * @param {Object} trad1 
+ * @param {Object} trad2 
+ * @param {Object} Percentile1 
+ * @param {Object} Percentile2
+ * @returns object containing fields team1 name, team2 name, and an array where each element contains:
+ *  - field1 name
+ *  - field2 name
+ *  - Percentile difference
+ *  - Percentile for field1 for team 1
+ *  - Percentile for field2 for team 2
+ *  - traditional data difference
+ *  - traditional data for field1 for team 1
+ *  - traditional data for field2 for team 2
+ */
 export function orderedPercentileTeams(trad1, trad2, Percentile1, Percentile2) {
     let list = []
     let opposingFields = opposingStats()
@@ -64,10 +80,10 @@ export function orderedPercentileTeams(trad1, trad2, Percentile1, Percentile2) {
             PercentileDifference: percentilediff.toFixed(2),
             absPercentileDifference: Math.abs(percentilediff.toFixed(2)),
             team1Percentile1: Percentile1[field[0]],
-            team2Percentile: Percentile2[field[1]],
+            team2Percentile_Op: Percentile2[field[1]],
             TraditionalDifference: difference.toFixed(2),
             team1Trad: trad1[field[0]],
-            team2Trad: trad2[field[1]],
+            team2Trad_Op: trad2[field[1]],
         }) 
     }
 

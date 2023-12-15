@@ -76,6 +76,20 @@ router.post(
     findTwoTeamsOrderedCached
 )
 
+/**
+ * /teams:
+ *  post:
+ *      summary: Retrieve data from two teams given from collection of year given ordered
+ *          difference in percentiles from opposing fields.
+ *          Uses redis caching to improve performance.
+ *      request body: team1: string, team2: string, year: string
+ *      returns: Gives array of data, with each element representing field, containing
+ *          - traditional data
+ *          - percentile data
+ *          - difference in traditional data
+ *          - difference in percentile data
+ *          Orders data by difference in percentile
+ */
 router.post(
     "/OrderedPercentile",
     checkSchema(teamDataValidateSchemaBased),
