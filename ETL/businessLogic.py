@@ -7,6 +7,7 @@ from scipy.stats import zscore
 from scipy.stats import percentileofscore
 from scipy.stats import norm
 from multiprocessing import Process
+import constants
 
 # TODO: Can utilize multiprocessing to run calculations in parallel
 '''
@@ -40,7 +41,7 @@ def calcData(year: str):
 
     df = webScraper(year)
     col = df.pop('Name')
-    writeStatsToDb('RankPercentile', calcRank(df, col), year)
+    # writeStatsToDb('RankPercentile', calcRank(df, col), year)
     writeStatsToDb('Percentile', calcPercentile(df, col), year)
     writeStatsToDb('Zscore', calcZscore(df, col), year)
     writeStatsToDb('Mean', calcMean(df), year)
@@ -98,12 +99,12 @@ def calcPercentile(df: pd.DataFrame, col: pd.Series) -> pd.DataFrame:
         raise TypeError("df is not a dataframe")
     
     df2 = df.apply(zscore)
+    for column in df2.columns:
+        if column in constants.NEGATIVE_STATS:
+            df2[column] = df2[column].map(lambda x: x * -1)
     df2 = df2.map(norm.cdf).round(3)
     df2.insert(0, col.name, col)
     return df2
-    # df2 = df.apply(lambda x: percentileofscore(df.sort_index(), x)).round(3)
-    # df2.insert(0, col.name, col)
-    # return df2
 
 def calcZscore(df: pd.DataFrame, col: pd.Series) -> pd.DataFrame:
     """Calculates z-scores for dataframe given to it
