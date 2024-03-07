@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from './index.module.css';
-import { To, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
+import NavBar from '../../components/NavBar';
 
 function Home() {
 
@@ -12,6 +14,7 @@ function Home() {
 
   return (
     <div className={styles.homePage}>
+      <NavBar/>
       <header className={styles.header}>
         <p>
           Welcome to NBAMatchups
