@@ -1,0 +1,11 @@
+.layout {
+    display: flex;
+}
+
+.navbar {
+    flex: 1 0 10vw;
+}
+
+.children {
+    flex: 1 0 90vw;
+}
