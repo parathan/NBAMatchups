@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+
+:root {
+  --secondary-colour: #0F0F0F;
+  --background-colour: #00193b;
+  --navbar-colour: #00377e;
+  --header-font-colour: #00BFFF;
+  --navbar-font-colour: #94E1FF;
+  --p-font-colour: #94E1FF;
+}

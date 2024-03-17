@@ -8,15 +8,12 @@ function Matchups() {
       <div className={styles.homePage}>
         <header className={styles.header}>
           <p>
-            Welcome to NBAMatchups
+            Team Matchups
           </p>
         </header>
         <header className={styles.features}>
           <p>
-            Team Matchups
-          </p>
-          <p>
-            Win/Loss Prediction
+            This is the Team Matchups feature
           </p>
         </header>
       </div>

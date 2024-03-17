@@ -1,15 +1,15 @@
 .homePage {
-  background-color: #282c34;
-  min-height: 100vh;
+
+  
   font-size: calc(10px + 2vmin);
-  color: white;
+  
 }
 
 .header {
   padding-top: 10%;
   text-align: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: var(--header-font-colour);
 }
 
 .features {
@@ -27,16 +27,12 @@
   transition: all .2s;
   padding: 10px 20px;
   border-radius: 100px;
-  background: #cfef00;
   border: 1px solid transparent;
   display: flex;
   align-items: center;
   font-size: 15px;
 }
 
-button.featureButton:hover {
-  background: #7f9201;
-}
 
 button.featureButton > svg {
   width: 34px;

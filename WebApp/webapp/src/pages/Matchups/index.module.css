@@ -1,0 +1,7 @@
+.header {
+    color: var(--header-font-colour)
+}
+
+.features {
+    color: var(--p-font-colour);
+}
