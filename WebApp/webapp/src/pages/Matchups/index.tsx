@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import styles from './index.module.css';
 import Layout from '../../components/Layout/Layout';
 
@@ -12,18 +12,33 @@ function Matchups() {
   const [progressVisible, setProgressVisible] = useState(false)
   const [errorVisible, setErrorVisible] = useState(false)
   const [successVisible, setSuccessVisible] = useState(false)
+  const [team1, setTeam1] = useState("")
+  const [team2, setTeam2] = useState("")
+  const [year, setYear] = useState("")
+
+  function changeTeam1(e: ChangeEvent<HTMLSelectElement>) {
+    setTeam1(e.target.value)
+  }
+
+  function changeTeam2(e: ChangeEvent<HTMLSelectElement>) {
+    setTeam2(e.target.value)
+  }
+
+  function changeYear(e: ChangeEvent<HTMLSelectElement>) {
+    setYear(e.target.value)
+  }
 
   function onSubmit() {
     setFormVisible(false)
     setProgressVisible(true)
-    getData()
+    team1 !== "" && team2 !== "" && year !== "" ? getData() : throwInputError()
   }
 
   function getData() {
     axios.post('http://localhost:5050/teams/OrderedPercentile', {
-      team1: "Sacramento Kings",
-      team2: "Miami Heat",
-      year: "2023"
+      team1: team1,
+      team2: team2,
+      year: year
     })
     .then((response) => {
       console.log(response)
@@ -35,6 +50,11 @@ function Matchups() {
       setProgressVisible(false)
       setErrorVisible(true)
     })
+  }
+
+  function throwInputError() {
+    setProgressVisible(false)
+    setErrorVisible(true)
   }
 
   return (
@@ -53,17 +73,20 @@ function Matchups() {
             </p>
           </div>
           <div className={styles.input}>
-            <select>
+            <select onChange={changeTeam1}>
+              <option value="">Pick a Team</option>
               {teamsNames.map( teamName =>
                 <option value={teamName}>{teamName}</option>
               )};
             </select>
-            <select>
+            <select onChange={changeTeam2}>
+              <option value="">Pick a Team</option>
               {teamsNames.map( teamName =>
                 <option value={teamName}>{teamName}</option>
               )};
             </select>
-            <select>
+            <select onChange={changeYear}>
+            <option value="">Pick a Year</option>
               {years.map( year =>
                 <option value={year}>{year}</option>
               )};
