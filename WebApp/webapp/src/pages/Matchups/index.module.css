@@ -20,10 +20,10 @@
 .header {
     color: var(--header-font-colour);
     font-size: calc(10px + 2vmin);;
+    padding-bottom: 2vh;
 }
 
 .description {
-    padding-top: 2vh;
     color: var(--p-font-colour);
 }
 
