@@ -1,7 +1,18 @@
-.header {
-    color: var(--header-font-colour)
+.matchups {
+    padding: 10vh;
+    text-align: center;
 }
 
-.features {
+.header {
+    color: var(--header-font-colour);
+    font-size: calc(10px + 2vmin);;
+}
+
+.description {
+    padding-top: 2vh;
     color: var(--p-font-colour);
+}
+
+.input {
+    padding-top: 5vh;
 }
