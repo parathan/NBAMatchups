@@ -1,7 +1,6 @@
 .homePage {
-
-  
   font-size: calc(10px + 2vmin);
+  animation: fade-in 2s;
   
 }
 
@@ -46,5 +45,14 @@ button.featureButton:hover svg {
 
 button.featureButton:active {
   transform: scale(0.95);
+}
+
+@keyframes fade-in {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 100;
+  }
 }
   

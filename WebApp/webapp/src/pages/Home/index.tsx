@@ -8,9 +8,9 @@ function Home() {
 
   const navigate = useNavigate();
 
-    function handleNavigate(route: string) {
-        navigate(route)
-    }
+  function handleNavigate(route: string) {
+      navigate(route)
+  }
 
   return (
     <Layout>

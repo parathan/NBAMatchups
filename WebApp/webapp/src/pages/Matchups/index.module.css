@@ -1,6 +1,20 @@
 .matchups {
     padding: 10vh;
     text-align: center;
+    animation: fade-in 2s;
+}
+
+.fadeout {
+    animation: fade-out 2.5s;
+}
+
+.hidden {
+    visibility: hidden;
+    height: 0;
+}
+
+.notHidden {
+    visibility: visible;
 }
 
 .header {
@@ -15,4 +29,13 @@
 
 .input {
     padding-top: 5vh;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 100;
+    }
 }
