@@ -1,0 +1,9 @@
+.description {
+    color: var(--p-font-colour);
+}
+
+.slider {
+    padding-top: 5vh;
+    padding-right: 10vh;
+    padding-left: 10vh;
+}
