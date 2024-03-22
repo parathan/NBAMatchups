@@ -2,9 +2,9 @@ import React, { ChangeEvent, useState } from 'react';
 import styles from './index.module.css';
 import { Grid, Slider } from '@mui/material';
 
-import { Data } from '../../interfaces/data';
+import { MatchupData } from '../../interfaces/data';
 
-function MatchupSlider(props: Data) {
+function MatchupSlider(props: MatchupData) {
 
     const [value, setValue] = useState(
         [props.team1Percentile1 < props.team2Percentile_Op ? props.team1Percentile1 : props.team2Percentile_Op, 

@@ -1,4 +1,4 @@
-export interface Data {
+export interface MatchupData {
     field1: string,
     field2: string,
     PercentileDifference: string,

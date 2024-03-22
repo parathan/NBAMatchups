@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import styles from './index.module.css';
 import Layout from '../../components/Layout/Layout';
 import MatchupSlider from '../../components/MatchupSlider';
-import { Data } from '../../interfaces/data';
+import { MatchupData } from '../../interfaces/data';
 
 import { teamsNames } from '../../constants/teamNames';
 import { years } from '../../constants/years';
@@ -20,7 +20,7 @@ function Matchups() {
   const [team2, setTeam2] = useState("")
   const [year, setYear] = useState("")
   const [errMessage, setErrorMessage] = useState("Error")
-  const [data, setData] = useState<Data[]>([])
+  const [data, setData] = useState<MatchupData[]>([])
 
   useEffect(() => {
     console.log(data)
