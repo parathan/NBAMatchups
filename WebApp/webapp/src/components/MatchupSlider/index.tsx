@@ -2,19 +2,25 @@ import React, { ChangeEvent, useState } from 'react';
 import styles from './index.module.css';
 import { Grid, Slider } from '@mui/material';
 
-function MatchupSlider() {
+import { Data } from '../../interfaces/data';
 
-    const [value, setValue] = useState([0.333, .666])
+function MatchupSlider(props: Data) {
 
-    function handleValue(e: Event, newValue: number | number[]) {
-        setValue(newValue as number[]);
-    }
+    const [value, setValue] = useState(
+        [props.team1Percentile1 < props.team2Percentile_Op ? props.team1Percentile1 : props.team2Percentile_Op, 
+        props.team1Percentile1 >= props.team2Percentile_Op ? props.team1Percentile1 : props.team2Percentile_Op]
+    )
+    const [field1, setField1] = useState(props.team1Percentile1 < props.team2Percentile_Op ? props.field1 : props.field2)
+    const [field2, setField2] = useState(props.team1Percentile1 >= props.team2Percentile_Op ? props.field1 : props.field2)
+
+    const [trad1, setTrad1] = useState(props.team1Percentile1 < props.team2Percentile_Op ? props.team1Trad : props.team2Trad_Op)
+    const [trad2, setTrad2] = useState(props.team1Percentile1 >= props.team2Percentile_Op ? props.team1Trad : props.team2Trad_Op)
 
     return (
         <Grid container spacing={2} className={styles.slider}>
             <Grid item xs={3} className={styles.description}>
-                team1 field<br/>
-                team1 traditional value
+                {field1}<br/>
+                {trad1}
             </Grid>
             <Grid item xs={6}>
                 <Slider
@@ -23,13 +29,12 @@ function MatchupSlider() {
                 value={value}
                 step={0.001}
                 valueLabelDisplay='on'
-                onChange={handleValue}
                 disabled
                 />
             </Grid>
             <Grid item xs={3} className={styles.description}>
-                team2 field<br/>
-                team2 traditional value
+                {field2}<br/>
+                {trad2}
             </Grid>
         </Grid>
     )

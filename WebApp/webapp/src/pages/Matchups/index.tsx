@@ -1,24 +1,14 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import styles from './index.module.css';
 import Layout from '../../components/Layout/Layout';
 import MatchupSlider from '../../components/MatchupSlider';
+import { Data } from '../../interfaces/data';
 
 import { teamsNames } from '../../constants/teamNames';
 import { years } from '../../constants/years';
 import axios from 'axios';
 import { Grid, Slider } from '@mui/material';
 
-interface Data {
-  field1: string,
-  field2: string,
-  PercentileDifference: string,
-  absPercentileDifference: number,
-  team1Percentile1: number,
-  team2Percentile_Op: number,
-  TraditionalDifference: string,
-  team1Trad: number,
-  team2Trad_Op: number
-}
 
 function Matchups() {
 
@@ -31,6 +21,10 @@ function Matchups() {
   const [year, setYear] = useState("")
   const [errMessage, setErrorMessage] = useState("Error")
   const [data, setData] = useState<Data[]>([])
+
+  useEffect(() => {
+    console.log(data)
+  }, [data])
 
   function changeTeam1(e: ChangeEvent<HTMLSelectElement>) {
     setTeam1(e.target.value)
@@ -61,8 +55,6 @@ function Matchups() {
       setErrorVisible(false)
       setSuccessVisible(true)
       setData(response.data.statistics)
-    }).then(() => {
-      console.log(data)
     })
     .catch((error) => {
       console.log(error)
@@ -127,7 +119,20 @@ function Matchups() {
         <div className={`${styles.description} ${successVisible ? styles.notHidden : styles.hidden}`}>
           Success
         </div>
-        <MatchupSlider/>
+        {
+          data.map( sliderData =>
+            <MatchupSlider 
+              field1={sliderData.field1}
+              field2={sliderData.field2}
+              PercentileDifference={sliderData.PercentileDifference}
+              absPercentileDifference={sliderData.absPercentileDifference} 
+              team1Percentile1={sliderData.team1Percentile1} 
+              team2Percentile_Op={sliderData.team2Percentile_Op} 
+              TraditionalDifference={sliderData.TraditionalDifference} 
+              team1Trad={sliderData.team1Trad} 
+              team2Trad_Op={sliderData.team2Trad_Op} 
+            />
+        )};
       </div>
     </Layout>
   );
