@@ -37,6 +37,10 @@
     padding-left: 10vh;
 }
 
+.teamName {
+    color: var(--p-font-colour);
+}
+
 @keyframes fade-in {
     from {
         opacity: 0;

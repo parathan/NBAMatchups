@@ -7,7 +7,7 @@ import { MatchupData } from '../../interfaces/data';
 import { teamsNames } from '../../constants/teamNames';
 import { years } from '../../constants/years';
 import axios from 'axios';
-import { Grid, Slider } from '@mui/material';
+import { Grid } from '@mui/material';
 
 
 function Matchups() {
@@ -16,18 +16,28 @@ function Matchups() {
   const [progressVisible, setProgressVisible] = useState(false)
   const [errorVisible, setErrorVisible] = useState(false)
   const [successVisible, setSuccessVisible] = useState(false)
-  const [team1, setTeam1] = useState("")
-  const [team2, setTeam2] = useState("")
+  const [team1, setTeam1] = useState("nba-logo.png")
+  const [team2, setTeam2] = useState("nba-logo.png")
   const [year, setYear] = useState("")
   const [errMessage, setErrorMessage] = useState("Error")
   const [data, setData] = useState<MatchupData[]>([])
+  const [team1image, setTeam1Image] = useState("")
+  const [team2image, setTeam2Image] = useState("")
 
   function changeTeam1(e: ChangeEvent<HTMLSelectElement>) {
-    setTeam1(e.target.value)
+    let newTeam: string = e.target.value;
+    let newTeamImage: string = newTeam.replace(/ /g,"_")
+    newTeamImage = newTeamImage.concat('.png')
+    setTeam1(newTeam)
+    setTeam1Image(newTeamImage)
   }
 
   function changeTeam2(e: ChangeEvent<HTMLSelectElement>) {
-    setTeam2(e.target.value)
+    let newTeam: string = e.target.value;
+    let newTeamImage: string = newTeam.replace(/ /g,"_")
+    newTeamImage = newTeamImage.concat('.png')
+    setTeam2(newTeam)
+    setTeam2Image(newTeamImage)
   }
 
   function changeYear(e: ChangeEvent<HTMLSelectElement>) {
@@ -115,6 +125,18 @@ function Matchups() {
         <div className={`${styles.description} ${successVisible ? styles.notHidden : styles.hidden}`}>
           Success
         </div>
+        <Grid container spacing={2} className={`${styles.teamName} ${successVisible ? styles.notHidden : styles.hidden}`}>
+          <Grid item xs={4}>
+            {team1}<br/>
+            <img src={'/Assets/NBALogos/' + team1image} alt='Team1'/>
+          </Grid>
+          <Grid item xs={4}>
+          </Grid>
+          <Grid item xs={4}>
+            {team2}<br/>
+            <img src={'/Assets/NBALogos/' + team2image} alt='Team2'/>
+          </Grid>
+        </Grid>
         {
           data.map( sliderData =>
             <MatchupSlider 

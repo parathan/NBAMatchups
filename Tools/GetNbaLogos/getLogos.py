@@ -18,6 +18,7 @@ def main():
 
     for item in list:
         linkName = item.text + ".png"
+        linkName = linkName.replace(" ", "_")
         lnk = item.find('img').get('src')
         lnk = 'https://loodibee.com' + lnk
         img = Image.open(requests.get(lnk, stream=True).raw)
