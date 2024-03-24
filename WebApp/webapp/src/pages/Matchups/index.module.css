@@ -39,7 +39,13 @@
 
 .teamName {
     color: var(--p-font-colour);
+    font-size: calc(10px + 2vmin);;
     animation: fade-in 2s;
+}
+
+.logo {
+    width: 30%;
+    height: auto;
 }
 
 @keyframes fade-in {

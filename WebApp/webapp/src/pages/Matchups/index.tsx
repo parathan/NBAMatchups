@@ -124,19 +124,16 @@ function Matchups() {
         <div className={`${styles.description} ${errorVisible ? styles.notHidden : styles.hidden}`}>
           {errMessage}
         </div>
-        <div className={`${styles.description} ${successVisible ? styles.notHidden : styles.hidden}`}>
-          Success
-        </div>
         <Grid container spacing={2} className={`${imageClass} ${successVisible ? styles.notHidden : styles.hidden}`}>
           <Grid item xs={4}>
             {team1}<br/>
-            <img src={'/Assets/NBALogos/' + team1image} alt={team1}/>
+            <img src={'/Assets/NBALogos/' + team1image} alt={team1} className={styles.logo}/>
           </Grid>
           <Grid item xs={4}>
           </Grid>
           <Grid item xs={4}>
             {team2}<br/>
-            <img src={'/Assets/NBALogos/' + team2image} alt={team2}/>
+            <img src={'/Assets/NBALogos/' + team2image} alt={team2} className={styles.logo}/>
           </Grid>
         </Grid>
         {
