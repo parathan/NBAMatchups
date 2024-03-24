@@ -23,6 +23,7 @@ function Matchups() {
   const [data, setData] = useState<MatchupData[]>([])
   const [team1image, setTeam1Image] = useState("")
   const [team2image, setTeam2Image] = useState("")
+  const [imageClass, setImageClass] = useState(styles.nothing)
 
   function changeTeam1(e: ChangeEvent<HTMLSelectElement>) {
     let newTeam: string = e.target.value;
@@ -61,6 +62,7 @@ function Matchups() {
       setErrorVisible(false)
       setSuccessVisible(true)
       setData(response.data.statistics)
+      setImageClass(styles.teamName)
     })
     .catch((error) => {
       console.log(error)
@@ -125,16 +127,16 @@ function Matchups() {
         <div className={`${styles.description} ${successVisible ? styles.notHidden : styles.hidden}`}>
           Success
         </div>
-        <Grid container spacing={2} className={`${styles.teamName} ${successVisible ? styles.notHidden : styles.hidden}`}>
+        <Grid container spacing={2} className={`${imageClass} ${successVisible ? styles.notHidden : styles.hidden}`}>
           <Grid item xs={4}>
             {team1}<br/>
-            <img src={'/Assets/NBALogos/' + team1image} alt='Team1'/>
+            <img src={'/Assets/NBALogos/' + team1image} alt={team1}/>
           </Grid>
           <Grid item xs={4}>
           </Grid>
           <Grid item xs={4}>
             {team2}<br/>
-            <img src={'/Assets/NBALogos/' + team2image} alt='Team2'/>
+            <img src={'/Assets/NBALogos/' + team2image} alt={team2}/>
           </Grid>
         </Grid>
         {
