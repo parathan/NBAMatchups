@@ -22,10 +22,6 @@ function Matchups() {
   const [errMessage, setErrorMessage] = useState("Error")
   const [data, setData] = useState<MatchupData[]>([])
 
-  useEffect(() => {
-    console.log(data)
-  }, [data])
-
   function changeTeam1(e: ChangeEvent<HTMLSelectElement>) {
     setTeam1(e.target.value)
   }

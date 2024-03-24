@@ -3,6 +3,7 @@ import styles from './index.module.css';
 import { Grid, Slider, ThemeProvider, createMuiTheme, createTheme, makeStyles } from '@mui/material';
 
 import { MatchupData } from '../../interfaces/data';
+import { statsMap } from '../../constants/statDictionary';
 
 function MatchupSlider(props: MatchupData) {
 
@@ -10,8 +11,8 @@ function MatchupSlider(props: MatchupData) {
         [props.team1Percentile1 < props.team2Percentile_Op ? props.team1Percentile1 : props.team2Percentile_Op, 
         props.team1Percentile1 >= props.team2Percentile_Op ? props.team1Percentile1 : props.team2Percentile_Op]
     )
-    const [field1, setField1] = useState(props.team1Percentile1 < props.team2Percentile_Op ? props.field1 : props.field2)
-    const [field2, setField2] = useState(props.team1Percentile1 >= props.team2Percentile_Op ? props.field1 : props.field2)
+    const [field1, setField1] = useState(props.team1Percentile1 < props.team2Percentile_Op ? statsMap.get(props.field1) : statsMap.get(props.field2))
+    const [field2, setField2] = useState(props.team1Percentile1 >= props.team2Percentile_Op ? statsMap.get(props.field1) : statsMap.get(props.field2))
 
     const [trad1, setTrad1] = useState(props.team1Percentile1 < props.team2Percentile_Op ? props.team1Trad : props.team2Trad_Op)
     const [trad2, setTrad2] = useState(props.team1Percentile1 >= props.team2Percentile_Op ? props.team1Trad : props.team2Trad_Op)
