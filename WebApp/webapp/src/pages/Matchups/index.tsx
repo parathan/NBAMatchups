@@ -46,7 +46,13 @@ function Matchups() {
   }
 
   function onSubmit() {
-    team1 !== "" && team2 !== "" && year !== "" ? getData() : throwInputError()
+    if (!(team1 !== "" && team2 !== "" && year !== "")) {
+      throwEmptyInputError();
+    } else if (team1 === team2) {
+      throwDuplicateTeamError();
+    } else {
+      getData();
+    }
   }
 
   function getData() {
@@ -74,10 +80,16 @@ function Matchups() {
     })
   }
 
-  function throwInputError() {
+  function throwEmptyInputError() {
     setProgressVisible(false)
     setErrorVisible(true)
     setErrorMessage("All fields need to be selected")
+  }
+
+  function throwDuplicateTeamError() {
+    setProgressVisible(false)
+    setErrorVisible(true)
+    setErrorMessage("You can't compare the same team")
   }
 
   return (
