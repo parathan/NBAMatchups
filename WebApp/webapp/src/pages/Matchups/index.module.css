@@ -42,17 +42,8 @@
     overflow: hidden;
 }
 
-.submit {
-    margin-top: 4vh;
-    cursor: pointer;
-    font-weight: 700;
-    font-family: Helvetica,"sans-serif";
-    transition: all .2s;
-    padding: 10px 20px;
-    border-radius: 100px;
-    border: 1px solid transparent;
-    align-items: center;
-    font-size: 15px;
+.dropdown:hover {
+    opacity: .75;
 }
 
 .slider {
@@ -90,23 +81,37 @@ select {
     /* Personalize */
     flex: 1;
     padding: 0 1em;
-    color: #fff;
+    color: var(--p-font-colour);
     background-color: var(--darkgray);
     background-image: none;
     cursor: pointer;
 }
-  
-  
-  button.submit > svg {
-    width: 34px;
-    margin-left: 10px;
-    transition: transform .3s ease-in-out;
-  }
-  
-  button.submit:hover svg {
-    transform: translateX(5px);
-  }
-  
-  button.submit:active {
-    transform: scale(0.95);
-  }
+
+/* CSS */
+.submit {
+    margin-top: 3vh;
+    background-color: var(--secondary-colour);
+    border-radius: 4px;
+    border-style: none;
+    box-sizing: border-box;
+    color: var(--p-font-colour);
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Farfetch Basis","Helvetica Neue",Arial,sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.5;
+    outline: none;
+    overflow: hidden;
+    padding: 9px 20px 8px;
+    text-align: center;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.submit:hover,
+.submit:focus {
+    opacity: .75;
+}

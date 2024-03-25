@@ -95,8 +95,8 @@ function Matchups() {
             </p>
           </div>
           <Grid container spacing={2} className={styles.input}>
-            <Grid item xs={1.5}></Grid>
-            <Grid item xs={3}>
+            <Grid item xs={2.25}></Grid>
+            <Grid item xs={2.5}>
               <select onChange={changeTeam1} className={styles.dropdown}>
                 <option value="">Pick a Team</option>
                 {teamsNames.map( teamName =>
@@ -104,7 +104,7 @@ function Matchups() {
                 )};
               </select>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={2.5}>
               <select onChange={changeTeam2} className={styles.dropdown}>
                 <option value="">Pick a Team</option>
                 {teamsNames.map( teamName =>
@@ -112,7 +112,7 @@ function Matchups() {
                 )};
               </select>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={2.5}>
               <select onChange={changeYear} className={styles.dropdown}>
               <option value="">Pick a Year</option>
                 {years.map( year =>
@@ -120,7 +120,7 @@ function Matchups() {
                 )};
               </select>
             </Grid>
-            <Grid item xs={1.5}></Grid>
+            <Grid item xs={2.25}></Grid>
             <Grid item xs={12}>
               <button onClick={onSubmit} className={styles.submit}>Check Matchup</button>
             </Grid>
