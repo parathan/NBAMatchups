@@ -4,12 +4,13 @@ import { Grid, Slider, ThemeProvider, createMuiTheme, createTheme, makeStyles } 
 
 import { MatchupData } from '../../interfaces/data';
 import { statsMap } from '../../constants/statDictionary';
+import { multby100 } from '../../util/math';
 
 function MatchupSlider(props: MatchupData) {
 
     const [value, setValue] = useState(
-        [props.team1Percentile1 < props.team2Percentile_Op ? props.team1Percentile1 : props.team2Percentile_Op, 
-        props.team1Percentile1 >= props.team2Percentile_Op ? props.team1Percentile1 : props.team2Percentile_Op]
+        [props.team1Percentile1 < props.team2Percentile_Op ? multby100(props.team1Percentile1) : multby100(props.team2Percentile_Op), 
+        props.team1Percentile1 >= props.team2Percentile_Op ? multby100(props.team1Percentile1) : multby100(props.team2Percentile_Op)]
     )
     const [field1, setField1] = useState(props.team1Percentile1 < props.team2Percentile_Op ? statsMap.get(props.field1) : statsMap.get(props.field2))
     const [field2, setField2] = useState(props.team1Percentile1 >= props.team2Percentile_Op ? statsMap.get(props.field1) : statsMap.get(props.field2))
@@ -56,9 +57,9 @@ function MatchupSlider(props: MatchupData) {
                 <ThemeProvider theme={customTheme}>
                     <Slider
                         min={0}
-                        max={1}
+                        max={100}
                         value={value}
-                        step={0.001}
+                        step={0.1}
                         valueLabelDisplay='on'
                         className={styles.line}
                     />
