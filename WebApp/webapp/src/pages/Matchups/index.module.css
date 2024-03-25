@@ -21,6 +21,7 @@
     color: var(--header-font-colour);
     font-size: calc(10px + 3vmin);;
     padding-bottom: 2vh;
+    margin-top: 8%;
 }
 
 .description {
