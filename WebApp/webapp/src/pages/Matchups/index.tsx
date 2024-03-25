@@ -52,6 +52,7 @@ function Matchups() {
   function getData() {
     setFormVisible(false)
     setProgressVisible(true)
+    setErrorVisible(false)
     axios.post('http://localhost:5050/teams/OrderedPercentile', {
       team1: team1,
       team2: team2,
@@ -59,7 +60,7 @@ function Matchups() {
     })
     .then((response) => {
       setProgressVisible(false)
-      setErrorVisible(false)
+      
       setSuccessVisible(true)
       setData(response.data.statistics)
       setImageClass(styles.teamName)
