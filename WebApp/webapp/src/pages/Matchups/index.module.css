@@ -44,6 +44,15 @@
 
 .submit {
     margin-top: 4vh;
+    cursor: pointer;
+    font-weight: 700;
+    font-family: Helvetica,"sans-serif";
+    transition: all .2s;
+    padding: 10px 20px;
+    border-radius: 100px;
+    border: 1px solid transparent;
+    align-items: center;
+    font-size: 15px;
 }
 
 .slider {
@@ -85,4 +94,19 @@ select {
     background-color: var(--darkgray);
     background-image: none;
     cursor: pointer;
+}
+  
+  
+  button.submit > svg {
+    width: 34px;
+    margin-left: 10px;
+    transition: transform .3s ease-in-out;
+  }
+  
+  button.submit:hover svg {
+    transform: translateX(5px);
+  }
+  
+  button.submit:active {
+    transform: scale(0.95);
   }
