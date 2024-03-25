@@ -7,7 +7,7 @@ import { MatchupData } from '../../interfaces/data';
 import { teamsNames } from '../../constants/teamNames';
 import { years } from '../../constants/years';
 import axios from 'axios';
-import { Alert, Grid } from '@mui/material';
+import { Alert, CircularProgress, Grid } from '@mui/material';
 
 
 function Matchups() {
@@ -130,8 +130,8 @@ function Matchups() {
             
           </div>
         </div>
-        <div className={`${styles.description} ${progressVisible ? styles.notHidden : styles.hidden}`}>
-          In Progress
+        <div className={`${progressVisible ? styles.notHidden : styles.hidden}`}>
+          <CircularProgress />
         </div>
         <div className={`${styles.errMessage} ${errorVisible ? styles.notHidden : styles.hidden}`}>
           <Alert severity='error'>
