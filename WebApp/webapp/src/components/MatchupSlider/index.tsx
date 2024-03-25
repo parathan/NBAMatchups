@@ -60,6 +60,7 @@ function MatchupSlider(props: MatchupData) {
                         value={value}
                         step={0.001}
                         valueLabelDisplay='on'
+                        className={styles.line}
                     />
                 </ThemeProvider>
             </Grid>

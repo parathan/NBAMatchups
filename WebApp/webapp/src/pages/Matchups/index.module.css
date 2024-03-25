@@ -31,6 +31,21 @@
     padding-top: 5vh;
 }
 
+.dropdown {
+    text-align: center;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    background-color: var(--secondary-colour);
+    width: 20em;
+    height: 3em;
+    border-radius: .25em;
+    overflow: hidden;
+}
+
+.submit {
+    margin-top: 4vh;
+}
+
 .slider {
     padding-top: 5vh;
     padding-right: 10vh;
@@ -56,3 +71,18 @@
         opacity: 100;
     }
 }
+
+select {
+    /* Reset Select */
+    appearance: none;
+    outline: 10px red;
+    border: 0;
+    box-shadow: none;
+    /* Personalize */
+    flex: 1;
+    padding: 0 1em;
+    color: #fff;
+    background-color: var(--darkgray);
+    background-image: none;
+    cursor: pointer;
+  }

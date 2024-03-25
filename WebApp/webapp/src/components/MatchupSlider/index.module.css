@@ -1,12 +1,17 @@
 .description {
     color: var(--p-font-colour);
+    font-size: calc(5px + 1vmin);;
 }
 
 .slider {
-    padding-top: 5vh;
+    padding-top: 6vh;
     padding-right: 10vh;
     padding-left: 10vh;
     animation: fade-in 1s;
+}
+
+.line {
+    margin-top: 2%;
 }
 
 @keyframes fade-in {

@@ -94,28 +94,39 @@ function Matchups() {
               Please input both teams that you want to compare and the year that you want to use 
             </p>
           </div>
-          <div className={styles.input}>
-            <select onChange={changeTeam1}>
-              <option value="">Pick a Team</option>
-              {teamsNames.map( teamName =>
-                <option value={teamName}>{teamName}</option>
-              )};
-            </select>
-            <select onChange={changeTeam2}>
-              <option value="">Pick a Team</option>
-              {teamsNames.map( teamName =>
-                <option value={teamName}>{teamName}</option>
-              )};
-            </select>
-            <select onChange={changeYear}>
-            <option value="">Pick a Year</option>
-              {years.map( year =>
-                <option value={year}>{year}</option>
-              )};
-            </select>
-          </div>
+          <Grid container spacing={2} className={styles.input}>
+            <Grid item xs={1.5}></Grid>
+            <Grid item xs={3}>
+              <select onChange={changeTeam1} className={styles.dropdown}>
+                <option value="">Pick a Team</option>
+                {teamsNames.map( teamName =>
+                  <option value={teamName}>{teamName}</option>
+                )};
+              </select>
+            </Grid>
+            <Grid item xs={3}>
+              <select onChange={changeTeam2} className={styles.dropdown}>
+                <option value="">Pick a Team</option>
+                {teamsNames.map( teamName =>
+                  <option value={teamName}>{teamName}</option>
+                )};
+              </select>
+            </Grid>
+            <Grid item xs={3}>
+              <select onChange={changeYear} className={styles.dropdown}>
+              <option value="">Pick a Year</option>
+                {years.map( year =>
+                  <option value={year}>{year}</option>
+                )};
+              </select>
+            </Grid>
+            <Grid item xs={1.5}></Grid>
+            <Grid item xs={12}>
+              <button onClick={onSubmit} className={styles.submit}>Check Matchup</button>
+            </Grid>
+          </Grid>
           <div>
-            <button onClick={onSubmit}>Check Matchup</button>
+            
           </div>
         </div>
         <div className={`${styles.description} ${progressVisible ? styles.notHidden : styles.hidden}`}>
