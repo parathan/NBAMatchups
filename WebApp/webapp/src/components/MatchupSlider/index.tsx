@@ -51,7 +51,7 @@ function MatchupSlider(props: MatchupData) {
         <Grid container spacing={2} className={styles.slider}>
             <Grid item xs={3} className={styles.description}>
                 {field1}<br/>
-                {trad1}
+                Team Stat: {trad1}
             </Grid>
             <Grid item xs={6}>
                 <ThemeProvider theme={customTheme}>
@@ -67,7 +67,7 @@ function MatchupSlider(props: MatchupData) {
             </Grid>
             <Grid item xs={3} className={styles.description}>
                 {field2}<br/>
-                {trad2}
+                Team Stat: {trad2}
             </Grid>
         </Grid>
     )
