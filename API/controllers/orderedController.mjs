@@ -95,6 +95,7 @@ export const findTwoTeamsPercentileOrdered = async (req, res, next) => {
 
         let tradCollection = tradDb.collection("NbaTeamStats_" + year)
         let percentileCollection = percentileDb.collection("NbaTeamStatsPercentile_" + year)
+        let meanCollection = meanDb.collection("NbaTeamStatsMean_" + year)
 
         // Promise.all runs all promises concurrently.
         let data = await Promise.all(
@@ -102,7 +103,8 @@ export const findTwoTeamsPercentileOrdered = async (req, res, next) => {
                 tradCollection.find({Name: team1name}).toArray(),
                 tradCollection.find({Name: team2name}).toArray(),
                 percentileCollection.find({Name: team1name}).toArray(),
-                percentileCollection.find({Name: team2name}).toArray()
+                percentileCollection.find({Name: team2name}).toArray(),
+                meanCollection.find({}).toArray(),
             ]
         )
 
@@ -111,6 +113,7 @@ export const findTwoTeamsPercentileOrdered = async (req, res, next) => {
             data[1][0],
             data[2][0],
             data[3][0],
+            data[4][0]
         )
 
         return res.status(200).json(orderedTeam)
@@ -240,6 +243,7 @@ export const findTwoTeamsPercentileOrderedCached = async (req, res, next) => {
 
         let tradCollection = tradDb.collection("NbaTeamStats_" + year)
         let percentileCollection = percentileDb.collection("NbaTeamStatsPercentile_" + year)
+        let meanCollection = meanDb.collection("NbaTeamStatsMean_" + year)
 
 
         const redisKey = `PercentileCollections-${year}`;
@@ -261,7 +265,8 @@ export const findTwoTeamsPercentileOrderedCached = async (req, res, next) => {
             data = await Promise.all(
                 [
                     tradCollection.find({}).toArray(),
-                    percentileCollection.find({}).toArray()
+                    percentileCollection.find({}).toArray(),
+                    meanCollection.find({}).toArray()
                 ]
             )
             await redisClient.set(redisKey, JSON.stringify(data))
@@ -284,7 +289,8 @@ export const findTwoTeamsPercentileOrderedCached = async (req, res, next) => {
             trad1Team,
             trad2Team,
             Percentile1Team, 
-            Percentile2Team
+            Percentile2Team,
+            data[2][0]
         )
 
         return res.status(200).json(orderedTeam)
