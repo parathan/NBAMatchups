@@ -7,5 +7,7 @@ export interface MatchupData {
     team2Percentile_Op: number,
     TraditionalDifference: string,
     team1Trad: number,
-    team2Trad_Op: number
+    team2Trad_Op: number,
+    mean1: number,
+    mean2: number
 }

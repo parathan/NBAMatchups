@@ -174,6 +174,8 @@ function Matchups() {
               TraditionalDifference={sliderData.TraditionalDifference} 
               team1Trad={sliderData.team1Trad} 
               team2Trad_Op={sliderData.team2Trad_Op} 
+              mean1={sliderData.mean1}
+              mean2={sliderData.mean2}
             />
         )}
       </div>

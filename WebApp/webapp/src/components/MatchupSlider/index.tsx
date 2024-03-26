@@ -18,6 +18,9 @@ function MatchupSlider(props: MatchupData) {
     const [trad1, setTrad1] = useState(props.team1Percentile1 < props.team2Percentile_Op ? props.team1Trad : props.team2Trad_Op)
     const [trad2, setTrad2] = useState(props.team1Percentile1 >= props.team2Percentile_Op ? props.team1Trad : props.team2Trad_Op)
 
+    const [mean1, setMean1] = useState(props.team1Percentile1 < props.team2Percentile_Op ? props.mean1 : props.mean2)
+    const [mean2, setMean2] = useState(props.team1Percentile1 >= props.team2Percentile_Op ? props.mean1 : props.mean2)
+
     function perc2color(perc: number,min: number,max: number) {
         var base = (max - min);
 
@@ -49,9 +52,10 @@ function MatchupSlider(props: MatchupData) {
 
     return (
         <Grid container spacing={2} className={styles.slider}>
-            <Grid item xs={3} className={styles.description}>
+            <Grid item xs={3} className={styles.descriptionLeft}>
                 {field1}<br/>
-                Team Stat: {trad1}
+                Team Stat: {trad1}<br/>
+                League Average: {mean1}
             </Grid>
             <Grid item xs={6}>
                 <ThemeProvider theme={customTheme}>
@@ -65,9 +69,10 @@ function MatchupSlider(props: MatchupData) {
                     />
                 </ThemeProvider>
             </Grid>
-            <Grid item xs={3} className={styles.description}>
+            <Grid item xs={3} className={styles.descriptionRight}>
                 {field2}<br/>
-                Team Stat: {trad2}
+                Team Stat: {trad2}<br/>
+                League Average: {mean2}
             </Grid>
         </Grid>
     )
