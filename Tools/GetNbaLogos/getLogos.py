@@ -4,6 +4,14 @@ import requests
 from PIL import Image
 
 def main():
+    """The function uses the BeautifulSoup to scrape the given URL and
+    download the images there into a folder. The names of the images
+    are based on the text under the image.
+
+    Raises:
+        Exception: Error connecting to the URUL through the requests library
+        Exception: request returns a status code that is not 200, in which the URL won't provide data
+    """
     url = "https://loodibee.com/nba/"
     try:
         res = requests.get(url)
