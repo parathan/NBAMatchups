@@ -11,8 +11,8 @@ function NavBar() {
         <Sidebar
             rootStyles={{
                 [`.${sidebarClasses.container}`]: {
-                    backgroundColor: '#00377e',
-                    color: '#94E1FF',
+                    backgroundColor: '#444444',
+                    color: '#dddddd',
                 },
             }}
         >

@@ -1,7 +1,123 @@
-.header {
-    color: var(--header-font-colour)
+.matchups {
+    padding: 10vh;
+    text-align: center;
+    animation: fade-in 2s;
 }
 
-.features {
+.fadeout {
+    animation: fade-out 2.5s;
+}
+
+.hidden {
+    visibility: hidden;
+    height: 0;
+}
+
+.notHidden {
+    visibility: visible;
+}
+
+.header {
+    color: var(--header-font-colour);
+    font-size: calc(10px + 3vmin);;
+    padding-bottom: 2vh;
+    margin-top: 8%;
+}
+
+.description {
     color: var(--p-font-colour);
+}
+
+.input {
+    padding-top: 5vh;
+}
+
+.dropdown {
+    text-align: center;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    background-color: var(--secondary-colour);
+    width: 20em;
+    height: 3em;
+    border-radius: .25em;
+    overflow: hidden;
+}
+
+.dropdown:hover {
+    opacity: .75;
+}
+
+.slider {
+    padding-top: 5vh;
+    padding-right: 10vh;
+    padding-left: 10vh;
+}
+
+.teamName {
+    color: var(--p-font-colour);
+    font-size: calc(10px + 2vmin);;
+    animation: fade-in 2s;
+}
+
+.logo {
+    width: 30%;
+    height: auto;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 100;
+    }
+}
+
+select {
+    /* Reset Select */
+    appearance: none;
+    outline: 10px red;
+    border: 0;
+    box-shadow: none;
+    /* Personalize */
+    flex: 1;
+    padding: 0 1em;
+    color: var(--p-font-colour);
+    background-color: var(--darkgray);
+    background-image: none;
+    cursor: pointer;
+}
+
+/* CSS */
+.submit {
+    margin-top: 3vh;
+    background-color: var(--secondary-colour);
+    border-radius: 4px;
+    border-style: none;
+    box-sizing: border-box;
+    color: var(--p-font-colour);
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Farfetch Basis","Helvetica Neue",Arial,sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.5;
+    outline: none;
+    overflow: hidden;
+    padding: 9px 20px 8px;
+    text-align: center;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.submit:hover {
+    opacity: .75;
+}
+
+.errMessage {
+    width: fit-content;
+    margin: 0 auto;
+    margin-top: 3%;
 }

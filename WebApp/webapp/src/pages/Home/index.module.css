@@ -1,12 +1,10 @@
 .homePage {
-
-  
-  font-size: calc(10px + 2vmin);
+  animation: fade-in 2s;
   
 }
 
 .header {
-  padding-top: 10%;
+  margin-top: 10%;
   text-align: center;
   font-size: calc(10px + 2vmin);
   color: var(--header-font-colour);
@@ -14,37 +12,49 @@
 
 .features {
   text-align: center;
-  margin-top: 10%;
+  margin: 3vh;
 }
 
 .featureButton {
-  display: block;
   margin: 2% auto;
 
+  background-color: var(--secondary-colour);
+  border-radius: 4px;
+  border-style: none;
+  box-sizing: border-box;
+  color: var(--p-font-colour);
   cursor: pointer;
+  display: block;
+  font-family: "Farfetch Basis","Helvetica Neue",Arial,sans-serif;
+  font-size: 16px;
   font-weight: 700;
-  font-family: Helvetica,"sans-serif";
-  transition: all .2s;
-  padding: 10px 20px;
-  border-radius: 100px;
-  border: 1px solid transparent;
-  display: flex;
-  align-items: center;
-  font-size: 15px;
+  line-height: 1.5;
+  outline: none;
+  overflow: hidden;
+  padding: 9px 20px 8px;
+  text-align: center;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
 
-
-button.featureButton > svg {
-  width: 34px;
-  margin-left: 10px;
-  transition: transform .3s ease-in-out;
+.featureButton:hover,
+.featureButton:focus {
+  opacity: .75;
 }
 
-button.featureButton:hover svg {
-  transform: translateX(5px);
+@keyframes fade-in {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 100;
+  }
 }
 
-button.featureButton:active {
-  transform: scale(0.95);
+.description {
+  margin-top: 3vh;
+  color: var(--p-font-colour);
+  text-align: justify;
 }
-  
