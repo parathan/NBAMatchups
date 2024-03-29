@@ -67,7 +67,7 @@ export function orderedTeams(trad1, trad2, mean, std, Zscore1, Zscore2) {
  *  - traditional data for field1 for team 1
  *  - traditional data for field2 for team 2
  */
-export function orderedPercentileTeams(trad1, trad2, Percentile1, Percentile2) {
+export function orderedPercentileTeams(trad1, trad2, Percentile1, Percentile2, mean) {
     let list = []
     let opposingFields = opposingStats()
 
@@ -84,6 +84,8 @@ export function orderedPercentileTeams(trad1, trad2, Percentile1, Percentile2) {
             TraditionalDifference: difference.toFixed(2),
             team1Trad: trad1[field[0]],
             team2Trad_Op: trad2[field[1]],
+            mean1: mean[field[0]],
+            mean2: mean[field[1]]
         }) 
     }
 

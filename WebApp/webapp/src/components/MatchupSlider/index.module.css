@@ -1,0 +1,31 @@
+.descriptionRight {
+    color: var(--p-font-colour);
+    font-size: calc(5px + 1vmin);
+    text-align: right;
+}
+
+.descriptionLeft {
+    color: var(--p-font-colour);
+    font-size: calc(5px + 1vmin);
+    text-align: left;
+}
+
+.slider {
+    padding-top: 6vh;
+    padding-right: 10vh;
+    padding-left: 10vh;
+    animation: fade-in 1s;
+}
+
+.line {
+    margin-top: 2%;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 100;
+    }
+}
