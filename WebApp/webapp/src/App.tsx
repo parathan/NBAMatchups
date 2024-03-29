@@ -5,6 +5,7 @@ import './App.css';
 import Home from './pages/Home';
 import Matchups from './pages/Matchups';
 import Prediction from './pages/Prediction';
+import Dashboard from './pages/Dashboard';
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<Home/>} />
           <Route path="/matchups" element={<Matchups/>} />
           <Route path="/predictions" element={<Prediction/>} />
+          <Route path="/dashboard" element={<Dashboard/>} />
         </Routes>
       </Router>
     </div>
