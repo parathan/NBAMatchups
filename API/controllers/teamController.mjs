@@ -3,6 +3,7 @@ import { tradDb, meanDb, stdDb, zscoreDb } from "../db/connection.mjs";
 import { orderedTeams } from "../util/util.mjs";
 import { redisClient } from "../cache/cache.mjs";
 import "express-validator"
+import { teamsNames } from "../constants/teamNames.mjs";
 
 const { validationResult } = new ExpressValidator
 
@@ -84,6 +85,7 @@ export const findTwoTeamsCached = async (req, res, next) => {
         let zscoreCollection = zscoreDb.collection("NbaTeamStatsZscore_" + year)
 
 
+        // TODO: #2 
         const redisKey = `AllCollections-${year}`;
         let data;
         let isCached = false;
@@ -138,5 +140,49 @@ export const findTwoTeamsCached = async (req, res, next) => {
         next(err);
     }
 };
+
+/**
+ * 
+ * Returns data for all teams within the given years, as well
+ * as the mean for the statistics in those years as well
+ */
+export const findAllTeams = async (req, res, next) => {
+    try {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                success: false,
+                errors: errors.array(),
+            })
+        }
+
+        let startYear = req.body.startYear;
+        let endYear = req.body.endYear;
+
+        var data = [];
+        
+
+        for (let team of teamsNames) {
+            let object = {
+                teamName: team,
+                stats: []
+            }
+            data.push(object)
+        }
+
+        let meanObject = {
+            teamName: "MEAN",
+            stats: []
+        }
+        data.push(meanObject)
+
+        return res.status(200).json(data)
+
+    } catch (err) {
+        console.log(err)
+        next(err);
+    }
+}
 
 // export default findTwoTeams;

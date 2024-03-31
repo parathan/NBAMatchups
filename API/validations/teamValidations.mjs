@@ -20,7 +20,7 @@ const isYear = (year) => {
  * Checks that teams are non-empty and strings, and are valid team names.
  * Checks that year is non-empty and a string, and within required range.
  */
-const teamDataValidateSchemaBased = {
+export const teamDataValidateSchemaBased = {
     team1: {
         exists: { errorMessage: "team1 required" },
         isIn:{
@@ -48,5 +48,24 @@ const teamDataValidateSchemaBased = {
 };
 
 
-
-export default teamDataValidateSchemaBased;
+/**
+ * Schema to validate post body request
+ * Checks that years are non-empty and an integer
+ */
+//TODO #3
+export const yearDataValidateSchemaBased = {
+    startYear: {
+        isInt: { errorMessage: "year is not an Integer" },
+        isYear: {
+            custom: isYear,
+            errorMessage: "year is not within range"
+        }
+    },
+    endYear: {
+        isInt: { errorMessage: "year is not an Integer" },
+        isYear: {
+            custom: isYear,
+            errorMessage: "year is not within range"
+        }
+    }
+}
