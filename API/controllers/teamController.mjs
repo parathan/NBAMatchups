@@ -173,7 +173,7 @@ export const findAllTeams = async (req, res, next) => {
 
         let meanObject = {
             teamName: "MEAN",
-            stats: []
+            teamStats: []
         }
         data.push(meanObject)
 
@@ -185,6 +185,7 @@ export const findAllTeams = async (req, res, next) => {
             let tradCollection = tradDb.collection("NbaTeamStats_" + year)
             let meanCollection = meanDb.collection("NbaTeamStatsMean_" + year)
 
+            //TODO #4
             let mongoData = await Promise.all(
                 [
                     tradCollection.find({}).toArray(),
@@ -199,14 +200,14 @@ export const findAllTeams = async (req, res, next) => {
                     })
                     let yearlyStats = {
                         year: year,
-                        stats: teamStats
+                        yearStats: teamStats
                     }
                     team.stats.push(yearlyStats)
                 } else {
                     let mean = mongoData[1][0];
                     let meanStats = {
                         year: year,
-                        stats: mean
+                        yearStats: mean
                     }
                     team.stats.push(meanStats)
                 }
