@@ -157,12 +157,12 @@ export const findAllTeams = async (req, res, next) => {
             })
         }
 
-        let startYear = req.body.startYear;
-        let endYear = req.body.endYear;
+        let startYear = req.body.startYear; // Has to be number, not string
+        let endYear = req.body.endYear; // Has to be number, not string
 
+        // Set up response array with teamnames and mean as elements
         var data = [];
         
-
         for (let team of teamsNames) {
             let object = {
                 teamName: team,
@@ -176,6 +176,42 @@ export const findAllTeams = async (req, res, next) => {
             stats: []
         }
         data.push(meanObject)
+
+        // Go through each year, make mongo request to database for data for that year for all teams.
+        // Process returning result to append the correct teams stats from mongo response to the data
+        // array set up above as well as the mean data.
+        for (let i = startYear; i <= endYear; i++) {
+            let year = i.toString()
+            let tradCollection = tradDb.collection("NbaTeamStats_" + year)
+            let meanCollection = meanDb.collection("NbaTeamStatsMean_" + year)
+
+            let mongoData = await Promise.all(
+                [
+                    tradCollection.find({}).toArray(),
+                    meanCollection.find({}).toArray()
+                ]
+            )
+
+            for (let team of data) {
+                if (team.teamName !== "MEAN") {
+                    let teamStats = mongoData[0].find(givenTeam => {
+                        return givenTeam.Name === team.teamName
+                    })
+                    let yearlyStats = {
+                        year: year,
+                        stats: teamStats
+                    }
+                    team.stats.push(yearlyStats)
+                } else {
+                    let mean = mongoData[1][0];
+                    let meanStats = {
+                        year: year,
+                        stats: mean
+                    }
+                    team.stats.push(meanStats)
+                }
+            }
+        }
 
         return res.status(200).json(data)
 
