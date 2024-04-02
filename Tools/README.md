@@ -9,3 +9,6 @@ Downloads nba logos from a website using the BeautifulSoup library for scraping 
 ## statsTexttoArray
 Converts strings from text file to 2 element array delimiting with the colon.
 Saves new strings to new text file.
+
+## fieldsToInterface
+Converts strings from a text file by replacing the value after the colons with either string or number, based on the given value
