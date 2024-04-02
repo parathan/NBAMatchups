@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import styles from './index.module.css';
 import Layout from '../../components/Layout/Layout';
 import MatchupSlider from '../../components/MatchupSlider';
-import { MatchupData } from '../../interfaces/data';
+import { MatchupData } from '../../interfaces/MatchupData';
 
 import { teamsNames } from '../../constants/teamNames';
 import { years } from '../../constants/years';
