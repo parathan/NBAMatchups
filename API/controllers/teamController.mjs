@@ -173,7 +173,7 @@ export const findAllTeams = async (req, res, next) => {
 
         let meanObject = {
             teamName: "MEAN",
-            teamStats: []
+            stats: []
         }
         data.push(meanObject)
 
@@ -198,6 +198,7 @@ export const findAllTeams = async (req, res, next) => {
                     let teamStats = mongoData[0].find(givenTeam => {
                         return givenTeam.Name === team.teamName
                     })
+                    delete teamStats.Name //Removes name from individual year as it is redundant
                     let yearlyStats = {
                         year: year,
                         yearStats: teamStats
