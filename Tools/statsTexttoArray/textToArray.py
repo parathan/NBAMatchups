@@ -17,6 +17,8 @@ def main():
         for line in result:
             adderString = "['" + line[0] + "','" + line[1] + "'],\n"
             resultFile.write(adderString)
+    file.close()
+    resultFile.close()
 
 
 
