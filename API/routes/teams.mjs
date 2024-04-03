@@ -1,5 +1,6 @@
 import express from "express";
-import { findAllTeams, findTwoTeams, findTwoTeamsCached } from "../controllers/teamController.mjs";
+import { findTwoTeams, findTwoTeamsCached } from "../controllers/teamController.mjs";
+import { findAllTeams } from "../controllers/allTeamController.mjs";
 import { findTwoTeamsOrdered, findTwoTeamsOrderedCached, findTwoTeamsPercentileOrdered, findTwoTeamsPercentileOrderedCached } from "../controllers/orderedController.mjs";
 import { check, checkSchema } from "express-validator";
 import { teamDataValidateSchemaBased, yearDataValidateSchemaBased } from "../validations/teamValidations.mjs";
