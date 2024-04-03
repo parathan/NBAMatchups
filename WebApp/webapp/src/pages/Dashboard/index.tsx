@@ -20,6 +20,7 @@ import {
     Legend,
   } from 'chart.js';
   import { Line } from 'react-chartjs-2';
+import { statsMap } from '../../constants/statDictionary';
 
 let testData: ChartFormat = {
     labels: ["2019", "2020", "2021", "2022", "2023"],
@@ -28,7 +29,13 @@ let testData: ChartFormat = {
             label: "Data",
             backgroundColor: "rgb(255, 99, 132)", // Setting up the background color for the dataset
             borderColor: "rgb(255, 99, 132)",
-            data: [0,0,0,0,0]
+            data: []
+        },
+        {
+            label: "League Average",
+            backgroundColor: "rgb(53, 162, 235)", // Setting up the background color for the dataset
+            borderColor: "rgba(53, 162, 235, 0.5)",
+            data: []
         }
     ]
 }
@@ -61,6 +68,7 @@ const options = {
 function Dashboard() {
 
     const [data, setData] = useState<totalTeamData[]>([]) // Total Data to be fetched
+    const [meanData, setMeanData] = useState<totalTeamData>() // Mean Data will be saved seperately to be accessed more efficiently
     const [progress, setProgress] = useState(true) // For progress bar
     const [error, setError] = useState(false) // For Error message if error fetching data
     // TODO #5
@@ -83,6 +91,11 @@ function Dashboard() {
         .then((response) => {
             setData(response.data)
             setProgress(false)
+
+            let meanData: totalTeamData | undefined = response.data.find((givenTeam: { teamName: string; }) => {
+                return givenTeam.teamName === "MEAN"
+            })
+            setMeanData(meanData)
         })
         .catch((error) => {
             console.log(error)
@@ -94,6 +107,7 @@ function Dashboard() {
     function changeTeam(e: ChangeEvent<HTMLSelectElement>) {
         let team = e.target.value // needs to be seperate as set functions are async, so can't use them in function
         setTeam(team)
+        let labelName = statsMap.get(field) || "" // set to empty if statsmap returns undefined
         if (field !== "") {
             let teamData: totalTeamData | undefined = data.find(givenTeam => {
                 return givenTeam.teamName === team
@@ -105,14 +119,26 @@ function Dashboard() {
                 // setDisplayData(oldArray => [...oldArray, Number(yearlyStat.yearStats[field as keyof TeamData])])
             })
 
+            let averageData: number[] = []
+            meanData?.stats.forEach(function (yearlyStat) {
+                averageData.push(Number(yearlyStat.yearStats[field as keyof TeamData]))
+                // setDisplayData(oldArray => [...oldArray, Number(yearlyStat.yearStats[field as keyof TeamData])])
+            })
+
             let newChart: ChartFormat = {
                 labels: years,
                 datasets: [
                     {
-                        label: "Data",
+                        label: labelName,
                         backgroundColor: "rgb(255, 99, 132)", // Setting up the background color for the dataset
                         borderColor: "rgb(255, 99, 132)",
                         data: fieldData
+                    },
+                    {
+                        label: "League Average",
+                        backgroundColor: "rgb(53, 162, 235)", // Setting up the background color for the dataset
+                        borderColor: "rgba(53, 162, 235, 0.5)",
+                        data: averageData
                     }
                 ]
             }
@@ -124,6 +150,7 @@ function Dashboard() {
     function changeField(e: ChangeEvent<HTMLSelectElement>) {
         let field = e.target.value // needs to be seperate as set functions are async, so can't use them in function
         setField(field)
+        let labelName = statsMap.get(field) || "" // set to empty if statsmap returns undefined
         if (team !== "") {
             let teamData: totalTeamData | undefined = data.find(givenTeam => {
                 return givenTeam.teamName === team
@@ -133,14 +160,27 @@ function Dashboard() {
                 fieldData.push(Number(yearlyStat.yearStats[field as keyof TeamData]))
                 // setDisplayData(oldArray => [...oldArray, Number(yearlyStat.yearStats[field as keyof TeamData])])
             })
+
+            let averageData: number[] = []
+            meanData?.stats.forEach(function (yearlyStat) {
+                averageData.push(Number(yearlyStat.yearStats[field as keyof TeamData]))
+                // setDisplayData(oldArray => [...oldArray, Number(yearlyStat.yearStats[field as keyof TeamData])])
+            })
+
             let newChart: ChartFormat = {
                 labels: years,
                 datasets: [
                     {
-                        label: "Data",
+                        label: labelName,
                         backgroundColor: "rgb(255, 99, 132)", // Setting up the background color for the dataset
                         borderColor: "rgb(255, 99, 132)",
                         data: fieldData
+                    },
+                    {
+                        label: "League Average",
+                        backgroundColor: "rgb(53, 162, 235)", // Setting up the background color for the dataset
+                        borderColor: "rgba(53, 162, 235, 0.5)",
+                        data: averageData
                     }
                 ]
             }
