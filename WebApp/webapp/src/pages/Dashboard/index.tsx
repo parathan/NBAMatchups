@@ -103,88 +103,58 @@ function Dashboard() {
         })
     }, []) // empty array so this only updates once on render
 
+    function establishData(team: string, field: string) {
+        let labelName = statsMap.get(field) || ""
+        let teamData: totalTeamData | undefined = data.find(givenTeam => {
+            return givenTeam.teamName === team
+        })
+
+        let fieldData: number[] = []
+        teamData?.stats.forEach(function (yearlyStat) {
+            fieldData.push(Number(yearlyStat.yearStats[field as keyof TeamData]))
+            // setDisplayData(oldArray => [...oldArray, Number(yearlyStat.yearStats[field as keyof TeamData])])
+        })
+
+        let averageData: number[] = []
+        meanData?.stats.forEach(function (yearlyStat) {
+            averageData.push(Number(yearlyStat.yearStats[field as keyof TeamData]))
+            // setDisplayData(oldArray => [...oldArray, Number(yearlyStat.yearStats[field as keyof TeamData])])
+        })
+
+        let newChart: ChartFormat = {
+            labels: years,
+            datasets: [
+                {
+                    label: labelName,
+                    backgroundColor: "rgb(255, 99, 132)", // Setting up the background color for the dataset
+                    borderColor: "rgb(255, 99, 132)",
+                    data: fieldData
+                },
+                {
+                    label: "League Average",
+                    backgroundColor: "rgb(53, 162, 235)", // Setting up the background color for the dataset
+                    borderColor: "rgba(53, 162, 235, 0.5)",
+                    data: averageData
+                }
+            ]
+        }
+        setChartData(newChart)
+        console.log("Both")
+    }
+
     function changeTeam(e: ChangeEvent<HTMLSelectElement>) {
         let team = e.target.value // needs to be seperate as set functions are async, so can't use them in function
         setTeam(team)
-        let labelName = statsMap.get(field) || "" // set to empty if statsmap returns undefined
         if (field !== "") {
-            let teamData: totalTeamData | undefined = data.find(givenTeam => {
-                return givenTeam.teamName === team
-            })
-
-            let fieldData: number[] = []
-            teamData?.stats.forEach(function (yearlyStat) {
-                fieldData.push(Number(yearlyStat.yearStats[field as keyof TeamData]))
-                // setDisplayData(oldArray => [...oldArray, Number(yearlyStat.yearStats[field as keyof TeamData])])
-            })
-
-            let averageData: number[] = []
-            meanData?.stats.forEach(function (yearlyStat) {
-                averageData.push(Number(yearlyStat.yearStats[field as keyof TeamData]))
-                // setDisplayData(oldArray => [...oldArray, Number(yearlyStat.yearStats[field as keyof TeamData])])
-            })
-
-            let newChart: ChartFormat = {
-                labels: years,
-                datasets: [
-                    {
-                        label: labelName,
-                        backgroundColor: "rgb(255, 99, 132)", // Setting up the background color for the dataset
-                        borderColor: "rgb(255, 99, 132)",
-                        data: fieldData
-                    },
-                    {
-                        label: "League Average",
-                        backgroundColor: "rgb(53, 162, 235)", // Setting up the background color for the dataset
-                        borderColor: "rgba(53, 162, 235, 0.5)",
-                        data: averageData
-                    }
-                ]
-            }
-            setChartData(newChart)
-            console.log("Both")
+            establishData(team, field)
         }
     }
     
     function changeField(e: ChangeEvent<HTMLSelectElement>) {
         let field = e.target.value // needs to be seperate as set functions are async, so can't use them in function
         setField(field)
-        let labelName = statsMap.get(field) || "" // set to empty if statsmap returns undefined
         if (team !== "") {
-            let teamData: totalTeamData | undefined = data.find(givenTeam => {
-                return givenTeam.teamName === team
-            })
-            let fieldData: number[] = []
-            teamData?.stats.forEach(function (yearlyStat) {
-                fieldData.push(Number(yearlyStat.yearStats[field as keyof TeamData]))
-                // setDisplayData(oldArray => [...oldArray, Number(yearlyStat.yearStats[field as keyof TeamData])])
-            })
-
-            let averageData: number[] = []
-            meanData?.stats.forEach(function (yearlyStat) {
-                averageData.push(Number(yearlyStat.yearStats[field as keyof TeamData]))
-                // setDisplayData(oldArray => [...oldArray, Number(yearlyStat.yearStats[field as keyof TeamData])])
-            })
-
-            let newChart: ChartFormat = {
-                labels: years,
-                datasets: [
-                    {
-                        label: labelName,
-                        backgroundColor: "rgb(255, 99, 132)", // Setting up the background color for the dataset
-                        borderColor: "rgb(255, 99, 132)",
-                        data: fieldData
-                    },
-                    {
-                        label: "League Average",
-                        backgroundColor: "rgb(53, 162, 235)", // Setting up the background color for the dataset
-                        borderColor: "rgba(53, 162, 235, 0.5)",
-                        data: averageData
-                    }
-                ]
-            }
-            setChartData(newChart)
-            console.log("Both")
+            establishData(team, field)
         }
     }
 
