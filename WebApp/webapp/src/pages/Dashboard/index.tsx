@@ -22,7 +22,7 @@ import {
   import { Line } from 'react-chartjs-2';
 import { statsMap } from '../../constants/statDictionary';
 
-let testData: ChartFormat = {
+const testData: ChartFormat = {
     labels: ["2019", "2020", "2021", "2022", "2023"],
     datasets: [
         {
@@ -77,7 +77,6 @@ function Dashboard() {
     const [years, setYears] = useState<string[]>(["2019","2020","2021","2022","2023"]) // Years that will be used as labels
     const [team, setTeam] = useState("") // The team name who's data will be displayed
     const [field, setField] = useState("") // The team's field name that will be displayed
-    const [displayData, setDisplayData] = useState<number[]>([]) // The field data
     const [chartData, setChartData] = useState<ChartFormat>(testData)
 
     // Intended that useEffect runs once, as empty array given means that it only updates once when page renders.
@@ -188,11 +187,6 @@ function Dashboard() {
             console.log("Both")
         }
     }
-
-    function onSubmit() {
-        console.log(displayData)
-    }
-
 
     return (
         <Layout>
