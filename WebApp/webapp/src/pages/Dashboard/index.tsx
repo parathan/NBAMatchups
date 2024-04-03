@@ -12,17 +12,23 @@ function Dashboard() {
     const [data, setData] = useState<totalTeamData[]>([])
     const [progress, setProgress] = useState(true)
     const [error, setError] = useState(false)
+    const [startYear, setStartYear] = useState(2019)
+    const [endYear, setEndYear] = useState(2023)
+    const [years, setYears] = useState<string[]>([])
 
     // Intended that useEffect runs once, as empty array given means that it only updates once when page renders.
     // In development, it will run twice due to strict mode being on. This won't happen in production, however.
     // https://byby.dev/useeffect-run-twice
     useEffect(() => {
         axios.post(process.env.REACT_APP_API_URL + '/teams/allTeams', {
-            startYear: 2019,
-            endYear: 2023
+            startYear: startYear,
+            endYear: endYear
         })
         .then((response) => {
             console.log(response)
+            for (let i = startYear; i <= endYear; i++) {
+                setYears(oldArray => [...oldArray, i.toString()])
+            }
             setData(response.data)
             setProgress(false)
         })
