@@ -1,3 +1,9 @@
+.dashboard {
+    padding: 10vh;
+    text-align: center;
+    animation: fade-in 2s;
+}
+
 .header {
     color: var(--header-font-colour);
     font-size: calc(10px + 3vmin);;
@@ -12,4 +18,23 @@
 
 .notHidden {
     visibility: visible;
+}
+
+.input {
+    padding-top: 5vh;
+}
+
+.dropdown {
+    text-align: center;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    background-color: var(--secondary-colour);
+    width: 20em;
+    height: 3em;
+    border-radius: .25em;
+    overflow: hidden;
+}
+
+.dropdown:hover {
+    opacity: .75;
 }

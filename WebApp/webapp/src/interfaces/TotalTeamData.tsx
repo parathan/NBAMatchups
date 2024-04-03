@@ -1,4 +1,4 @@
-interface TeamData {
+export interface TeamData {
     _id: string,
     g: number,
     mp: number,
