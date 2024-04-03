@@ -4,6 +4,7 @@ import { orderedTeams } from "../util/util.mjs";
 import { redisClient } from "../cache/cache.mjs";
 import "express-validator"
 import { teamsNames } from "../constants/teamNames.mjs";
+import { ErrorMessage } from "../constants/errorMessages.mjs";
 
 const { validationResult } = new ExpressValidator
 
@@ -93,7 +94,7 @@ export const findTwoTeamsCached = async (req, res, next) => {
         try {
             cachedResult = await redisClient.get(redisKey)
         } catch (err) {
-            return res.status(500).json({error : "Redis server is not running"})
+            return res.status(500).json({error : ErrorMessage.redisConnectionError})
         }
         if (cachedResult) {
             isCached = true;

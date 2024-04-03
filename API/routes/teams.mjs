@@ -1,6 +1,6 @@
 import express from "express";
 import { findTwoTeams, findTwoTeamsCached } from "../controllers/teamController.mjs";
-import { findAllTeams } from "../controllers/allTeamController.mjs";
+import { findAllTeams, findAllTeamsCached } from "../controllers/allTeamController.mjs";
 import { findTwoTeamsOrdered, findTwoTeamsOrderedCached, findTwoTeamsPercentileOrdered, findTwoTeamsPercentileOrderedCached } from "../controllers/orderedController.mjs";
 import { check, checkSchema } from "express-validator";
 import { teamDataValidateSchemaBased, yearDataValidateSchemaBased } from "../validations/teamValidations.mjs";
@@ -131,6 +131,23 @@ router.post(
     "/allTeams",
     checkSchema(yearDataValidateSchemaBased),
     findAllTeams
+)
+
+/**
+ * /teams:
+ *  post:
+ *      summary: Retrieve all team data for the given years, organized by teams,
+ *          then suborganized by years. 
+ *          Uses redis cache to improve performance.
+ *      request body: startYear: Int, endYear: Int
+ *      returns: Gives array of data, with each element reqpresenting a team, with
+ *          the final element being the mean. In each element has the years, and within
+ *          each year is all the fields and statistics for that team for that year.
+ */
+router.post(
+    "/allTeamsCached",
+    checkSchema(yearDataValidateSchemaBased),
+    findAllTeamsCached
 )
 
 export default router;
