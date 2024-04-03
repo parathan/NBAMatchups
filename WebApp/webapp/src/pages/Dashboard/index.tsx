@@ -5,8 +5,57 @@ import { CircularProgress, Grid } from '@mui/material';
 
 import axios from 'axios';
 import { totalTeamData, TeamData } from '../../interfaces/TotalTeamData';
+import { ChartFormat } from '../../interfaces/ChartFormat';
 import { teamsNames } from '../../constants/teamNames';
 import { statsArray } from '../../constants/statArray';
+
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+  } from 'chart.js';
+  import { Line } from 'react-chartjs-2';
+
+let testData: ChartFormat = {
+    labels: ["2019", "2020", "2021", "2022", "2023"],
+    datasets: [
+        {
+            label: "Data",
+            backgroundColor: "rgb(255, 99, 132)", // Setting up the background color for the dataset
+            borderColor: "rgb(255, 99, 132)",
+            data: [0,0,0,0,0]
+        }
+    ]
+}
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+);
+
+const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top' as const,
+      },
+      title: {
+        display: true,
+        text: 'Chart.js Line Chart',
+      },
+    },
+  };
+
 
 
 function Dashboard() {
@@ -17,10 +66,11 @@ function Dashboard() {
     // TODO #5
     const [startYear, setStartYear] = useState(2019) // Start year of data used
     const [endYear, setEndYear] = useState(2023) // End year of data used
-    const [years, setYears] = useState<string[]>([]) // Years that will be used as labels
+    const [years, setYears] = useState<string[]>(["2019","2020","2021","2022","2023"]) // Years that will be used as labels
     const [team, setTeam] = useState("") // The team name who's data will be displayed
     const [field, setField] = useState("") // The team's field name that will be displayed
     const [displayData, setDisplayData] = useState<number[]>([]) // The field data
+    const [chartData, setChartData] = useState<ChartFormat>(testData)
 
     // Intended that useEffect runs once, as empty array given means that it only updates once when page renders.
     // In development, it will run twice due to strict mode being on. This won't happen in production, however.
@@ -31,9 +81,6 @@ function Dashboard() {
             endYear: endYear
         })
         .then((response) => {
-            for (let i = startYear; i <= endYear; i++) {
-                setYears(oldArray => [...oldArray, i.toString()])
-            }
             setData(response.data)
             setProgress(false)
         })
@@ -51,9 +98,25 @@ function Dashboard() {
             let teamData: totalTeamData | undefined = data.find(givenTeam => {
                 return givenTeam.teamName === team
             })
+
+            let fieldData: number[] = []
             teamData?.stats.forEach(function (yearlyStat) {
-                setDisplayData(oldArray => [...oldArray, Number(yearlyStat.yearStats[field as keyof TeamData])])
+                fieldData.push(Number(yearlyStat.yearStats[field as keyof TeamData]))
+                // setDisplayData(oldArray => [...oldArray, Number(yearlyStat.yearStats[field as keyof TeamData])])
             })
+
+            let newChart: ChartFormat = {
+                labels: years,
+                datasets: [
+                    {
+                        label: "Data",
+                        backgroundColor: "rgb(255, 99, 132)", // Setting up the background color for the dataset
+                        borderColor: "rgb(255, 99, 132)",
+                        data: fieldData
+                    }
+                ]
+            }
+            setChartData(newChart)
             console.log("Both")
         }
     }
@@ -65,9 +128,23 @@ function Dashboard() {
             let teamData: totalTeamData | undefined = data.find(givenTeam => {
                 return givenTeam.teamName === team
             })
+            let fieldData: number[] = []
             teamData?.stats.forEach(function (yearlyStat) {
-                setDisplayData(oldArray => [...oldArray, Number(yearlyStat.yearStats[field as keyof TeamData])])
+                fieldData.push(Number(yearlyStat.yearStats[field as keyof TeamData]))
+                // setDisplayData(oldArray => [...oldArray, Number(yearlyStat.yearStats[field as keyof TeamData])])
             })
+            let newChart: ChartFormat = {
+                labels: years,
+                datasets: [
+                    {
+                        label: "Data",
+                        backgroundColor: "rgb(255, 99, 132)", // Setting up the background color for the dataset
+                        borderColor: "rgb(255, 99, 132)",
+                        data: fieldData
+                    }
+                ]
+            }
+            setChartData(newChart)
             console.log("Both")
         }
     }
@@ -87,7 +164,7 @@ function Dashboard() {
                 <div className={`${error ? styles.notHidden : styles.hidden}`}>
                     Errors getting data
                 </div>
-                <div className={`${styles.header} ${error || progress ? styles.hidden : styles.notHidden}`}>
+                <div className={`${error || progress ? styles.hidden : styles.notHidden}`}>
                     <Grid container spacing={2} className={styles.input}>
                         <Grid item xs={2}></Grid>
                         <Grid item xs={4}>
@@ -107,9 +184,11 @@ function Dashboard() {
                         </select>
                         </Grid>
                         <Grid item xs={2}></Grid>
-                        <Grid item xs={12}>
-                            <button onClick={onSubmit} className={styles.submit}>Check Matchup</button>
+                        <Grid item xs={3}></Grid>
+                        <Grid item xs={6}>
+                            <Line options={options} data={chartData}/>
                         </Grid>
+                        <Grid item xs={3}></Grid>
                     </Grid>
                 </div>
             </div>
