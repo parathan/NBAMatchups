@@ -4,3 +4,12 @@
     padding-bottom: 2vh;
     margin-top: 8%;
 }
+
+.hidden {
+    visibility: hidden;
+    height: 0;
+}
+
+.notHidden {
+    visibility: visible;
+}
