@@ -1,6 +1,6 @@
 import { opposingStats } from "../constants/opposingStats.mjs"
 /**
- * 
+ * This function orders stats based on zscore difference
  * @param {Object} trad1 
  * @param {Object} trad2 
  * @param {Object} mean 
@@ -52,7 +52,7 @@ export function orderedTeams(trad1, trad2, mean, std, Zscore1, Zscore2) {
 }
 
 /**
- * 
+ * This function orders stats based on percentile difference
  * @param {Object} trad1 
  * @param {Object} trad2 
  * @param {Object} Percentile1 

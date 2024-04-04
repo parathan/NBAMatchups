@@ -20,6 +20,7 @@ function NavBar() {
                 <MenuItem component={<Link to="/" />}>Home</MenuItem>
                 <MenuItem component={<Link to="/matchups" />}>Team Matchups</MenuItem>
                 <MenuItem component={<Link to="/predictions" />}>Win/Loss Prediction</MenuItem>
+                <MenuItem component={<Link to="/dashboard" />}>Dashboard</MenuItem>
             </Menu>
         </Sidebar>
     )
