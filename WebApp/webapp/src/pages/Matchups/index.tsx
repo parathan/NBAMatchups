@@ -24,6 +24,7 @@ function Matchups() {
   const [team1image, setTeam1Image] = useState("")
   const [team2image, setTeam2Image] = useState("")
   const [imageClass, setImageClass] = useState(styles.nothing)
+  const [fadeInItems, setFadeInItems] = useState<MatchupData[]>([]);
 
   function changeTeam1(e: ChangeEvent<HTMLSelectElement>) {
     let newTeam: string = e.target.value;
@@ -91,6 +92,19 @@ function Matchups() {
     setErrorVisible(true)
     setErrorMessage("You can't compare the same team")
   }
+
+  useEffect(() => {
+    // Delay to show each item in the list
+    const delay = 300; // Adjust the delay time as needed
+    const timeoutIds = data.map((_, index) => setTimeout(() => {
+      setFadeInItems(prevItems => [...prevItems, data[index]]);
+    }, index * delay));
+
+    return () => {
+      // Clear timeouts on component unmount to avoid memory leaks
+      timeoutIds.forEach(timeoutId => clearTimeout(timeoutId));
+    };
+  }, [data]);
 
   return (
     <Layout>
@@ -163,20 +177,22 @@ function Matchups() {
           </Grid>
         </Grid>
         {
-          data.map( sliderData =>
-            <MatchupSlider 
-              field1={sliderData.field1}
-              field2={sliderData.field2}
-              PercentileDifference={sliderData.PercentileDifference}
-              absPercentileDifference={sliderData.absPercentileDifference} 
-              team1Percentile1={sliderData.team1Percentile1} 
-              team2Percentile_Op={sliderData.team2Percentile_Op} 
-              TraditionalDifference={sliderData.TraditionalDifference} 
-              team1Trad={sliderData.team1Trad} 
-              team2Trad_Op={sliderData.team2Trad_Op} 
-              mean1={sliderData.mean1}
-              mean2={sliderData.mean2}
-            />
+          fadeInItems.map( sliderData =>
+            <div className={styles.fadeInItem}>
+              <MatchupSlider 
+                field1={sliderData.field1}
+                field2={sliderData.field2}
+                PercentileDifference={sliderData.PercentileDifference}
+                absPercentileDifference={sliderData.absPercentileDifference} 
+                team1Percentile1={sliderData.team1Percentile1} 
+                team2Percentile_Op={sliderData.team2Percentile_Op} 
+                TraditionalDifference={sliderData.TraditionalDifference} 
+                team1Trad={sliderData.team1Trad} 
+                team2Trad_Op={sliderData.team2Trad_Op} 
+                mean1={sliderData.mean1}
+                mean2={sliderData.mean2}
+              />
+            </div>
         )}
       </div>
     </Layout>

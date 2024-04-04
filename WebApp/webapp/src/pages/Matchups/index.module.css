@@ -64,15 +64,6 @@
     height: auto;
 }
 
-@keyframes fade-in {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 100;
-    }
-}
-
 select {
     /* Reset Select */
     appearance: none;
@@ -120,4 +111,18 @@ select {
     width: fit-content;
     margin: 0 auto;
     margin-top: 3%;
+}
+
+.fadeInItem {
+    animation: fade-in 2s;
+}
+
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 100;
+    }
 }
