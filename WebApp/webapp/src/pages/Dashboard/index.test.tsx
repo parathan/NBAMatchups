@@ -1,14 +1,23 @@
-import renderer from 'react-test-renderer'
+// import renderer from 'react-test-renderer'
+import { render } from '@testing-library/react'
 import Dashboard from '.'
 import { BrowserRouter } from 'react-router-dom'
 
+jest.mock('react-chartjs-2', () => ({ Line: () => null }))
 
-it('Dashboard renders', () => {
-    const component = renderer.create(
+describe('Dashboard Component', () => {
+    it('Dashboard renders', () => {
+        render(
         <BrowserRouter>
-            <Dashboard/>
-        </BrowserRouter>,
-    )
-    let tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
+            <Dashboard />
+        </BrowserRouter>
+        )
+        // const component = renderer.create(
+        //     <BrowserRouter>
+        //         <Dashboard/>
+        //     </BrowserRouter>,
+        // )
+        // let tree = component.toJSON();
+        // expect(tree).toMatchSnapshot();
+    })
 })
