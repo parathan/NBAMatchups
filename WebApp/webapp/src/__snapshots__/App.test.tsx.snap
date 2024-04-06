@@ -1,0 +1,171 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders learn react link 1`] = `
+<div>
+  <div
+    className="layout"
+  >
+    <div
+      className="navbar"
+    >
+      <aside
+        className="ps-sidebar-root css-17c6mwq"
+        data-testid="ps-sidebar-root-test-id"
+        width="250px"
+      >
+        <div
+          className="ps-sidebar-container css-dip3t8"
+          data-testid="ps-sidebar-container-test-id"
+        >
+          <nav
+            className="ps-menu-root css-vj11vy"
+          >
+            <ul
+              className="css-ewdv3l"
+            >
+              <li
+                className="ps-menuitem-root css-1t8x7v1"
+                disabled={false}
+              >
+                <a
+                  className="ps-menu-button"
+                  data-testid="ps-menu-button-test-id"
+                  href="/"
+                  onClick={[Function]}
+                  tabIndex={0}
+                >
+                  <span
+                    className="ps-menu-label css-12w9als"
+                  >
+                    Home
+                  </span>
+                </a>
+              </li>
+              <li
+                className="ps-menuitem-root css-1t8x7v1"
+                disabled={false}
+              >
+                <a
+                  className="ps-menu-button"
+                  data-testid="ps-menu-button-test-id"
+                  href="/matchups"
+                  onClick={[Function]}
+                  tabIndex={0}
+                >
+                  <span
+                    className="ps-menu-label css-12w9als"
+                  >
+                    Team Matchups
+                  </span>
+                </a>
+              </li>
+              <li
+                className="ps-menuitem-root css-1t8x7v1"
+                disabled={false}
+              >
+                <a
+                  className="ps-menu-button"
+                  data-testid="ps-menu-button-test-id"
+                  href="/predictions"
+                  onClick={[Function]}
+                  tabIndex={0}
+                >
+                  <span
+                    className="ps-menu-label css-12w9als"
+                  >
+                    Win/Loss Prediction
+                  </span>
+                </a>
+              </li>
+              <li
+                className="ps-menuitem-root css-1t8x7v1"
+                disabled={false}
+              >
+                <a
+                  className="ps-menu-button"
+                  data-testid="ps-menu-button-test-id"
+                  href="/dashboard"
+                  onClick={[Function]}
+                  tabIndex={0}
+                >
+                  <span
+                    className="ps-menu-label css-12w9als"
+                  >
+                    Dashboard
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </aside>
+    </div>
+    <div
+      className="children"
+    >
+      <div
+        className="homePage"
+      >
+        <header
+          className="header"
+        >
+          <p>
+            Welcome to NBAMatchups
+          </p>
+        </header>
+        <div
+          className="features"
+        >
+          <div
+            className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
+          >
+            <div
+              className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-gj1fbr-MuiGrid-root"
+            />
+            <div
+              className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-gj1fbr-MuiGrid-root"
+            >
+              <div
+                className="description"
+              >
+                Matchups is a feature that allows you to compare two teams based on their statistics in a given season. Just select the two teams you want to compare, and the season that you want to use. However, instead of comparing both teams on their same stats, this feature compares them based on opposing stats, and orders them by biggest differences. For example, if Team A is in the bottom percentile for defensive rebounding and Team B is in the top percentile of offensive rebounding, these are the stats that would be compared and shown near the top as the difference is the greatest. This feature would show the list of these opposing stats and order them based on these differences.
+              </div>
+              <button
+                className="featureButton"
+                onClick={[Function]}
+              >
+                Go to Team Matchups
+              </button>
+              <div
+                className="description"
+              >
+                This prediction feature is based on a model that uses previous basketball data and the correlation these statistics have with a team's winning or losing. Using this, given two team's data, this feature predicts which team will win the matchup.
+              </div>
+              <button
+                className="featureButton"
+                onClick={[Function]}
+              >
+                Win/Loss Prediction
+              </button>
+              <div
+                className="description"
+              >
+                The Dashboard feature visualizes the trends teams have had in the past few years for the various statistical categories that have been used in this platform. It also allows you to see the comparison between the teams statistical trends for a particular stat against the league average for this stat over the years.
+              </div>
+              <button
+                className="featureButton"
+                onClick={[Function]}
+              >
+                Dashboard
+              </button>
+            </div>
+            <div
+              className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-gj1fbr-MuiGrid-root"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

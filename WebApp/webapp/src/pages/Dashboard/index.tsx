@@ -173,17 +173,17 @@ function Dashboard() {
                         <Grid item xs={2}></Grid>
                         <Grid item xs={4}>
                         <select onChange={changeTeam} className={styles.dropdown}>
-                            <option value="">Pick a Team</option>
+                            <option key={""} value="">Pick a Team</option>
                             {teamsNames.map( teamName =>
-                                <option value={teamName}>{teamName}</option>
+                                <option key={teamName} value={teamName}>{teamName}</option>
                             )};
                         </select>
                         </Grid>
                         <Grid item xs={4}>
                         <select onChange={changeField} className={styles.dropdown}>
-                            <option value="">Pick a Field</option>
+                            <option key={""} value="">Pick a Field</option>
                             {statsArray.map( stat =>
-                                <option value={stat[0]}>{stat[1]}</option>
+                                <option key={stat[0]} value={stat[0]}>{stat[1]}</option>
                             )}
                         </select>
                         </Grid>

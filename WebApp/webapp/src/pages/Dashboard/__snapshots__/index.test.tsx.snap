@@ -1,0 +1,883 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dashboard renders 1`] = `
+<div
+  className="layout"
+>
+  <div
+    className="navbar"
+  >
+    <aside
+      className="ps-sidebar-root css-17c6mwq"
+      data-testid="ps-sidebar-root-test-id"
+      width="250px"
+    >
+      <div
+        className="ps-sidebar-container css-dip3t8"
+        data-testid="ps-sidebar-container-test-id"
+      >
+        <nav
+          className="ps-menu-root css-vj11vy"
+        >
+          <ul
+            className="css-ewdv3l"
+          >
+            <li
+              className="ps-menuitem-root css-1t8x7v1"
+              disabled={false}
+            >
+              <a
+                className="ps-menu-button"
+                data-testid="ps-menu-button-test-id"
+                href="/"
+                onClick={[Function]}
+                tabIndex={0}
+              >
+                <span
+                  className="ps-menu-label css-12w9als"
+                >
+                  Home
+                </span>
+              </a>
+            </li>
+            <li
+              className="ps-menuitem-root css-1t8x7v1"
+              disabled={false}
+            >
+              <a
+                className="ps-menu-button"
+                data-testid="ps-menu-button-test-id"
+                href="/matchups"
+                onClick={[Function]}
+                tabIndex={0}
+              >
+                <span
+                  className="ps-menu-label css-12w9als"
+                >
+                  Team Matchups
+                </span>
+              </a>
+            </li>
+            <li
+              className="ps-menuitem-root css-1t8x7v1"
+              disabled={false}
+            >
+              <a
+                className="ps-menu-button"
+                data-testid="ps-menu-button-test-id"
+                href="/predictions"
+                onClick={[Function]}
+                tabIndex={0}
+              >
+                <span
+                  className="ps-menu-label css-12w9als"
+                >
+                  Win/Loss Prediction
+                </span>
+              </a>
+            </li>
+            <li
+              className="ps-menuitem-root css-1t8x7v1"
+              disabled={false}
+            >
+              <a
+                className="ps-menu-button"
+                data-testid="ps-menu-button-test-id"
+                href="/dashboard"
+                onClick={[Function]}
+                tabIndex={0}
+              >
+                <span
+                  className="ps-menu-label css-12w9als"
+                >
+                  Dashboard
+                </span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </aside>
+  </div>
+  <div
+    className="children"
+  >
+    <div
+      className="dashboard"
+    >
+      <div
+        className="header"
+      >
+        Dashboard
+      </div>
+      <div
+        className="notHidden"
+      >
+        <span
+          className="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary css-18lrjg1-MuiCircularProgress-root"
+          role="progressbar"
+          style={
+            {
+              "height": 40,
+              "width": 40,
+            }
+          }
+        >
+          <svg
+            className="MuiCircularProgress-svg css-1idz92c-MuiCircularProgress-svg"
+            viewBox="22 22 44 44"
+          >
+            <circle
+              className="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-176wh8e-MuiCircularProgress-circle"
+              cx={44}
+              cy={44}
+              fill="none"
+              r={20.2}
+              strokeWidth={3.6}
+              style={{}}
+            />
+          </svg>
+        </span>
+      </div>
+      <div
+        className="hidden"
+      >
+        Errors getting data
+      </div>
+      <div
+        className="hidden"
+      >
+        <div
+          className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 input css-mhc70k-MuiGrid-root"
+        >
+          <div
+            className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
+          />
+          <div
+            className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-gj1fbr-MuiGrid-root"
+          >
+            <select
+              className="dropdown"
+              onChange={[Function]}
+            >
+              <option
+                value=""
+              >
+                Pick a Team
+              </option>
+              <option
+                value="Atlanta Hawks"
+              >
+                Atlanta Hawks
+              </option>
+              <option
+                value="Boston Celtics"
+              >
+                Boston Celtics
+              </option>
+              <option
+                value="Brooklyn Nets"
+              >
+                Brooklyn Nets
+              </option>
+              <option
+                value="Charlotte Hornets"
+              >
+                Charlotte Hornets
+              </option>
+              <option
+                value="Chicago Bulls"
+              >
+                Chicago Bulls
+              </option>
+              <option
+                value="Cleveland Cavaliers"
+              >
+                Cleveland Cavaliers
+              </option>
+              <option
+                value="Dallas Mavericks"
+              >
+                Dallas Mavericks
+              </option>
+              <option
+                value="Denver Nuggets"
+              >
+                Denver Nuggets
+              </option>
+              <option
+                value="Detroit Pistons"
+              >
+                Detroit Pistons
+              </option>
+              <option
+                value="Golden State Warriors"
+              >
+                Golden State Warriors
+              </option>
+              <option
+                value="Houston Rockets"
+              >
+                Houston Rockets
+              </option>
+              <option
+                value="Indiana Pacers"
+              >
+                Indiana Pacers
+              </option>
+              <option
+                value="Los Angeles Clippers"
+              >
+                Los Angeles Clippers
+              </option>
+              <option
+                value="Los Angeles Lakers"
+              >
+                Los Angeles Lakers
+              </option>
+              <option
+                value="Memphis Grizzlies"
+              >
+                Memphis Grizzlies
+              </option>
+              <option
+                value="Miami Heat"
+              >
+                Miami Heat
+              </option>
+              <option
+                value="Milwaukee Bucks"
+              >
+                Milwaukee Bucks
+              </option>
+              <option
+                value="Minnesota Timberwolves"
+              >
+                Minnesota Timberwolves
+              </option>
+              <option
+                value="New Orleans Pelicans"
+              >
+                New Orleans Pelicans
+              </option>
+              <option
+                value="New York Knicks"
+              >
+                New York Knicks
+              </option>
+              <option
+                value="Oklahoma City Thunder"
+              >
+                Oklahoma City Thunder
+              </option>
+              <option
+                value="Orlando Magic"
+              >
+                Orlando Magic
+              </option>
+              <option
+                value="Philadelphia 76ers"
+              >
+                Philadelphia 76ers
+              </option>
+              <option
+                value="Phoenix Suns"
+              >
+                Phoenix Suns
+              </option>
+              <option
+                value="Portland Trail Blazers"
+              >
+                Portland Trail Blazers
+              </option>
+              <option
+                value="Sacramento Kings"
+              >
+                Sacramento Kings
+              </option>
+              <option
+                value="San Antonio Spurs"
+              >
+                San Antonio Spurs
+              </option>
+              <option
+                value="Toronto Raptors"
+              >
+                Toronto Raptors
+              </option>
+              <option
+                value="Utah Jazz"
+              >
+                Utah Jazz
+              </option>
+              <option
+                value="Washington Wizards"
+              >
+                Washington Wizards
+              </option>
+              ;
+            </select>
+          </div>
+          <div
+            className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-gj1fbr-MuiGrid-root"
+          >
+            <select
+              className="dropdown"
+              onChange={[Function]}
+            >
+              <option
+                value=""
+              >
+                Pick a Field
+              </option>
+              <option
+                value="g"
+              >
+                Games Played
+              </option>
+              <option
+                value="mp"
+              >
+                Minutes Played
+              </option>
+              <option
+                value="fg"
+              >
+                Field Goals
+              </option>
+              <option
+                value="fga"
+              >
+                Field Goals Attempted
+              </option>
+              <option
+                value="fg_pct"
+              >
+                Field Goal Percentage
+              </option>
+              <option
+                value="fg3"
+              >
+                3-Point Field Goals
+              </option>
+              <option
+                value="fg3a"
+              >
+                3-Point Field Goals Attempted
+              </option>
+              <option
+                value="fg3_pct"
+              >
+                3-Point Field Goal Percentage
+              </option>
+              <option
+                value="fg2"
+              >
+                2-Point Field Goals
+              </option>
+              <option
+                value="fg2a"
+              >
+                2-Point Field goals Attempted
+              </option>
+              <option
+                value="fg2_pct"
+              >
+                2-Point Field Goal Percentage
+              </option>
+              <option
+                value="ft"
+              >
+                Free Throws
+              </option>
+              <option
+                value="fta"
+              >
+                Free Throws Attempted
+              </option>
+              <option
+                value="ft_pct"
+              >
+                Free Throw Percentage
+              </option>
+              <option
+                value="orb"
+              >
+                Offensive Rebounds
+              </option>
+              <option
+                value="drb"
+              >
+                Defensive Rebounds
+              </option>
+              <option
+                value="trb"
+              >
+                Total Rebounds
+              </option>
+              <option
+                value="ast"
+              >
+                Assists
+              </option>
+              <option
+                value="stl"
+              >
+                Steals
+              </option>
+              <option
+                value="blk"
+              >
+                Blocks
+              </option>
+              <option
+                value="tov"
+              >
+                Turnovers
+              </option>
+              <option
+                value="pf"
+              >
+                Personal Fouls
+              </option>
+              <option
+                value="pts"
+              >
+                Points
+              </option>
+              <option
+                value="opp_fg"
+              >
+                Opponent Field Goals
+              </option>
+              <option
+                value="opp_fga"
+              >
+                Opponent Field Goals Attempted
+              </option>
+              <option
+                value="opp_fg_pct"
+              >
+                Opponent Field Goal Percentage
+              </option>
+              <option
+                value="opp_fg3"
+              >
+                Opponent 3-Point Field Goals
+              </option>
+              <option
+                value="opp_fg3a"
+              >
+                Opponent 3-Point Field Goals Attempted
+              </option>
+              <option
+                value="opp_fg3_pct"
+              >
+                Opponent 3-Point Field Goal Percentage
+              </option>
+              <option
+                value="opp_fg2"
+              >
+                Opponent 2-Point Field Goals
+              </option>
+              <option
+                value="opp_fg2a"
+              >
+                Opponent 2-Point Field goals Attempted
+              </option>
+              <option
+                value="opp_fg2_pct"
+              >
+                Opponent 2-Point Field Goal Percentage
+              </option>
+              <option
+                value="opp_ft"
+              >
+                Opponent Free Throws
+              </option>
+              <option
+                value="opp_fta"
+              >
+                Opponent Free Throws Attempted
+              </option>
+              <option
+                value="opp_ft_pct"
+              >
+                Opponent Free Throw Percentage
+              </option>
+              <option
+                value="opp_orb"
+              >
+                Opponent Offensive Rebounds
+              </option>
+              <option
+                value="opp_drb"
+              >
+                Opponent Defensive Rebounds
+              </option>
+              <option
+                value="opp_trb"
+              >
+                Opponent Total Rebounds
+              </option>
+              <option
+                value="opp_ast"
+              >
+                Opponent Assists
+              </option>
+              <option
+                value="opp_stl"
+              >
+                Opponent Steals
+              </option>
+              <option
+                value="opp_blk"
+              >
+                Opponent Blocks
+              </option>
+              <option
+                value="opp_tov"
+              >
+                Opponent Turnovers
+              </option>
+              <option
+                value="opp_pf"
+              >
+                Opponent Personal Fouls
+              </option>
+              <option
+                value="opp_pts"
+              >
+                Opponent Points
+              </option>
+              <option
+                value="age"
+              >
+                Age
+              </option>
+              <option
+                value="wins"
+              >
+                Wins
+              </option>
+              <option
+                value="losses"
+              >
+                Losses
+              </option>
+              <option
+                value="wins_pyth"
+              >
+                Pythagorean Wins
+              </option>
+              <option
+                value="losses_pyth"
+              >
+                Pythagorean Losses
+              </option>
+              <option
+                value="mov"
+              >
+                Margin of Victory
+              </option>
+              <option
+                value="sos"
+              >
+                Strength of Schedule
+              </option>
+              <option
+                value="srs"
+              >
+                Simple Rating System
+              </option>
+              <option
+                value="off_rtg"
+              >
+                Offensive Rating
+              </option>
+              <option
+                value="def_rtg"
+              >
+                Defensive Rating
+              </option>
+              <option
+                value="net_rtg"
+              >
+                Net Rating
+              </option>
+              <option
+                value="pace"
+              >
+                Pace
+              </option>
+              <option
+                value="fta_per_fga_pct"
+              >
+                Free Throw Attempt Rate
+              </option>
+              <option
+                value="fg3a_per_fga_pct"
+              >
+                3-Point Attempt Rate
+              </option>
+              <option
+                value="ts_pct"
+              >
+                True Shooting Percentage
+              </option>
+              <option
+                value="efg_pct"
+              >
+                Effective Field Goal Percentage
+              </option>
+              <option
+                value="tov_pct"
+              >
+                Turnover Percentage
+              </option>
+              <option
+                value="orb_pct"
+              >
+                Offensive Rebound Percentage
+              </option>
+              <option
+                value="ft_rate"
+              >
+                Free Throws Per Field Goal Attempt
+              </option>
+              <option
+                value="opp_efg_pct"
+              >
+                Opponent Effective Field Goal Percentage
+              </option>
+              <option
+                value="opp_tov_pct"
+              >
+                Opponent Turnover Percentage
+              </option>
+              <option
+                value="drb_pct"
+              >
+                Defensive Rebound Percentage
+              </option>
+              <option
+                value="opp_ft_rate"
+              >
+                Opponent Free throws Per Field Goal Attempt
+              </option>
+              <option
+                value="avg_dist"
+              >
+                Average Distance of FGA
+              </option>
+              <option
+                value="pct_fga_fg2a"
+              >
+                Percentage of FGA that are 2-Pt FGAs
+              </option>
+              <option
+                value="pct_fga_00_03"
+              >
+                Percentage of FGA that are 0-3 feet from basket
+              </option>
+              <option
+                value="pct_fga_03_10"
+              >
+                Percentage of FGA that are 3-10 feet from basket
+              </option>
+              <option
+                value="pct_fga_10_16"
+              >
+                Percentage of FGA that are 10-16 feet from basket
+              </option>
+              <option
+                value="pct_fga_16_xx"
+              >
+                Percentage of 2-Pt FGA that are 16+ feet from the basket
+              </option>
+              <option
+                value="pct_fga_fg3a"
+              >
+                Percentage of FGA that are 3-Pt FGAS
+              </option>
+              <option
+                value="fg_pct_00_03"
+              >
+                FG Percentage of FGA that are 0-3 feet from basket
+              </option>
+              <option
+                value="fg_pct_03_10"
+              >
+                FG Percentage of FGA that are 3-10 feet from basket
+              </option>
+              <option
+                value="fg_pct_10_16"
+              >
+                FG Percentage of FGA that are 10-16 feet from basket
+              </option>
+              <option
+                value="fg_pct_16_xx"
+              >
+                FG Percentage of 2-Pt FGA that are 16+ feet from basket
+              </option>
+              <option
+                value="pct_ast_fg2"
+              >
+                Percentage of 2-Pt FG assisted on
+              </option>
+              <option
+                value="pct_ast_fg3"
+              >
+                Percentage of 3-Pt FG assisted on
+              </option>
+              <option
+                value="pct_fga_dunk"
+              >
+                Percentage of FGA that are dunks
+              </option>
+              <option
+                value="fg_dunk"
+              >
+                Number of made dunks
+              </option>
+              <option
+                value="pct_fga_layup"
+              >
+                Percentage of FGA that are layups
+              </option>
+              <option
+                value="fg_layup"
+              >
+                Number of made layups
+              </option>
+              <option
+                value="pct_fg3a_corner"
+              >
+                Percentage of 3-Pt attempts from the corner
+              </option>
+              <option
+                value="fg3_pct_corner"
+              >
+                Corner 3-Pt Percentage
+              </option>
+              <option
+                value="opp_avg_dist"
+              >
+                Opponent Average Distance of FGA
+              </option>
+              <option
+                value="opp_pct_fga_fg2a"
+              >
+                Opponent Percentage of FGA that are 2-Pt FGAs
+              </option>
+              <option
+                value="opp_pct_fga_00_03"
+              >
+                Opponent Percentage of FGA that are 0-3 feet from basket
+              </option>
+              <option
+                value="opp_pct_fga_03_10"
+              >
+                Opponent Percentage of FGA that are 3-10 feet from basket
+              </option>
+              <option
+                value="opp_pct_fga_10_16"
+              >
+                Opponent Percentage of FGA that are 10-16 feet from basket
+              </option>
+              <option
+                value="opp_pct_fga_16_xx"
+              >
+                Opponent Percentage of 2-Pt FGA that are 16+ feet from the basket
+              </option>
+              <option
+                value="opp_pct_fga_fg3a"
+              >
+                Opponent Percentage of FGA that are 3-Pt FGAS
+              </option>
+              <option
+                value="opp_fg_pct_00_03"
+              >
+                Opponent FG Percentage of FGA that are 0-3 feet from basket
+              </option>
+              <option
+                value="opp_fg_pct_03_10"
+              >
+                Opponent FG Percentage of FGA that are 3-10 feet from basket
+              </option>
+              <option
+                value="opp_fg_pct_10_16"
+              >
+                Opponent FG Percentage of FGA that are 10-16 feet from basket
+              </option>
+              <option
+                value="opp_fg_pct_16_xx"
+              >
+                Opponent FG Percentage of 2-Pt FGA that are 16+ feet from basket
+              </option>
+              <option
+                value="opp_pct_ast_fg2"
+              >
+                Opponent Percentage of 2-Pt FG assisted on
+              </option>
+              <option
+                value="opp_pct_ast_fg3"
+              >
+                Opponent Percentage of 3-Pt FG assisted on
+              </option>
+              <option
+                value="opp_pct_fga_dunk"
+              >
+                Opponent Percentage of FGA that are dunks
+              </option>
+              <option
+                value="opp_fg_dunk"
+              >
+                Opponent Number of made dunks
+              </option>
+              <option
+                value="opp_pct_fga_layup"
+              >
+                Opponent Percentage of FGA that are layups
+              </option>
+              <option
+                value="opp_fg_layup"
+              >
+                Opponent Number of made layups
+              </option>
+              <option
+                value="opp_pct_fg3a_corner"
+              >
+                Opponent Percentage of 3-Pt attempts from the corner
+              </option>
+              <option
+                value="opp_fg3_pct_corner"
+              >
+                Opponent Corner 3-Pt Percentage
+              </option>
+            </select>
+          </div>
+          <div
+            className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
+          />
+          <div
+            className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3 css-1equabv-MuiGrid-root"
+          />
+          <div
+            className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
+          >
+            <canvas
+              height={150}
+              role="img"
+              width={300}
+            />
+          </div>
+          <div
+            className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3 css-1equabv-MuiGrid-root"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
