@@ -175,7 +175,7 @@ function Dashboard() {
                         <select onChange={changeTeam} className={styles.dropdown}>
                             <option key={""} value="">Pick a Team</option>
                             {teamsNames.map( teamName =>
-                                <option key={teamName} value={teamName}>{teamName}</option>
+                                <option data-testid="team-options" key={teamName} value={teamName}>{teamName}</option>
                             )};
                         </select>
                         </Grid>
@@ -183,7 +183,7 @@ function Dashboard() {
                         <select onChange={changeField} className={styles.dropdown}>
                             <option key={""} value="">Pick a Field</option>
                             {statsArray.map( stat =>
-                                <option key={stat[0]} value={stat[0]}>{stat[1]}</option>
+                                <option data-testid="field-options" key={stat[0]} value={stat[0]}>{stat[1]}</option>
                             )}
                         </select>
                         </Grid>
