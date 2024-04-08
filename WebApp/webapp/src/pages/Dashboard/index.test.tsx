@@ -72,44 +72,4 @@ describe('Dashboard Component', () => {
         const fieldDropdowns = await screen.findAllByTestId('field-options');
         expect(fieldDropdowns.length).toBe(statsArray.length)
     })
-
-    // it('Dashboard renders', () => {
-    //     render(
-    //         <BrowserRouter>
-    //             <Dashboard/>
-    //         </BrowserRouter>
-    //     )
-    // })
-    // it('renders team and field dropdowns', async () => {
-    //     mockedAxios.post.mockResolvedValue({ data: mockData });
-
-    //     render(
-    //         <BrowserRouter>
-    //             <Dashboard />
-    //         </BrowserRouter>
-    //     );
-    //     const stringTeam = await screen.findByText(/Pick a Team/i);
-    //     expect(stringTeam).toBeInTheDocument();
-
-    //     const stringField = await screen.findByText(/Pick a Field/i);
-    //     expect(stringField).toBeInTheDocument();
-    // })
-    // it('correct number of team dropdowns exist', () => {
-    //     render(
-    //         <BrowserRouter>
-    //             <Dashboard />
-    //         </BrowserRouter>
-    //     );
-    //     const options = screen.getAllByTestId("team-options");
-    //     expect(options.length).toBe(30); //30 teams
-    // })
-    // it('correct number of field dropdowns exist', () => {
-    //     render(
-    //         <BrowserRouter>
-    //             <Dashboard />
-    //         </BrowserRouter>
-    //     )
-    //     const options = screen.getAllByTestId('field-options');
-    //     expect(options.length).toBe(statsArray.length)
-    // })
 })
