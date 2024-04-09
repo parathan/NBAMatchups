@@ -73,3 +73,5 @@ describe('Dashboard Component elements render correctly', () => {
         expect(fieldDropdowns.length).toBe(statsArray.length)
     })
 })
+
+//TODO #7
