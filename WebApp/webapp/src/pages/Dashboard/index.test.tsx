@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import '@testing-library/jest-dom'
 import axios from 'axios'
 import { statsArray } from '../../constants/statArray'
-import { mockData } from '../../constants/mockData'
+import { allTeamsMockData } from '../../constants/mockData'
 
 jest.mock('react-chartjs-2', () => ({ Line: () => null })) // mocks chart in dashboard
 jest.mock('axios', () => ({
@@ -13,11 +13,11 @@ jest.mock('axios', () => ({
 }));
 
 
-describe('Dashboard Component', () => {
+describe('Dashboard Component elements render correctly', () => {
 
     beforeEach(() => {
         (axios.post as jest.Mock).mockResolvedValue({
-            data: mockData
+            data: allTeamsMockData
         });
     });
 
