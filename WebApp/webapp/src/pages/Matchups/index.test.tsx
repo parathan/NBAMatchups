@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import Matchups from '.'
-import { BrowserRouter } from 'react-router-dom'
+import { MemoryRouter } from 'react-router-dom'
 import '@testing-library/jest-dom'
 import axios from 'axios'
 import { orderedPercentileMockData } from '../../constants/mockData'
@@ -19,9 +19,9 @@ describe("Matchups Page elements render correctly", () => {
 
     it('renders matchups header', async () => {
         render(
-            <BrowserRouter>
+            <MemoryRouter>
                 <Matchups />
-            </BrowserRouter>
+            </MemoryRouter>
         )
         const header = await screen.findAllByText(/Team Matchups/i);
         expect(header.length).toBe(3);
@@ -29,9 +29,9 @@ describe("Matchups Page elements render correctly", () => {
 
     it('renders team dropdowns', async () => {
         render(
-            <BrowserRouter>
+            <MemoryRouter>
                 <Matchups />
-            </BrowserRouter>
+            </MemoryRouter>
         )
         const teamDropdowns = await screen.findAllByText(/Pick a Team/i);
         expect(teamDropdowns.length).toBe(2);
@@ -39,9 +39,9 @@ describe("Matchups Page elements render correctly", () => {
 
     it('renders year dropdown', async () => {
         render(
-            <BrowserRouter>
+            <MemoryRouter>
                 <Matchups />
-            </BrowserRouter>
+            </MemoryRouter>
         )
         const yearDropdown = await screen.findByText(/Pick a Year/i);
         expect(yearDropdown).toBeInTheDocument();
@@ -49,9 +49,9 @@ describe("Matchups Page elements render correctly", () => {
 
     it('renders check matchups button', async () => {
         render(
-            <BrowserRouter>
+            <MemoryRouter>
                 <Matchups />
-            </BrowserRouter>
+            </MemoryRouter>
         )
         const matchupButton = await screen.findByText(/Check Matchup/i);
         expect(matchupButton).toBeInTheDocument();
@@ -59,9 +59,9 @@ describe("Matchups Page elements render correctly", () => {
 
     it('correct number of team dropdowns exist for team1', async () => {
         render(
-            <BrowserRouter>
+            <MemoryRouter>
                 <Matchups />
-            </BrowserRouter>
+            </MemoryRouter>
         )
         const team1Dropdowns = await screen.findAllByTestId('team1-options');
         expect(team1Dropdowns.length).toBe(30);
@@ -69,9 +69,9 @@ describe("Matchups Page elements render correctly", () => {
 
     it('correct number of team dropdowns exist for team2', async () => {
         render(
-            <BrowserRouter>
+            <MemoryRouter>
                 <Matchups />
-            </BrowserRouter>
+            </MemoryRouter>
         )
         const team2Dropdowns = await screen.findAllByTestId('team2-options');
         expect(team2Dropdowns.length).toBe(30);
@@ -79,9 +79,9 @@ describe("Matchups Page elements render correctly", () => {
 
     it('correct number of year dropdowns exist for team2', async () => {
         render(
-            <BrowserRouter>
+            <MemoryRouter>
                 <Matchups />
-            </BrowserRouter>
+            </MemoryRouter>
         )
         const yearDropdowns = await screen.findAllByTestId('year-options');
         expect(yearDropdowns.length).toBe(5);

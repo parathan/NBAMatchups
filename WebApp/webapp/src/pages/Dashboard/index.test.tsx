@@ -1,7 +1,7 @@
 // import renderer from 'react-test-renderer'
-import { act, render, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import Dashboard from '.'
-import { BrowserRouter } from 'react-router-dom'
+import { MemoryRouter } from 'react-router-dom'
 import '@testing-library/jest-dom'
 import axios from 'axios'
 import { statsArray } from '../../constants/statArray'
@@ -23,9 +23,9 @@ describe('Dashboard Page elements render correctly', () => {
 
     it('renders dashboard header', async () => {
         render(
-            <BrowserRouter>
+            <MemoryRouter>
                 <Dashboard />
-            </BrowserRouter>
+            </MemoryRouter>
         );
         const headerArray = await screen.findAllByText(/Dashboard/i);
         expect(headerArray.length).toBe(2); // One in the page and one in navbar
@@ -33,9 +33,9 @@ describe('Dashboard Page elements render correctly', () => {
 
     it('renders team dropdown', async () => {
         render(
-            <BrowserRouter>
+            <MemoryRouter>
                 <Dashboard />
-            </BrowserRouter>
+            </MemoryRouter>
         );
         const teamDropdown = await screen.findByText(/Pick a Team/i);
         expect(teamDropdown).toBeInTheDocument();
@@ -43,9 +43,9 @@ describe('Dashboard Page elements render correctly', () => {
 
     it('renders field dropdown', async () => {
         render(
-            <BrowserRouter>
+            <MemoryRouter>
                 <Dashboard />
-            </BrowserRouter>
+            </MemoryRouter>
         );
         const fieldDropdown = await screen.findByText(/Pick a Field/i);
         expect(fieldDropdown).toBeInTheDocument();
@@ -53,9 +53,9 @@ describe('Dashboard Page elements render correctly', () => {
 
     it('correct number of team dropdowns exist', async () => {
         render(
-            <BrowserRouter>
+            <MemoryRouter>
                 <Dashboard />
-            </BrowserRouter>
+            </MemoryRouter>
         );
 
         const teamDropdowns = await screen.findAllByTestId('team-options')
@@ -64,9 +64,9 @@ describe('Dashboard Page elements render correctly', () => {
 
     it('correct number of field dropdowns exist', async () => {
         render(
-            <BrowserRouter>
+            <MemoryRouter>
                 <Dashboard />
-            </BrowserRouter>
+            </MemoryRouter>
         );
 
         const fieldDropdowns = await screen.findAllByTestId('field-options');
