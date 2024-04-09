@@ -11,3 +11,9 @@ export interface MatchupData {
     mean1: number,
     mean2: number
 }
+
+export interface OrderedPercentile {
+    team1: string,
+    team2: string,
+    statistics: MatchupData[]
+}

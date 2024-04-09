@@ -13,7 +13,7 @@ jest.mock('axios', () => ({
 }));
 
 
-describe('Dashboard Component elements render correctly', () => {
+describe('Dashboard Page elements render correctly', () => {
 
     beforeEach(() => {
         (axios.post as jest.Mock).mockResolvedValue({

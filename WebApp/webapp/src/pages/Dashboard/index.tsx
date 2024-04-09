@@ -4,7 +4,7 @@ import Layout from "../../components/Layout/Layout";
 import { CircularProgress, Grid } from '@mui/material';
 
 import axios from 'axios';
-import { totalTeamData, TeamData } from '../../interfaces/TotalTeamData';
+import { TotalTeamData, TeamData } from '../../interfaces/TotalTeamData';
 import { ChartFormat } from '../../interfaces/ChartFormat';
 import { teamsNames } from '../../constants/teamNames';
 import { statsArray } from '../../constants/statArray';
@@ -67,8 +67,8 @@ const options = {
 
 function Dashboard() {
 
-    const [data, setData] = useState<totalTeamData[]>([]) // Total Data to be fetched
-    const [meanData, setMeanData] = useState<totalTeamData>() // Mean Data will be saved seperately to be accessed more efficiently
+    const [data, setData] = useState<TotalTeamData[]>([]) // Total Data to be fetched
+    const [meanData, setMeanData] = useState<TotalTeamData>() // Mean Data will be saved seperately to be accessed more efficiently
     const [progress, setProgress] = useState(true) // For progress bar
     const [error, setError] = useState(false) // For Error message if error fetching data
     // TODO #5
@@ -91,7 +91,7 @@ function Dashboard() {
             setData(response.data)
             setProgress(false)
 
-            let meanData: totalTeamData | undefined = response.data.find((givenTeam: { teamName: string; }) => {
+            let meanData: TotalTeamData | undefined = response.data.find((givenTeam: { teamName: string; }) => {
                 return givenTeam.teamName === "MEAN"
             })
             setMeanData(meanData)
@@ -105,7 +105,7 @@ function Dashboard() {
 
     function establishData(team: string, field: string) {
         let labelName = statsMap.get(field) || ""
-        let teamData: totalTeamData | undefined = data.find(givenTeam => {
+        let teamData: TotalTeamData | undefined = data.find(givenTeam => {
             return givenTeam.teamName === team
         })
 

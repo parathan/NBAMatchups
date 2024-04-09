@@ -107,12 +107,12 @@ export interface TeamData {
     opp_fg3_pct_corner: number,
 }
 
-interface yearlyTeamData {
+interface YearlyTeamData {
     year: string,
     yearStats: TeamData
 }
 
-export interface totalTeamData {
+export interface TotalTeamData {
     teamName: string,
-    stats: yearlyTeamData[]
+    stats: YearlyTeamData[]
 }

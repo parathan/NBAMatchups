@@ -113,7 +113,7 @@ function Matchups() {
               <select onChange={changeTeam1} className={styles.dropdown}>
                 <option value="">Pick a Team</option>
                 {teamsNames.map( teamName =>
-                  <option value={teamName}>{teamName}</option>
+                  <option data-testid="team1-options" key={teamName} value={teamName}>{teamName}</option>
                 )};
               </select>
             </Grid>
@@ -121,7 +121,7 @@ function Matchups() {
               <select onChange={changeTeam2} className={styles.dropdown}>
                 <option value="">Pick a Team</option>
                 {teamsNames.map( teamName =>
-                  <option value={teamName}>{teamName}</option>
+                  <option data-testid="team2-options" key={teamName} value={teamName}>{teamName}</option>
                 )};
               </select>
             </Grid>
@@ -129,7 +129,7 @@ function Matchups() {
               <select onChange={changeYear} className={styles.dropdown}>
               <option value="">Pick a Year</option>
                 {years.map( year =>
-                  <option value={year}>{year}</option>
+                  <option data-testid="year-options" key={year} value={year}>{year}</option>
                 )};
               </select>
             </Grid>
