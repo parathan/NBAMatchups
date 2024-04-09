@@ -45,7 +45,7 @@ function Home() {
                 team's data, this feature predicts which team will win the matchup.
               </div>
               <button className={styles.featureButton} onClick={() => handleNavigate("/predictions")}>
-                  Win/Loss Prediction
+                  Go to Win/Loss Prediction
               </button>
               <div className={styles.description}>
                 The Dashboard feature visualizes the trends teams have had in the past few years for the
@@ -54,7 +54,7 @@ function Home() {
                 league average for this stat over the years.
               </div>
               <button className={styles.featureButton} onClick={() => handleNavigate("/dashboard")}>
-                  Dashboard
+                Go to Dashboard
               </button>
             </Grid>
             <Grid item xs={4}></Grid>
