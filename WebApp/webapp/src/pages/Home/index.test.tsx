@@ -2,7 +2,6 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import Home from '.'
 import { MemoryRouter } from 'react-router-dom'
 import '@testing-library/jest-dom'
-import Dashboard from '../Dashboard'
 
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
