@@ -4,7 +4,7 @@ import { Grid, Slider, ThemeProvider, createMuiTheme, createTheme, makeStyles } 
 
 import { MatchupData } from '../../interfaces/MatchupData';
 import { statsMap } from '../../constants/statDictionary';
-import { multby100 } from '../../util/math';
+import { multby100 } from '../../util/Math/math';
 
 function MatchupSlider(props: MatchupData) {
 
