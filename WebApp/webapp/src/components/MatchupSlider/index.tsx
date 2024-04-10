@@ -5,6 +5,7 @@ import { Grid, Slider, ThemeProvider, createMuiTheme, createTheme, makeStyles } 
 import { MatchupData } from '../../interfaces/MatchupData';
 import { statsMap } from '../../constants/statDictionary';
 import { multby100 } from '../../util/Math/math';
+import { perc2color } from '../../util/Color/color';
 
 function MatchupSlider(props: MatchupData) {
 
@@ -21,31 +22,10 @@ function MatchupSlider(props: MatchupData) {
     const [mean1, setMean1] = useState(props.team1Percentile1 < props.team2Percentile_Op ? props.mean1 : props.mean2)
     const [mean2, setMean2] = useState(props.team1Percentile1 >= props.team2Percentile_Op ? props.mean1 : props.mean2)
 
-    function perc2color(perc: number,min: number,max: number) {
-        var base = (max - min);
-
-        if (base == 0) { perc = 100; }
-        else {
-            perc = (perc - min) / base * 100; 
-        }
-        var r, g, b = 0;
-        if (perc < 50) {
-            r = 255;
-            g = Math.round(5.1 * perc);
-        }
-        else {
-            g = 255;
-            r = Math.round(510 - 5.10 * perc);
-        }
-        var h = r * 0x10000 + g * 0x100 + b * 0x1;
-        return '#' + ('000000' + h.toString(16)).slice(-6);
-    }
-
-
     const customTheme = createTheme({
         palette: {
             primary: {
-                main: perc2color(props.absPercentileDifference * 100, 0, 100),
+                main: perc2color(props.absPercentileDifference * 100),
             }
         }
     })
