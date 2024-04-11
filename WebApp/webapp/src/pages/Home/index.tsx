@@ -5,6 +5,11 @@ import styles from './index.module.css';
 import Layout from '../../components/Layout/Layout';
 import { Grid } from '@mui/material';
 
+/**
+ * The Home component is designed to be the landing page of that application. Provides descriptions
+ * and links to the other features/pages
+ * @returns 
+ */
 function Home() {
 
   const navigate = useNavigate();
