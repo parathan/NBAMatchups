@@ -14,10 +14,10 @@ function Layout({ children }: {
 }) {
     return (
         <div className={styles.layout}>
-            <div className={styles.navbar}>
+            <div className={styles.navbar} data-testid='navbar'>
                 <NavBar />
             </div>
-            <div className={styles.children}>
+            <div className={styles.children} data-testid='child'>
                 {children}
             </div>
         </div>
