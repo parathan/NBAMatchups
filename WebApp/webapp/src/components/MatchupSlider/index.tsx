@@ -33,9 +33,9 @@ function MatchupSlider(props: MatchupData) {
     return (
         <Grid container spacing={2} className={styles.slider}>
             <Grid item xs={3} className={styles.descriptionLeft}>
-                {field1}<br/>
-                Team Stat: {trad1}<br/>
-                League Average: {mean1}
+                <div>{field1}<br/></div>
+                <div>Team Stat: {trad1}<br/></div>
+                <div>League Average: {mean1}</div>
             </Grid>
             <Grid item xs={6}>
                 <ThemeProvider theme={customTheme}>
@@ -50,9 +50,9 @@ function MatchupSlider(props: MatchupData) {
                 </ThemeProvider>
             </Grid>
             <Grid item xs={3} className={styles.descriptionRight}>
-                {field2}<br/>
-                Team Stat: {trad2}<br/>
-                League Average: {mean2}
+                <div>{field2}<br/></div>
+                <div>Team Stat: {trad2}<br/></div>
+                <div>League Average: {mean2}</div>
             </Grid>
         </Grid>
     )
