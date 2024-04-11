@@ -31,17 +31,17 @@ export default MyComponent;
 
 
 ## Props
-field1: The name of the first statistical field to be displayed.  
-field2: The name of the second statistical field to be displayed.  
-team1Percentile1: The percentile value of the first team for the first statistical field.  
-team2Percentile_Op: The percentile value of the second team for the second statistical field.  
-team1Trad: The traditional statistic value of the first team.  
-team2Trad_Op: The traditional statistic value of the second team.  
-mean1: The league average value for the first statistical field.  
-mean2: The league average value for the second statistical field.  
-absPercentileDifference: The absolute percentile difference between the two teams.  
-traditionalDifference: Difference between the traditional statistic value.  
-PercentileDifference: The percentile difference between the two teams.  
+**field1**: The name of the first statistical field to be displayed.  
+**field2**: The name of the second statistical field to be displayed.  
+**team1Percentile1**: The percentile value of the first team for the first statistical field.  
+**team2Percentile_Op**: The percentile value of the second team for the second statistical field.  
+**team1Trad**: The traditional statistic value of the first team.  
+**team2Trad_Op**: The traditional statistic value of the second team.  
+**mean1**: The league average value for the first statistical field.  
+**mean2**: The league average value for the second statistical field.  
+**absPercentileDifference**: The absolute percentile difference between the two teams.  
+**traditionalDifference**: Difference between the traditional statistic value.  
+**PercentileDifference**: The percentile difference between the two teams.  
 
 
 ## State
@@ -51,7 +51,7 @@ This component does not have any internal state.
 This component does not have any functions.
 
 ## Dependencies
-Material-UI (Mui): A React UI framework used for styling and layout components. The component uses Slider, Grid, and ThemeProvider components from MUI.  
+**Material-UI (Mui)**: A React UI framework used for styling and layout components. The component uses Slider, Grid, and ThemeProvider components from MUI.  
 
 ## External Resources
 No external resources were used in this component.  
