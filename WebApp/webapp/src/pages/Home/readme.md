@@ -28,11 +28,11 @@ This component does not have any internal state.
 **handleNavigate(route: string)**: Function to handle navigation to different pages based on the provided route string.  
 
 ## Dependencies
-react-router-dom: Provides navigation functionality for routing within the React application.  
-Material-UI (Mui): A React UI framework used for styling and layout components.  
+**react-router-dom**: Provides navigation functionality for routing within the React application.  
+**Material-UI (Mui)**: A React UI framework used for styling and layout components.  
 
 ## External Resources
-Material-UI: A popular React UI framework used for styling and layout components.
+**Material-UI**: A popular React UI framework used for styling and layout components.
 
 ## Styles
 The component uses CSS modules for styling. The main styles are defined in the index.module.css file.
