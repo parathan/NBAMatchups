@@ -5,7 +5,7 @@
 The Dashboard component is a React component designed to display statistical data for different teams over multiple years. It allows users to select a team and a specific statistical field to visualize data using a line chart. The line chart then displays the data for that team as well as the league average for that statistic over the given years.
 
 ## Usage
-`
+```
 import Dashboard from './Dashboard';
 
 function App() {
@@ -15,7 +15,8 @@ function App() {
 }
 
 export default App;
-`
+```
+
 
 ## Props
 This component does not accept any props.
