@@ -22,7 +22,7 @@ export default App;
 This component does not accept any props.
 
 ## State
-**formVisible**: Boolean state to control the visibility of the form for inputting team names and year.  
+| formVisible |  Boolean state to control the visibility of the form for inputting team names and year |
 **progressVisible**: Boolean state to control the visibility of the progress indicator while data is being fetched.  
 **errorVisible**: Boolean state to control the visibility of error messages.  
 **successVisible**: Boolean state to control the visibility of the matchup results.  
