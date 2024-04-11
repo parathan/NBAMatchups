@@ -10,6 +10,11 @@ import axios from 'axios';
 import { Alert, CircularProgress, Grid } from '@mui/material';
 
 
+/**
+ * This matchups page allows users to compare two teams based off opposing stats, and orders these
+ * comparisons based on biggest percentile differences.
+ * @returns 
+ */
 function Matchups() {
 
   const [formVisible, setFormVisible] = useState(true)
