@@ -4,6 +4,12 @@ import styles from './index.module.css'
 
 import { Link } from "react-router-dom"
 
+/**
+ * The NavBar component provides navigation links to different pages of the application. 
+ * It utilizes the react-pro-sidebar library to create a sidebar menu with clickable 
+ * items that direct users to various sections of the application.
+ * @returns 
+ */
 function NavBar() {
     return (
         // https://codesandbox.io/p/sandbox/react-dashboard-pnm6fh?file=%2Fsrc%2Fpages%2Fglobal%2Fsidebar%2FMyProSidebar.jsx%3A51%2C6-51%2C9
