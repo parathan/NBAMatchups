@@ -64,7 +64,12 @@ const options = {
   };
 
 
-
+/**
+ * This Dashboard page is used to show the trends of a team's stats over the past few years, and compare them to the league average for that 
+ * stat over the same time period. It take an API call from the /teams/allTeams route to get the data, and use the ChartJS library to
+ * display this data.
+ * @returns 
+ */
 function Dashboard() {
 
     const [data, setData] = useState<TotalTeamData[]>([]) // Total Data to be fetched
@@ -72,9 +77,9 @@ function Dashboard() {
     const [progress, setProgress] = useState(true) // For progress bar
     const [error, setError] = useState(false) // For Error message if error fetching data
     // TODO #5
-    const [startYear, setStartYear] = useState(2019) // Start year of data used
-    const [endYear, setEndYear] = useState(2023) // End year of data used
-    const [years, setYears] = useState<string[]>(["2019","2020","2021","2022","2023"]) // Years that will be used as labels
+    const startYear: number = 2019;
+    const endYear: number = 2023;
+    const years: string[] = ["2019","2020","2021","2022","2023"]
     const [team, setTeam] = useState("") // The team name who's data will be displayed
     const [field, setField] = useState("") // The team's field name that will be displayed
     const [chartData, setChartData] = useState<ChartFormat>(testData)
