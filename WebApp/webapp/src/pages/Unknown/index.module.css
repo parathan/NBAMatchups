@@ -1,0 +1,41 @@
+.header {
+    margin-top: 10%;
+    text-align: center;
+    font-size: calc(10px + 2vmin);
+    color: var(--header-font-colour);
+}
+
+.description {
+    margin-top: 3vh;
+    color: var(--p-font-colour);
+    text-align: center;
+}
+
+.featureButton {
+    margin: 2% auto;
+  
+    background-color: var(--secondary-colour);
+    border-radius: 4px;
+    border-style: none;
+    box-sizing: border-box;
+    color: var(--p-font-colour);
+    cursor: pointer;
+    display: block;
+    font-family: "Farfetch Basis","Helvetica Neue",Arial,sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.5;
+    outline: none;
+    overflow: hidden;
+    padding: 9px 20px 8px;
+    text-align: center;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.featureButton:hover,
+.featureButton:focus {
+    opacity: .75;
+}
