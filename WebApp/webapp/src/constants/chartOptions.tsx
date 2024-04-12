@@ -1,3 +1,4 @@
+// Options used for the ChartJS configuration
 export const options = {
     responsive: true,
     plugins: {

@@ -1,3 +1,9 @@
+
+/**
+ * 2d Array for statistics where for each element [x, y], x is the abbreviation of the statistic used
+ * in the API responses, and y is the full phrase of the statistic.
+ * Used to map elements for a select option, as statsMap could not be used for that.
+ */
 export const statsArray = [
     ['g','Games Played'],
     ['mp','Minutes Played'],

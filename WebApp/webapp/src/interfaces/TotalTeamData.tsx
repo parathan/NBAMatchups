@@ -1,3 +1,8 @@
+// These are interfaces that will be used to accomodate the response from the /teams/allTeams request
+
+/**
+ * TeamData is the interface for an individual's team data for a single year
+ */
 export interface TeamData {
     _id: string,
     g: number,
@@ -107,12 +112,20 @@ export interface TeamData {
     opp_fg3_pct_corner: number,
 }
 
+/**
+ * YearlyTeamData is an interface that packages the TeamData as well as giving information on the year
+ * for which the data was taken from.
+ */
 interface YearlyTeamData {
-    year: string,
+    year: string, // The year of the data is taken from
     yearStats: TeamData
 }
 
+/**
+ * TotalTeamData is an interface that packages a list of YearlyTeamData with the team
+ * the data belongs to
+ */
 export interface TotalTeamData {
-    teamName: string,
+    teamName: string, // The team the data is taken from
     stats: YearlyTeamData[]
 }

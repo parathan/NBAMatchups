@@ -1,3 +1,4 @@
+// LIst of all team names in alphabetical order
 export const teamsNames = [
     "Atlanta Hawks",
     "Boston Celtics",

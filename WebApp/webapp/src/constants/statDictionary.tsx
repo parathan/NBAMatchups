@@ -1,3 +1,8 @@
+/**
+ * Dictionary for statistics where each key is the abbreviation of the statistic used
+ * in the API responses, and the value is the full phrase of the statistic.
+ * Used in MatchupSlider component to convert value given from api response to user-facing phrase.
+ */
 export const statsMap = new Map<string, string>([
     ['g','Games Played'],
     ['mp','Minutes Played'],
