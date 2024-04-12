@@ -1,3 +1,10 @@
+/**
+ * This function takes a percentage value, between 0 and 100 and returns a colour
+ * representing the value, with the closer to 0 the percentage is, the closer to the colour red
+ * it is, and the closer it is to 100, the more green it is. Values closer to the middle will be yellow.
+ * @param perc the given percentage that is in number format
+ * @returns String representing hex value of a color
+ */
 export function perc2color(perc: number) {
     let min: number = 0;
     let max: number = 100;
