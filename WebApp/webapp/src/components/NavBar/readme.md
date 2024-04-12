@@ -29,8 +29,8 @@ This component does not have any internal state.
 This component does not have any functions.
 
 ## Dependencies
-react-pro-sidebar: A React library for creating responsive and customizable sidebar menus.  
-@mui/material: The Material-UI library for UI components, used for styling.  
+**react-pro-sidebar**: A React library for creating responsive and customizable sidebar menus.  
+**@mui/material**: The Material-UI library for UI components, used for styling.  
 
 ## External Resources
 No external resources were used in this component.  
