@@ -125,7 +125,7 @@ function Matchups() {
           </p>
         </div>
         {formVisible ? 
-          <div /*className={formVisible ? styles.notHidden : styles.hidden}*/>
+          <div>
             <div className={styles.description}>
               <p>
                 This is the Team Matchups feature <br/>
@@ -163,9 +163,6 @@ function Matchups() {
                 <button onClick={onSubmit} className={styles.submit}>Check Matchup</button>
               </Grid>
             </Grid>
-            <div>
-              
-            </div>
           </div>
           :
           null
