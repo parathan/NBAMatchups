@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import styles from './index.module.css';
 import Layout from "../../components/Layout/Layout";
-import { CircularProgress, Grid } from '@mui/material';
+import { Alert, CircularProgress, Grid } from '@mui/material';
 
 import axios from 'axios';
 import { TotalTeamData, TeamData } from '../../interfaces/TotalTeamData';
@@ -77,6 +77,7 @@ function Dashboard() {
     const [meanData, setMeanData] = useState<TotalTeamData>() // Mean Data will be saved seperately to be accessed more efficiently
     const [progress, setProgress] = useState(true) // For progress bar
     const [error, setError] = useState(false) // For Error message if error fetching data
+    const [errMessage, setErrorMessage] = useState("Error")
     // TODO #5
     const startYear: number = 2019;
     const endYear: number = 2023;
@@ -127,6 +128,8 @@ function Dashboard() {
             .catch((error) => {
                 setProgress(false)
                 setError(true)
+                let errorMessage = "Error retrieving from Server\n"
+                setErrorMessage(errorMessage.concat(error))
             })
         }
 
@@ -193,39 +196,49 @@ function Dashboard() {
         <Layout>
             <div className={styles.dashboard}>
                 <div className={styles.header}>Dashboard</div>
-                <div className={`${progress ? styles.notHidden : styles.hidden}`}>
-                    <CircularProgress />
-                </div>
-                <div className={`${error ? styles.notHidden : styles.hidden}`}>
-                    Errors getting data
-                </div>
-                <div className={`${error || progress ? styles.hidden : styles.notHidden}`}>
-                    <Grid container spacing={2} className={styles.input}>
-                        <Grid item xs={2}></Grid>
-                        <Grid item xs={4}>
-                        <select onChange={changeTeam} className={styles.dropdown}>
-                            <option key={""} value="">Pick a Team</option>
-                            {teamsNames.map( teamName =>
-                                <option data-testid="team-options" key={teamName} value={teamName}>{teamName}</option>
-                            )};
-                        </select>
+                {progress ? <CircularProgress /> : null}
+                {
+                    error ? 
+                    <div className={styles.errMessage}>
+                        <Alert severity='error'>
+                            {errMessage}
+                        </Alert>
+                    </div>
+                    : 
+                    null}
+                {
+                    error || progress ? 
+                    null
+                    :
+                    <div>
+                        <Grid container spacing={2} className={styles.input}>
+                            <Grid item xs={2}></Grid>
+                            <Grid item xs={4}>
+                            <select onChange={changeTeam} className={styles.dropdown}>
+                                <option key={""} value="">Pick a Team</option>
+                                {teamsNames.map( teamName =>
+                                    <option data-testid="team-options" key={teamName} value={teamName}>{teamName}</option>
+                                )};
+                            </select>
+                            </Grid>
+                            <Grid item xs={4}>
+                            <select onChange={changeField} className={styles.dropdown}>
+                                <option key={""} value="">Pick a Field</option>
+                                {statsArray.map( stat =>
+                                    <option data-testid="field-options" key={stat[0]} value={stat[0]}>{stat[1]}</option>
+                                )}
+                            </select>
+                            </Grid>
+                            <Grid item xs={2}></Grid>
+                            <Grid item xs={3}></Grid>
+                            <Grid item xs={6}>
+                                <Line options={options} data={chartData}/>
+                            </Grid>
+                            <Grid item xs={3}></Grid>
                         </Grid>
-                        <Grid item xs={4}>
-                        <select onChange={changeField} className={styles.dropdown}>
-                            <option key={""} value="">Pick a Field</option>
-                            {statsArray.map( stat =>
-                                <option data-testid="field-options" key={stat[0]} value={stat[0]}>{stat[1]}</option>
-                            )}
-                        </select>
-                        </Grid>
-                        <Grid item xs={2}></Grid>
-                        <Grid item xs={3}></Grid>
-                        <Grid item xs={6}>
-                            <Line options={options} data={chartData}/>
-                        </Grid>
-                        <Grid item xs={3}></Grid>
-                    </Grid>
-                </div>
+                    </div>
+                }
+                
             </div>
         </Layout>
     )

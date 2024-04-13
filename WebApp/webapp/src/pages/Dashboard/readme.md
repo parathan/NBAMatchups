@@ -26,6 +26,7 @@ This component does not accept any props.
 **meanData**: A TotalTeamData object containing the mean statistical data across all teams taken from the API response  
 **progress**: A boolean value indicating whether data is being fetched from the API (true) or not (false).  
 **error**: A boolean value indicating whether an error occurred while fetching data from the API (true) or not (false).  
+**errMessage**: String state to store error messages.  
 **team**: The name of the selected team for which data will be displayed.  
 **field**: The selected statistical field for which data will be displayed.  
 **chartData**: A ChartFormat object containing data for the line chart.  
