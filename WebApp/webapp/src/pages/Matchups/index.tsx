@@ -8,6 +8,7 @@ import { teamsNames } from '../../constants/teamNames';
 import { years } from '../../constants/years';
 import axios from 'axios';
 import { Alert, CircularProgress, Grid } from '@mui/material';
+import { orderedPerentile, orderedPerentileCached } from '../../constants/routes';
 
 
 /**
@@ -60,11 +61,12 @@ function Matchups() {
     }
   }
 
+  // Gets data from route that uses redis cache. If it fails it uses route that doesnt have cache
   function getData() {
     setFormVisible(false)
     setProgressVisible(true)
     setErrorVisible(false)
-    axios.post(process.env.REACT_APP_API_URL + '/teams/OrderedPercentile', {
+    axios.post(process.env.REACT_APP_API_URL + orderedPerentileCached, {
       team1: team1,
       team2: team2,
       year: year
@@ -78,6 +80,23 @@ function Matchups() {
     })
     .catch((error) => {
       console.log(error)
+      getUncachedData();
+    })
+  }
+
+  function getUncachedData() {
+    axios.post(process.env.REACT_APP_API_URL + orderedPerentile, {
+      team1: team1,
+      team2: team2,
+      year: year
+    })
+    .then((response) => {
+      setProgressVisible(false)
+      setSuccessVisible(true)
+      setData(response.data.statistics)
+      setImageClass(styles.teamName)
+    })
+    .catch((error) => {
       setProgressVisible(false)
       setErrorVisible(true)
       let errorMessage = "Error retrieving from Server\n"

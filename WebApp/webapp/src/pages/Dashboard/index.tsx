@@ -21,6 +21,7 @@ import {
   } from 'chart.js';
   import { Line } from 'react-chartjs-2';
 import { statsMap } from '../../constants/statDictionary';
+import { allTeams, allTeamsCached } from '../../constants/routes';
 
 const testData: ChartFormat = {
     labels: ["2019", "2020", "2021", "2022", "2023"],
@@ -88,24 +89,49 @@ function Dashboard() {
     // In development, it will run twice due to strict mode being on. This won't happen in production, however.
     // https://byby.dev/useeffect-run-twice
     useEffect(() => {
-        axios.post(process.env.REACT_APP_API_URL + '/teams/allTeams', {
-            startYear: startYear,
-            endYear: endYear
-        })
-        .then((response) => {
-            setData(response.data)
-            setProgress(false)
-
-            let meanData: TotalTeamData | undefined = response.data.find((givenTeam: { teamName: string; }) => {
-                return givenTeam.teamName === "MEAN"
+        // Gets data from route that uses redis cache. If it fails it uses route that doesnt have cache
+        const getCachedData = async () => {
+            axios.post(process.env.REACT_APP_API_URL + allTeamsCached, {
+                startYear: startYear,
+                endYear: endYear
             })
-            setMeanData(meanData)
-        })
-        .catch((error) => {
-            console.log(error)
-            setProgress(false)
-            setError(true)
-        })
+            .then((response) => {
+                setData(response.data)
+                setProgress(false)
+    
+                let meanData: TotalTeamData | undefined = response.data.find((givenTeam: { teamName: string; }) => {
+                    return givenTeam.teamName === "MEAN"
+                })
+                setMeanData(meanData)
+            })
+            .catch((error) => {
+                console.log(error)
+                getUncachedData();
+            })
+        }
+
+        const getUncachedData = async () => {
+            axios.post(process.env.REACT_APP_API_URL + allTeams, {
+                startYear: startYear,
+                endYear: endYear
+            })
+            .then((response) => {
+                setData(response.data)
+                setProgress(false)
+    
+                let meanData: TotalTeamData | undefined = response.data.find((givenTeam: { teamName: string; }) => {
+                    return givenTeam.teamName === "MEAN"
+                })
+                setMeanData(meanData)
+            })
+            .catch((error) => {
+                setProgress(false)
+                setError(true)
+            })
+        }
+
+        getCachedData();
+        
     }, []) // empty array so this only updates once on render
 
     function establishData(team: string, field: string) {
