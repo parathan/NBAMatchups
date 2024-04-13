@@ -8,15 +8,6 @@
     animation: fade-out 2.5s;
 }
 
-.hidden {
-    visibility: hidden;
-    height: 0;
-}
-
-.notHidden {
-    visibility: visible;
-}
-
 .header {
     color: var(--header-font-colour);
     font-size: calc(10px + 3vmin);;

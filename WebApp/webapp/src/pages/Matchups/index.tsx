@@ -124,68 +124,79 @@ function Matchups() {
             Team Matchups
           </p>
         </div>
-        <div className={formVisible ? styles.notHidden : styles.hidden}>
-          <div className={styles.description}>
-            <p>
-              This is the Team Matchups feature <br/>
-              Please input both teams that you want to compare and the year that you want to use 
-            </p>
+        {formVisible ? 
+          <div /*className={formVisible ? styles.notHidden : styles.hidden}*/>
+            <div className={styles.description}>
+              <p>
+                This is the Team Matchups feature <br/>
+                Please input both teams that you want to compare and the year that you want to use 
+              </p>
+            </div>
+            <Grid container spacing={2} className={styles.input}>
+              <Grid item xs={2.25}></Grid>
+              <Grid item xs={2.5}>
+                <select onChange={changeTeam1} className={styles.dropdown}>
+                  <option value="">Pick a Team</option>
+                  {teamsNames.map( teamName =>
+                    <option data-testid="team1-options" key={teamName} value={teamName}>{teamName}</option>
+                  )};
+                </select>
+              </Grid>
+              <Grid item xs={2.5}>
+                <select onChange={changeTeam2} className={styles.dropdown}>
+                  <option value="">Pick a Team</option>
+                  {teamsNames.map( teamName =>
+                    <option data-testid="team2-options" key={teamName} value={teamName}>{teamName}</option>
+                  )};
+                </select>
+              </Grid>
+              <Grid item xs={2.5}>
+                <select onChange={changeYear} className={styles.dropdown}>
+                <option value="">Pick a Year</option>
+                  {years.map( year =>
+                    <option data-testid="year-options" key={year} value={year}>{year}</option>
+                  )};
+                </select>
+              </Grid>
+              <Grid item xs={2.25}></Grid>
+              <Grid item xs={12}>
+                <button onClick={onSubmit} className={styles.submit}>Check Matchup</button>
+              </Grid>
+            </Grid>
+            <div>
+              
+            </div>
           </div>
-          <Grid container spacing={2} className={styles.input}>
-            <Grid item xs={2.25}></Grid>
-            <Grid item xs={2.5}>
-              <select onChange={changeTeam1} className={styles.dropdown}>
-                <option value="">Pick a Team</option>
-                {teamsNames.map( teamName =>
-                  <option data-testid="team1-options" key={teamName} value={teamName}>{teamName}</option>
-                )};
-              </select>
-            </Grid>
-            <Grid item xs={2.5}>
-              <select onChange={changeTeam2} className={styles.dropdown}>
-                <option value="">Pick a Team</option>
-                {teamsNames.map( teamName =>
-                  <option data-testid="team2-options" key={teamName} value={teamName}>{teamName}</option>
-                )};
-              </select>
-            </Grid>
-            <Grid item xs={2.5}>
-              <select onChange={changeYear} className={styles.dropdown}>
-              <option value="">Pick a Year</option>
-                {years.map( year =>
-                  <option data-testid="year-options" key={year} value={year}>{year}</option>
-                )};
-              </select>
-            </Grid>
-            <Grid item xs={2.25}></Grid>
-            <Grid item xs={12}>
-              <button onClick={onSubmit} className={styles.submit}>Check Matchup</button>
-            </Grid>
-          </Grid>
-          <div>
-            
+          :
+          null
+        }
+        {progressVisible ? <CircularProgress /> : null}
+        {errorVisible ? 
+          <div className={styles.errMessage}>
+            <Alert severity='error'>
+              {errMessage}
+            </Alert>
           </div>
-        </div>
-        <div className={`${progressVisible ? styles.notHidden : styles.hidden}`}>
-          <CircularProgress />
-        </div>
-        <div className={`${styles.errMessage} ${errorVisible ? styles.notHidden : styles.hidden}`}>
-          <Alert severity='error'>
-            {errMessage}
-          </Alert>
-        </div>
-        <Grid container spacing={2} className={`${imageClass} ${successVisible ? styles.notHidden : styles.hidden}`}>
-          <Grid item xs={4}>
-            {team1}<br/>
-            <img src={'/Assets/NBALogos/' + team1image} alt={team1} className={styles.logo}/>
+          :
+          null
+        }
+        {successVisible ?
+          <Grid container spacing={2} className={imageClass}>
+            <Grid item xs={4}>
+              {team1}<br/>
+              <img src={'/Assets/NBALogos/' + team1image} alt={team1} className={styles.logo}/>
+            </Grid>
+            <Grid item xs={4}>
+            </Grid>
+            <Grid item xs={4}>
+              {team2}<br/>
+              <img src={'/Assets/NBALogos/' + team2image} alt={team2} className={styles.logo}/>
+            </Grid>
           </Grid>
-          <Grid item xs={4}>
-          </Grid>
-          <Grid item xs={4}>
-            {team2}<br/>
-            <img src={'/Assets/NBALogos/' + team2image} alt={team2} className={styles.logo}/>
-          </Grid>
-        </Grid>
+          :
+          null
+        }
+        
         {
           data.map( sliderData =>
             <MatchupSlider 
