@@ -58,3 +58,9 @@
   color: var(--p-font-colour);
   text-align: justify;
 }
+
+.acknowledgmenet {
+  margin-top: 10%;
+  font-size: calc(5px + 2vmin);
+  color: var(--header-font-colour);
+}

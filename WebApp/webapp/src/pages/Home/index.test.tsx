@@ -18,6 +18,16 @@ describe('Home Page', () => {
         const header = await screen.findByText(/Welcome to NBAMatchups/i);
         expect(header).toBeInTheDocument();
     })
+
+    it('contains acknowledgement', () => {
+        render(
+            <MemoryRouter>
+                <Home />
+            </MemoryRouter>
+        )
+        const acknowledgement = screen.getByText("Acknowledgement");
+        expect(acknowledgement).toBeInTheDocument();
+    })
     
     it('navigates to matchups page when "Go to Team Matchups" button is clicked', async () => {
         const navigate = jest.fn();

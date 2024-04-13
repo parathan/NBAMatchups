@@ -61,6 +61,14 @@ function Home() {
               <button className={styles.featureButton} onClick={() => handleNavigate("/dashboard")}>
                 Go to Dashboard
               </button>
+              <div className={styles.acknowledgmenet}>
+                Acknowledgement
+              </div>
+              <div className={styles.description}>
+                The data that is presented from this website was all taken from basketballreference.com.
+                All raw data was scraped from their website, and then transformed for the purposes of this
+                application. All credit for the raw data goes to them.
+              </div>
             </Grid>
             <Grid item xs={4}></Grid>
           </Grid>
