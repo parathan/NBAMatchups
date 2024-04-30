@@ -41,11 +41,35 @@ def calcData(year: str):
 
     df = webScraper(year)
     col = df.pop('Name')
-    # writeStatsToDb('RankPercentile', calcRank(df, col), year)
     writeStatsToDb('Percentile', calcPercentile(df, col), year)
     writeStatsToDb('Zscore', calcZscore(df, col), year)
     writeStatsToDb('Mean', calcMean(df), year)
     writeStatsToDb('Std', calcStd(df), year)
+
+def allData(year: str):
+    """Scrape data and calculate statistics for it and write both raw and processed data to database
+
+    Args:
+        year (str): year to scrape data from and write data to
+
+    Raises:
+        TypeError: if year is not a string raise an error
+    """
+
+    if type(year) is not str:
+        raise TypeError("year is not a string")
+    
+    database = 'NBAMatchups_test'
+    collection = 'NbaTeamStats_'
+    df = webScraper(year)
+    writeData(df, year, database, collection)
+
+    col = df.pop('Name')
+    writeStatsToDb('Percentile', calcNormalizedPercentile(df, col), year)
+    writeStatsToDb('Zscore', calcZscore(df, col), year)
+    writeStatsToDb('Mean', calcMean(df), year)
+    writeStatsToDb('Std', calcStd(df), year)
+
 
 # Function does not provide meaningful improvement in performance but is here for future reference/improvement
 def calcDataConcurrently(year: str):
@@ -68,23 +92,6 @@ def calcDataConcurrently(year: str):
     p2.join()
     p3.join()
 
-def calcRank(df: pd.DataFrame, col: pd.Series) -> pd.DataFrame:
-    """Calculates rank percentiles for dataframe given to it
-
-    Args:
-        df (pd.DataFrame): scraped data dataframe to be calculated on
-
-    Returns:
-        pd.DataFrame: 2d dataframe with z-scores from original dataframe
-    """
-    if type(df) is not pd.DataFrame:
-        raise TypeError("df is not a dataframe")
-    
-
-    df2 = df.rank(numeric_only=True, pct=True).round(3)
-    df2.insert(0, col.name, col)
-    return df2
-
 def calcPercentile(df: pd.DataFrame, col: pd.Series) -> pd.DataFrame:
     """Calculates percentiles for dataframe given to it. 
         Converts to Zscore, then uses cdf to find cumulative probability
@@ -104,6 +111,26 @@ def calcPercentile(df: pd.DataFrame, col: pd.Series) -> pd.DataFrame:
             df2[column] = df2[column].map(lambda x: x * -1)
     df2 = df2.map(norm.cdf).round(3)
     df2.insert(0, col.name, col)
+    return df2
+
+def calcNormalizedPercentile(df: pd.DataFrame, col: pd.Series) -> pd.DataFrame:
+    """Calculates percentiles for dataframes by normalizing the data
+
+    Args:
+        df (pd.DataFrame): scraped data dataframe to be calculated on
+        col (pd.Series): team name column to be added afterward
+
+    Raises:
+        TypeError: if df is not a pandas dataframe raise an error
+
+    Returns:
+        pd.DataFrame: 2d dataframe with normalized values from original dataframe
+    """
+    if type(df) is not pd.DataFrame:
+        raise TypeError('df is not a dataframe')
+    
+    df2 = (df-df.mean())/df.std()
+    df2.insert(0,col.name, col)
     return df2
 
 def calcZscore(df: pd.DataFrame, col: pd.Series) -> pd.DataFrame:
@@ -167,7 +194,7 @@ def writeStatsToDb(stat: str, df: pd.DataFrame, year: str):
     if type(year) is not str:
         raise TypeError("year is not a string")
 
-    database = 'NBAMatchups' + stat
+    database = 'NBAMatchups' + stat + '_test'
     collection = 'NbaTeamStats' + stat + "_"
     writeData(df, year, database, collection)
     
