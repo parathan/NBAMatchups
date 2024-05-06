@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: '#222222',
+      paddingHorizontal: '10%',
     //   alignItems: 'center',
     //   justifyContent: 'center',
     },
@@ -45,9 +46,12 @@ const styles = StyleSheet.create({
     text: {
         color: '#dddddd',
         marginTop: '5%',
+        fontSize: 15,
+        textAlign: 'center',
     },
     buttonLabel: {
         color: '#dddddd',
+        fontSize: 20,
     },
     button: {
         backgroundColor: '#444444',
@@ -55,9 +59,10 @@ const styles = StyleSheet.create({
         borderStyle: 'none',
         fontSize: '16sp',
         overflow: 'none',
-        textAlign: 'center',
-        marginHorizontal: 15,
+        marginHorizontal: '5%',
+        marginVertical: '5%',
         paddingVertical: 12,
-        paddingHorizontal: 32,
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 });
