@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
+from .ML import lr_predict
 # Create your views here.
 
 @api_view(['GET'])
@@ -19,19 +20,19 @@ def LR_pred(request):
         BLK = request.GET.get("BLK")
         TOV = request.GET.get("TOV")
         PF = request.GET.get("PF")
-        if not validateGETParam(FGM, FGpercent, threeMade, FTM, ftpercent, DREB, OREB, AST, STL, BLK, TOV, PF):
+        params = [FGM, FGpercent, threeMade, FTM, ftpercent, DREB, OREB, AST, STL, BLK, TOV, PF]
+        if not validateGETParam(params):
             return {"Error" : "Missing or Bad Request Parameter"}
 
-        first_name = request.GET.get("first_name")
-        sort = request.GET.get("sort")
-        json = {first_name : first_name,
-                "sort" : sort ,
-                "work" : "works"} 
+        params = list(map(float, params))
+        predict = lr_predict.predict(params)
+        json = {
+            "prediction" : predict
+        }
 
-    return JsonResponse(json)
+    return json
 
-def validateGETParam(FGM, FGpercent, threeMade, FTM, ftpercent, DREB, OREB, AST, STL, BLK, TOV, PF):
-    params = [FGM, FGpercent, threeMade, FTM, ftpercent, DREB, OREB, AST, STL, BLK, TOV, PF]
+def validateGETParam(params):
     for param in params:
         try:
             float(param)
