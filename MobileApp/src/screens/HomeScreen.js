@@ -65,20 +65,4 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    buttonLabelPressed: {
-        color: '#dddddd',
-        fontSize: 20,
-    },
-    buttonPressed: {
-        backgroundColor: 'red',
-        borderRadius: 4,
-        borderStyle: 'none',
-        fontSize: '16sp',
-        overflow: 'none',
-        marginHorizontal: '5%',
-        marginVertical: '5%',
-        paddingVertical: 12,
-        justifyContent: 'center',
-        alignItems: 'center',
-    }
 });
