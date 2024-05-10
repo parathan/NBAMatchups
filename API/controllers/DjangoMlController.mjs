@@ -8,7 +8,7 @@ const axios = require('axios');
     returns different traditional and zscore data for both teams given
     and mean and std for league in general.
 */
-export const LRpred = async (req, res, next) => {
+export const findLRPred = async (req, res, next) => {
     try {
         const errors = validationResult(req);
 
