@@ -2,6 +2,13 @@ import { useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+/**
+ * HomeScreen is the initial screen a user will see when they open the app.
+ * It contains short descriptions about the features in the app, as well as buttons that link
+ * to the respective features' screens.
+ * @param {navigation} navigation prop that is used for navigation to other screens 
+ * @returns 
+ */
 export default function HomeScreen({navigation}) {
     return (
         <View style={styles.container}>
@@ -34,7 +41,7 @@ export default function HomeScreen({navigation}) {
                 <Text style={styles.buttonLabel}>Go to Dashboard</Text>
             </TouchableOpacity>
 
-            <StatusBar style="auto" />
+            <StatusBar style="light" />
         </View>
     );
 }
@@ -48,7 +55,7 @@ const styles = StyleSheet.create({
     //   justifyContent: 'center',
     },
     header: {
-        marginTop: '10%',
+        marginTop: '25%',
         textAlign: 'center',
         color: '#ffffff',
         fontSize: 30, //TODO #10

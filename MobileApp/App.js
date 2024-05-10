@@ -11,11 +11,14 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Matchups" component={MatchupsScreen} />
-        <Stack.Screen name="Dashboard" component={DashboardScreen} />
-        <Stack.Screen name="Prediction" component={PredictiveScreen} />
+      <Stack.Navigator
+        initialRouteName="Home"
+        screenOptions={{headerShown: false}}
+      >
+        <Stack.Screen name="Home" component={HomeScreen}/>
+        <Stack.Screen name="Matchups" component={MatchupsScreen}/>
+        <Stack.Screen name="Dashboard" component={DashboardScreen}/>
+        <Stack.Screen name="Prediction" component={PredictiveScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
