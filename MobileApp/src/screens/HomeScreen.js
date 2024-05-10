@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Button, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Button, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function HomeScreen() {
     return (
@@ -8,28 +8,21 @@ export default function HomeScreen() {
             <Text style={styles.text}>
                 Jump into Matchups, and compare teams based on their opposing stats.
             </Text>
-            <Pressable 
-                style={({ pressed }) => [
-                    {
-                        backgroundColor: pressed ? 'red' : '#444444'
-                    },
-                    styles.button
-                ]}
-            >
+            <TouchableOpacity style={styles.button}>
                 <Text style={styles.buttonLabel}>Go to Team Matchups</Text>
-            </Pressable>
+            </TouchableOpacity>
             <Text style={styles.text}>
                 Explore our predictive feature, that predicts the winner of a given nba game
             </Text>
-            <Pressable style={styles.button}>
+            <TouchableOpacity style={styles.button}>
                 <Text style={styles.buttonLabel}>Go to Win/Loss Prediction</Text>
-            </Pressable>
+            </TouchableOpacity>
             <Text style={styles.text}>
                 Dig into Dashboard, allowing you to see trends of a teams stats for the past several years
             </Text>
-            <Pressable style={styles.button}>
+            <TouchableOpacity style={styles.button}>
                 <Text style={styles.buttonLabel}>Go to Dashboard</Text>
-            </Pressable>
+            </TouchableOpacity>
 
             <StatusBar style="auto" />
         </View>
