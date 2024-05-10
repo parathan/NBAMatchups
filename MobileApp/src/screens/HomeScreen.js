@@ -1,26 +1,36 @@
+import { useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
     return (
         <View style={styles.container}>
             <Text style={styles.header}>Welcome to NBAMatchups</Text>
             <Text style={styles.text}>
                 Jump into Matchups, and compare teams based on their opposing stats.
             </Text>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity 
+                style={styles.button}
+                onPress={() => navigation.navigate("Matchups")}
+            >
                 <Text style={styles.buttonLabel}>Go to Team Matchups</Text>
             </TouchableOpacity>
             <Text style={styles.text}>
                 Explore our predictive feature, that predicts the winner of a given nba game
             </Text>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity 
+                style={styles.button}
+                onPress={() => navigation.navigate("Prediction")}
+            >
                 <Text style={styles.buttonLabel}>Go to Win/Loss Prediction</Text>
             </TouchableOpacity>
             <Text style={styles.text}>
                 Dig into Dashboard, allowing you to see trends of a teams stats for the past several years
             </Text>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity 
+                style={styles.button}
+                onPress={() => navigation.navigate("Dashboard")}
+            >
                 <Text style={styles.buttonLabel}>Go to Dashboard</Text>
             </TouchableOpacity>
 

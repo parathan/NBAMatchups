@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { StyleSheet, Text } from "react-native";
 
-export default function DashboardScreen() {
+export default function DashboardScreen({navigation}) {
     return (
         <View style={styles.container}>
             <Text style={styles.header}>Dashboard Screen</Text>

@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { StyleSheet, Text } from "react-native";
 
-export default function MatchupsScreen() {
+export default function MatchupsScreen({navigation}) {
     return (
         <View style={styles.container}>
             <Text style={styles.header}>Matchups Screen</Text>

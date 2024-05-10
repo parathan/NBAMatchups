@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { StyleSheet, Text } from "react-native";
 
-export default function PredictiveScreen() {
+export default function PredictiveScreen({navigation}) {
     return (
         <View style={styles.container}>
             <Text style={styles.header}>Prediction Screen</Text>
