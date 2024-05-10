@@ -8,7 +8,14 @@ export default function HomeScreen() {
             <Text style={styles.text}>
                 Jump into Matchups, and compare teams based on their opposing stats.
             </Text>
-            <Pressable style={styles.button}>
+            <Pressable 
+                style={({ pressed }) => [
+                    {
+                        backgroundColor: pressed ? 'red' : '#444444'
+                    },
+                    styles.button
+                ]}
+            >
                 <Text style={styles.buttonLabel}>Go to Team Matchups</Text>
             </Pressable>
             <Text style={styles.text}>
@@ -55,6 +62,22 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: '#444444',
+        borderRadius: 4,
+        borderStyle: 'none',
+        fontSize: '16sp',
+        overflow: 'none',
+        marginHorizontal: '5%',
+        marginVertical: '5%',
+        paddingVertical: 12,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    buttonLabelPressed: {
+        color: '#dddddd',
+        fontSize: 20,
+    },
+    buttonPressed: {
+        backgroundColor: 'red',
         borderRadius: 4,
         borderStyle: 'none',
         fontSize: '16sp',
