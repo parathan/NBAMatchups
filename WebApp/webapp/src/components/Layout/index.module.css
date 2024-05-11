@@ -1,0 +1,14 @@
+.layout {
+    display: flex;
+}
+
+.navbar {
+    flex: 1 0 10vw;
+    background-color: var(--navbar-colour);
+}
+
+.children {
+    flex: 1 0 90vw;
+    background-color: var(--background-colour);
+    min-height: 100vh;
+}

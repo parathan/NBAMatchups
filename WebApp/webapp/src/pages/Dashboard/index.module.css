@@ -1,0 +1,56 @@
+.dashboard {
+    padding: 10vh;
+    text-align: center;
+    animation: fade-in 2s;
+}
+
+.header {
+    color: var(--header-font-colour);
+    font-size: calc(10px + 3vmin);;
+    padding-bottom: 2vh;
+    margin-top: 8%;
+}
+
+.hidden {
+    visibility: hidden;
+    height: 0;
+}
+
+.notHidden {
+    visibility: visible;
+}
+
+.input {
+    padding-top: 5vh;
+}
+
+.dropdown {
+    text-align: center;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    background-color: var(--secondary-colour);
+    width: 20em;
+    height: 3em;
+    border-radius: .25em;
+    overflow: hidden;
+}
+
+.dropdown:hover {
+    opacity: .75;
+}
+
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 100;
+    }
+}
+
+.errMessage {
+    width: fit-content;
+    margin: 0 auto;
+    margin-top: 3%;
+}
