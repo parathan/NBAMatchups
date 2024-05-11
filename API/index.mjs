@@ -5,6 +5,7 @@ import "express-async-errors"
 // Load environment variables
 import "./loadEnvironment.mjs";
 import teams from "./routes/teams.mjs"
+import ml from "./routes/ml.mjs"
 
 /**
  * Creates Express API that listens to port and uses routes
@@ -18,6 +19,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/teams", teams);
+app.use("/ml", ml);
 
 app.use((err, _req, res, next) => {
     res.status(500).send("Unexpected error occured. Code 500")

@@ -1,8 +1,8 @@
 import { ExpressValidator } from "express-validator";
 import "express-validator"
+import axios from "axios";
 
 const { validationResult } = new ExpressValidator
-const axios = require('axios');
 
 /*
     returns different traditional and zscore data for both teams given
