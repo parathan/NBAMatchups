@@ -18,8 +18,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use("/teams", teams);
 app.use("/ml", ml);
+app.use("/teams", teams);
 
 app.use((err, _req, res, next) => {
     res.status(500).send("Unexpected error occured. Code 500")
