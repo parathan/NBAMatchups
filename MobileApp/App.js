@@ -1,12 +1,14 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import 'react-native-gesture-handler';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeScreen from './src/screens/HomeScreen';
 import MatchupsScreen from './src/screens/MatchupsScreen';
 import DashboardScreen from './src/screens/DashboardScreen';
 import PredictiveScreen from './src/screens/PredictiveScreen';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
