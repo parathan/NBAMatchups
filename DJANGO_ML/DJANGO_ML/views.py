@@ -27,7 +27,8 @@ def LR_pred(request):
         params = list(map(float, params))
         predict = lr_predict.predict(params)
         response = {
-            "prediction" : predict
+            "prob_loss" : predict[0],
+            "prob_win" : predict[1]
         }
 
     return JsonResponse(response)
