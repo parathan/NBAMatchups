@@ -1,11 +1,11 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseBadRequest
 from rest_framework.decorators import api_view
 from .ML import lr_predict
 # Create your views here.
 
 @api_view(['GET'])
 def LR_pred(request):
-    response = {"Error" : "LR_pred.Views.DJANGO_ML has not performed"}
+    response = HttpResponseBadRequest("LR_pred.Views.DJANGO_ML has not performed")
 
     if request.method == 'GET':
         FGM = request.GET.get("FGM")
@@ -22,7 +22,7 @@ def LR_pred(request):
         PF = request.GET.get("PF")
         params = [FGM, FGpercent, threeMade, FTM, ftpercent, DREB, OREB, AST, STL, BLK, TOV, PF]
         if not validateGETParam(params):
-            return JsonResponse({"Error" : "Bad or Missing Request Parameter"})
+            return HttpResponseBadRequest("Bad or Missing Request Parameter")
 
         params = list(map(float, params))
         predict = lr_predict.predict(params)
