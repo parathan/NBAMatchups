@@ -1,6 +1,7 @@
 import { View } from "react-native";
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import SelectDropdown from "react-native-select-dropdown";
 
 export default function MatchupsScreen({navigation}) {
     return (
@@ -16,11 +17,14 @@ export default function MatchupsScreen({navigation}) {
                         }
                     }}
                 >
-                    <Text style={styles.buttonLabel}>Home</Text>
+                    <Text style={styles.buttonLabel}>Go Back</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.mainContent}>
                 <Text style={styles.header}>Matchups Screen</Text>
+            </View>
+            <View>
+                <SelectDropdown/>
             </View>
             <StatusBar style="light" />
         </View>
