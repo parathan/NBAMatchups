@@ -34,11 +34,34 @@ export const findLRPred = async (req, res, next) => {
             PF: req.query.PF
         }
 
-        const response = await axios.get('http://127.0.0.1:8000/LR_pred/', {params});
-    
-        // Process the response data
-        console.log('Response data:', response.data);
-        return res.status(200).json(response.data)
+        try {
+            const response = await axios.get('http://127.0.0.1:8000/LR_pred/', { params });
+            return res.status(200).json(response.data)
+          } catch (error) {
+            if (error.response) {
+              // The server responded with a status code outside the range of 2xx
+              console.error('Error response:', error.response.data);
+              console.error('Error status:', error.response.status);
+              console.error('Error headers:', error.response.headers);
+            } else if (error.request) {
+              // The request was made but no response was received
+              console.error('No response received:', error.request);
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.error('Error setting up request:', error.message);
+            }
+            if (error.code === 'ECONNABORTED' || error.message.includes('Network Error')) {
+              return {
+                status: 503,
+                message: 'Service Unavailable. Please try again later.'
+              };
+            }
+            // Handle other types of errors accordingly
+            return {
+              status: error.response ? error.response.status : 500,
+              message: error.message
+            };
+          }
       } 
     catch (error) {
         // Handle errors

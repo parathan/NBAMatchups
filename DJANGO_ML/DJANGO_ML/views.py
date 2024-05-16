@@ -5,8 +5,6 @@ from .ML import lr_predict
 
 @api_view(['GET'])
 def LR_pred(request):
-    response = {"Error" : "LR_pred.Views.DJANGO_ML has not performed"}
-
     if request.method == 'GET':
         FGM = request.GET.get("FGM")
         FGpercent = request.GET.get("FGpercent")
@@ -22,16 +20,22 @@ def LR_pred(request):
         PF = request.GET.get("PF")
         params = [FGM, FGpercent, threeMade, FTM, ftpercent, DREB, OREB, AST, STL, BLK, TOV, PF]
         if not validateGETParam(params):
-            return JsonResponse({"Error" : "Bad or Missing Request Parameter"})
-
+            return JsonResponse({"Error": "Bad or Missing Request Parameter"}, status=400)
+        # Convert parameters to float
         params = list(map(float, params))
-        predict = lr_predict.predict(params)
-        response = {
-            "prob_loss" : predict[0],
-            "prob_win" : predict[1]
-        }
+        try:
+            # Perform prediction
+            predict = lr_predict.predict(params)
+            response = {
+                "prob_loss": predict[0],
+                "prob_win": predict[1]
+            }
+            return JsonResponse(response)
+        except Exception as e:
+            return JsonResponse({"Error": str(e)}, status=500)
 
-    return JsonResponse(response)
+
+    return JsonResponse({"Error": "LR_pred.Views.DJANGO_ML has not performed"}, status=500)
 
 def validateGETParam(params):
     for param in params:
