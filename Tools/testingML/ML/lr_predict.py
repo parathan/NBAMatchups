@@ -65,16 +65,25 @@ def main():
         for row in reader_obj: 
             total += 1
             x = np.array([teamAverages[row['TEAM']]])
+            oppTeam = row['MATCH UP'].replace(" vs. ", " ").replace(" @ "," ").split()[1]
+            opp_x = np.array([teamAverages[oppTeam]])
+
             y_predict = model.predict_proba(x)
             winPercentage = y_predict.tolist()[0][0]
+
+            yOpp_predict = model.predict_proba(opp_x)
+            oppWinPercentage = yOpp_predict.tolist()[0][0]
+
             seedingPercentage = seedPercentage[row['TEAM']]
-            if row['W/L'] == 'W' and winPercentage >= .50:
+            oppSeedingPercentage = seedPercentage[oppTeam]
+
+            if row['W/L'] == 'W' and winPercentage >= oppWinPercentage:
                 modelAccurate +=1
-            elif row['W/L'] == 'L' and winPercentage < .50:
+            elif row['W/L'] == 'L' and winPercentage < oppWinPercentage:
                 modelAccurate +=1
-            if row['W/L'] == 'W' and seedingPercentage >= .50:
+            if row['W/L'] == 'W' and seedingPercentage >= oppSeedingPercentage:
                 seedingAccurate +=1
-            elif row['W/L'] == 'L' and seedingPercentage < .50:
+            elif row['W/L'] == 'L' and seedingPercentage < oppSeedingPercentage:
                 seedingAccurate +=1
             if total % 100 == 0:
                 print(total)
