@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseBadRequest
 from rest_framework.decorators import api_view
 from .ML import lr_predict
 # Create your views here.
