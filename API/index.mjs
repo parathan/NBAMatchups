@@ -5,6 +5,7 @@ import "express-async-errors"
 // Load environment variables
 import "./loadEnvironment.mjs";
 import teams from "./routes/teams.mjs"
+import ml from "./routes/ml.mjs"
 
 /**
  * Creates Express API that listens to port and uses routes
@@ -17,6 +18,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use("/ml", ml);
 app.use("/teams", teams);
 
 app.use((err, _req, res, next) => {
