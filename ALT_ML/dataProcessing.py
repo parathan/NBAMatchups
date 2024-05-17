@@ -41,45 +41,49 @@ def getAllTeamData(year: int):
     keys = dataDict[0].keys()
 
     # Write dictionary to csv file
-    with open('2022-23_TeamAverage_v2.csv', 'w', newline='') as output_file:
+    file = 'Data\\' + str(year) + '\\TeamAverage_' + str(year) + '.csv'
+    with open(file, 'w', newline='') as output_file:
         dict_writer = csv.DictWriter(output_file, keys)
         dict_writer.writeheader()
         dict_writer.writerows(dataDict)
 
-def seperateBoxScoreData():
-    """Alters box score data by seperating matchup data into two teams and only include teams,
-    who wins and the dates
-    """
+# def seperateBoxScoreData():
+#     """Alters box score data by seperating matchup data into two teams and only include teams,
+#     who wins and the dates
+#     """
     
-    file = 'boxscores2023.csv'
-    newFile = 'newBoxScores2023.csv'
+#     file = 'boxscores2023.csv'
+#     newFile = 'newBoxScores2023.csv'
 
-    dataDict = []
+#     dataDict = []
 
-    with open(file) as file_obj:
-        reader_obj = csv.DictReader(file_obj)
-        for row in reader_obj:
-            dictAdder = {}
-            dictAdder['FirstTeam'] = row['TEAM']
-            dictAdder['SecondTeam'] = row['MATCH UP'].replace(" vs. ", " ").replace(" @ "," ").split()[1]
-            dictAdder['Date'] = row['GAME DATE']
-            dictAdder['W/L'] = row['W/L']
-            dataDict.append(dictAdder)
+#     with open(file) as file_obj:
+#         reader_obj = csv.DictReader(file_obj)
+#         for row in reader_obj:
+#             dictAdder = {}
+#             dictAdder['FirstTeam'] = row['TEAM']
+#             dictAdder['SecondTeam'] = row['MATCH UP'].replace(" vs. ", " ").replace(" @ "," ").split()[1]
+#             dictAdder['Date'] = row['GAME DATE']
+#             dictAdder['W/L'] = row['W/L']
+#             dataDict.append(dictAdder)
     
-    keys = dataDict[0].keys()
+#     keys = dataDict[0].keys()
 
-    with open(newFile, 'w', newline='') as output_file:
-        dict_writer = csv.DictWriter(output_file, keys)
-        dict_writer.writeheader()
-        dict_writer.writerows(dataDict)
+#     with open(newFile, 'w', newline='') as output_file:
+#         dict_writer = csv.DictWriter(output_file, keys)
+#         dict_writer.writeheader()
+#         dict_writer.writerows(dataDict)
 
-def seperateBoxScoreDataNoDups():
+def seperateBoxScoreDataNoDups(year: int):
     """Alters box score data by seperating matchup data into two teams and only include teams,
     who wins and the dates. Ensures that no duplicate games are included
-    """
 
-    file = 'boxscores2023.csv'
-    newFile = 'newBoxScores2023_nodups.csv'
+    Args:
+        year (int): year used for file naming conventions
+    """
+    strYear = str(year)
+    file = 'Data\\' + strYear + '\\boxscores' + strYear + '.csv'
+    newFile = 'Data\\' + strYear + '\\newboxscores' + strYear + '_nodups.csv'
 
     dataDict = []
     repeats = set()
@@ -113,19 +117,23 @@ def seperateBoxScoreDataNoDups():
         dict_writer.writeheader()
         dict_writer.writerows(dataDict)
 
-def joinCsvFiles():
+def joinCsvFiles(year: int):
     """Left joins the averages for both teams into the boxscore csv and outputs a new csv with the joined data
+
+    Args:
+        year (int): year used for file naming conventions
     """
-    nbaTeamAverages = '2022-23_TeamAverage_v2.csv'
-    nbaBoxScores = 'newBoxScores2023_nodups.csv'
+    strYear = str(year)
+    nbaTeamAverages = 'Data\\' + str(year) + '\\TeamAverage_' + str(year) + '.csv'
+    nbaBoxScores = 'Data\\' + strYear + '\\newboxscores' + strYear + '_nodups.csv'
 
     boxscores = pd.read_csv(nbaBoxScores)
     averages = pd.read_csv(nbaTeamAverages)
 
     output = pd.merge(boxscores, averages, how='left', left_on='FirstTeam', right_on='teamName')
-    # print(output)
     output2 = pd.merge(output, averages, how='left', left_on='SecondTeam', right_on='teamName')
-    outputFile = 'finalData.csv'
+
+    outputFile = 'Data\\' + str(year) + '\\FinalData_' + str(year) + '.csv'
     output2.to_csv(outputFile, sep=',')
     
     # print(output2)
@@ -133,4 +141,12 @@ def joinCsvFiles():
 # getAllTeamData(2022)
 # seperateBoxScoreData()
 # seperateBoxScoreDataNoDups()
-joinCsvFiles()
+# joinCsvFiles()
+
+def main():
+    year = 2023
+    getAllTeamData(2023)
+    seperateBoxScoreDataNoDups(year)
+    joinCsvFiles(year)
+
+main()
