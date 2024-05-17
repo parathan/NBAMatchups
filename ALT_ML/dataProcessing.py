@@ -1,7 +1,6 @@
 import requests
 import csv
 import constants
-import pandas as pd
 
 
 # Take data from the api route getallteams and place in the csv file
@@ -47,14 +46,13 @@ def getAllTeamData(year: int):
         dict_writer.writeheader()
         dict_writer.writerows(dataDict)
 
-
-
-
-
 def seperateBoxScoreData():
+    """Alters box score data by seperating matchup data into two teams and only include teams,
+    who wins and the dates
+    """
     
     file = 'boxscores2023.csv'
-    newFile = 'newBosScores2023.csv'
+    newFile = 'newBoxScores2023.csv'
 
     dataDict = []
 
@@ -75,9 +73,48 @@ def seperateBoxScoreData():
         dict_writer.writeheader()
         dict_writer.writerows(dataDict)
 
+def seperateBoxScoreDataNoDups():
+    """Alters box score data by seperating matchup data into two teams and only include teams,
+    who wins and the dates. Ensures that no duplicate games are included
+    """
+
+    file = 'boxscores2023.csv'
+    newFile = 'newBoxScores2023_nodups.csv'
+
+    dataDict = []
+    repeats = set()
+
+    with open(file) as file_obj:
+        reader_obj = csv.DictReader(file_obj)
+        for row in reader_obj:
+            # Create dictionary element
+            dictAdder = {}
+            dictAdder['FirstTeam'] = row['TEAM']
+            dictAdder['SecondTeam'] = row['MATCH UP'].replace(" vs. ", " ").replace(" @ "," ").split()[1]
+            dictAdder['Date'] = row['GAME DATE']
+            dictAdder['W/L'] = row['W/L']
+
+            # set value for checking duplicates
+            first = dictAdder['FirstTeam']
+            second  = dictAdder['SecondTeam']
+            teamsCombined = first + second if first < second else second + first
+            teamsCombined += dictAdder['Date']
+
+            if teamsCombined in repeats:
+                continue
+            else:
+                repeats.add(teamsCombined)
+                dataDict.append(dictAdder)
+    
+    keys = dataDict[0].keys()
+
+    with open(newFile, 'w', newline='') as output_file:
+        dict_writer = csv.DictWriter(output_file, keys)
+        dict_writer.writeheader()
+        dict_writer.writerows(dataDict)
 
 
 
 # getAllTeamData(2022)
 # seperateBoxScoreData()
-getAllTeamData()
+seperateBoxScoreDataNoDups()
