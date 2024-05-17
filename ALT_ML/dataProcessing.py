@@ -138,9 +138,9 @@ def joinCsvFiles(year: int):
     
 
 def main():
-    year = 2023
-    getAllTeamData(2023)
-    seperateBoxScoreDataNoDups(year)
-    joinCsvFiles(year)
+    for year in range(2021, 2023):
+        getAllTeamData(year)
+        seperateBoxScoreDataNoDups(year)
+        joinCsvFiles(year)
 
 main()
