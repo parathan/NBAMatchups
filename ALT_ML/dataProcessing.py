@@ -136,12 +136,6 @@ def joinCsvFiles(year: int):
     outputFile = 'Data\\' + str(year) + '\\FinalData_' + str(year) + '.csv'
     output2.to_csv(outputFile, sep=',')
     
-    # print(output2)
-
-# getAllTeamData(2022)
-# seperateBoxScoreData()
-# seperateBoxScoreDataNoDups()
-# joinCsvFiles()
 
 def main():
     year = 2023
