@@ -124,7 +124,7 @@ def joinCsvFiles(year: int):
         year (int): year used for file naming conventions
     """
     strYear = str(year)
-    nbaTeamAverages = 'Data\\' + str(year) + '\\TeamAverage_' + str(year) + '.csv'
+    nbaTeamAverages = 'Data\\' + strYear + '\\TeamAverage_' + strYear + '.csv'
     nbaBoxScores = 'Data\\' + strYear + '\\newboxscores' + strYear + '_nodups.csv'
 
     boxscores = pd.read_csv(nbaBoxScores)
@@ -133,14 +133,29 @@ def joinCsvFiles(year: int):
     output = pd.merge(boxscores, averages, how='left', left_on='FirstTeam', right_on='teamName')
     output2 = pd.merge(output, averages, how='left', left_on='SecondTeam', right_on='teamName')
 
-    outputFile = 'Data\\' + str(year) + '\\FinalData_' + str(year) + '.csv'
+    outputFile = 'Data\\' + strYear + '\\FinalData_' + strYear + '.csv'
     output2.to_csv(outputFile, sep=',')
+
+def combineYearlyData(years: list):
+    final_df = pd.DataFrame()
+
+    for year in years:
+        strYear = str(year)
+        file = 'Data\\' + strYear + '\\FinalData_' + strYear + '.csv'
+        adder_df = pd.read_csv(file)
+        # final_df = final_df.append(adder_df, ignore_index=True)
+        final_df = pd.concat([final_df, adder_df], ignore_index=True)
+
+    outputFile = 'FinalMasterData.csv'
+    final_df.to_csv(outputFile,sep=',')
+
     
 
 def main():
-    for year in range(2021, 2023):
-        getAllTeamData(year)
-        seperateBoxScoreDataNoDups(year)
-        joinCsvFiles(year)
+    # for year in range(2021, 2023):
+    #     getAllTeamData(year)
+    #     seperateBoxScoreDataNoDups(year)
+    #     joinCsvFiles(year)
+    combineYearlyData([2021, 2022, 2023])
 
 main()
