@@ -149,6 +149,21 @@ def combineYearlyData(years: list):
     outputFile = 'FinalMasterData.csv'
     final_df.to_csv(outputFile,sep=',')
 
+def cleanupMasterData():
+    file = 'FinalMasterData.csv'
+    outputFile = 'FinalMasterData_updated.csv'
+
+    data = pd.read_csv(file)
+    data.drop('random', inplace=True, axis=1)
+    data.drop('Unnamed: 0', inplace=True, axis=1)
+    data.drop('FirstTeam', inplace=True, axis=1)
+    data.drop('SecondTeam', inplace=True, axis=1)
+    data.drop('Date', inplace=True, axis=1)
+    data.drop('teamName_x', inplace=True, axis=1)
+    data['W/L'] = data['W/L'].replace({'W': 1, 'L': 0})
+
+
+    data.to_csv(outputFile, sep=',')
     
 
 def main():
@@ -156,6 +171,7 @@ def main():
     #     getAllTeamData(year)
     #     seperateBoxScoreDataNoDups(year)
     #     joinCsvFiles(year)
-    combineYearlyData([2021, 2022, 2023])
+    # combineYearlyData([2021, 2022, 2023])
+    cleanupMasterData()
 
 main()
