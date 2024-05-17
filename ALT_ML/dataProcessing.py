@@ -1,7 +1,7 @@
 import requests
 import csv
 import constants
-
+import pandas as pd
 
 # Take data from the api route getallteams and place in the csv file
 # Api needs to be running
@@ -113,8 +113,24 @@ def seperateBoxScoreDataNoDups():
         dict_writer.writeheader()
         dict_writer.writerows(dataDict)
 
+def joinCsvFiles():
+    """Left joins the averages for both teams into the boxscore csv and outputs a new csv with the joined data
+    """
+    nbaTeamAverages = '2022-23_TeamAverage_v2.csv'
+    nbaBoxScores = 'newBoxScores2023_nodups.csv'
 
+    boxscores = pd.read_csv(nbaBoxScores)
+    averages = pd.read_csv(nbaTeamAverages)
+
+    output = pd.merge(boxscores, averages, how='left', left_on='FirstTeam', right_on='teamName')
+    # print(output)
+    output2 = pd.merge(output, averages, how='left', left_on='SecondTeam', right_on='teamName')
+    outputFile = 'finalData.csv'
+    output2.to_csv(outputFile, sep=',')
+    
+    # print(output2)
 
 # getAllTeamData(2022)
 # seperateBoxScoreData()
-seperateBoxScoreDataNoDups()
+# seperateBoxScoreDataNoDups()
+joinCsvFiles()
