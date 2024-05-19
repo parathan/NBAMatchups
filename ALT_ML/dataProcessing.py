@@ -160,6 +160,7 @@ def cleanupMasterData():
     data.drop('SecondTeam', inplace=True, axis=1)
     data.drop('Date', inplace=True, axis=1)
     data.drop('teamName_x', inplace=True, axis=1)
+    data.drop('teamName_y', inplace=True, axis=1)
     data['W/L'] = data['W/L'].replace({'W': 1, 'L': 0})
 
 
