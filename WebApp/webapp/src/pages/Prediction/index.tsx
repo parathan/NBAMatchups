@@ -54,10 +54,6 @@ function Prediction() {
     }
   }
 
-  function changeYear(e: ChangeEvent<HTMLSelectElement>) {
-    setYear(e.target.value)
-  }
-
   function onSubmit() {
     if (!(team1 !== "" && team2 !== "")) {
       throwEmptyInputError();
@@ -70,6 +66,7 @@ function Prediction() {
 
   // Gets data from route that uses redis cache. If it fails it uses route that doesnt have cache
   function getData() {
+    console.log("hello")
     setFormVisible(false)
     setProgressVisible(true)
     setErrorVisible(false)
@@ -99,6 +96,30 @@ function Prediction() {
     .then((response) => {
       setProgressVisible(false)
       setSuccessVisible(true)
+      //fg
+      console.log(response.data.statistics[12].mean2)
+      //fgp
+      console.log(response.data.statistics[11].mean1)
+      //threeMade
+      console.log(response.data.statistics[16].mean2)
+      //ftm
+      console.log(response.data.statistics[28].mean2)
+      //ftp
+      console.log(response.data.statistics[32].mean1)
+      //DREb
+      console.log(response.data.statistics[18].mean2)
+      //oreb
+      console.log(response.data.statistics[14].mean2)
+      //ast
+      console.log(response.data.statistics[20].mean2)
+      //stl
+      console.log(response.data.statistics[50].mean2)
+      //blk
+      console.log(response.data.statistics[44].mean2)
+      //tov
+      console.log(response.data.statistics[35].mean2)
+      //pf
+      console.log(response.data.statistics[4].mean2)
       setData(response.data.statistics)
       setImageClass(styles.teamName)
     })
