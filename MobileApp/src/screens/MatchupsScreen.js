@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { View } from "react-native";
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import DropDownPicker from 'react-native-dropdown-picker';
 import RNPickerSelect from 'react-native-picker-select'; 
 
 import { teamsNames } from "../constants/teamNames";
@@ -77,54 +76,6 @@ export default function MatchupsScreen({navigation}) {
             >
                 <Text style={styles.buttonLabel}>Check Matchup</Text>
             </TouchableOpacity>
-            {/* <View style={styles.dropdownContainer}>
-                <DropDownPicker
-                    open={open}
-                    value={value}
-                    items={items}
-                    setOpen={setOpen}
-                    setValue={setValue}
-                    setItems={setItems}
-                    theme="DARK"
-                    placeholder="Pick a Team"
-                    // style={styles.dropDown}
-                    // textStyle={styles.dropDownText}
-                    // containerStyle={styles.dropDown}
-                    // labelStyle={styles.dropDown}
-                />
-            </View>
-            <View style={styles.dropdownContainer}>
-                <DropDownPicker
-                    open={open}
-                    value={value}
-                    items={items}
-                    setOpen={setOpen}
-                    setValue={setValue}
-                    setItems={setItems}
-                    theme="DARK"
-                    placeholder="Pick a Team"
-                    // style={styles.dropDown}
-                    // textStyle={styles.dropDownText}
-                    // containerStyle={styles.dropDown}
-                    // labelStyle={styles.dropDown}
-                />
-            </View>
-            <View style={styles.dropdownContainer}>
-                <DropDownPicker
-                    open={open}
-                    value={value}
-                    items={items}
-                    setOpen={setOpen}
-                    setValue={setValue}
-                    setItems={setItems}
-                    theme="DARK"
-                    placeholder="Pick a Year"
-                    // style={styles.dropDown}
-                    // textStyle={styles.dropDownText}
-                    // containerStyle={styles.dropDown}
-                    // labelStyle={styles.dropDown}
-                />
-            </View> */}
             <StatusBar style="light" />
         </View>
     )
