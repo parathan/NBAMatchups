@@ -19,9 +19,9 @@ export default function MatchupsScreen({navigation}) {
     const [yearsList, setYears] = useState(years.map( year => (
         {label: year, value: year}
     )))
-    const [team1, setTeam1] = useState("")
-    const [team2, setTeam2] = useState("")
-    const [year, setYear] = useState("")
+    const [team1, setTeam1] = useState(null)
+    const [team2, setTeam2] = useState(null)
+    const [year, setYear] = useState(null)
 
     function onSubmit() {
         console.log("submitted")
@@ -142,6 +142,7 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         justifyContent: 'center',
         alignItems: 'center',
+        marginTop: '10%'
     },
 })
 
@@ -153,9 +154,11 @@ const pickerSelectStyles = StyleSheet.create({
       borderWidth: 1,
       borderColor: 'gray',
       borderRadius: 4,
-      color: 'black',
+      color: '#dddddd',
       paddingRight: 30, // to ensure the text is never behind the icon
-      marginBottom: 20,
+      marginTop: '10%',
+      marginHorizontal: '10%',
+      textAlign: 'center'
     },
     inputAndroid: {
       fontSize: 16,
