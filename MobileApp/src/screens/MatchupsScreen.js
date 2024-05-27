@@ -1,9 +1,25 @@
+import { useState } from 'react'
+
 import { View } from "react-native";
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import SelectDropdown from "react-native-select-dropdown";
+import DropDownPicker from 'react-native-dropdown-picker';
+
+import { teamsNames } from "../constants/teamNames";
+
 
 export default function MatchupsScreen({navigation}) {
+
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(null);
+    const [items, setItems] = useState(teamsNames.map( team => (
+        { label: team, value: team }
+    )))
+    // const [items, setItems] = useState([
+    //     {label: 'Apple', value: 'apple'},
+    //     {label: 'Banana', value: 'banana'}
+    // ])
+
     return (
         <View style={styles.container}>
             <View style={styles.backButton}>
@@ -23,8 +39,53 @@ export default function MatchupsScreen({navigation}) {
             <View style={styles.mainContent}>
                 <Text style={styles.header}>Matchups Screen</Text>
             </View>
-            <View>
-                <SelectDropdown/>
+            <View style={styles.dropdownContainer}>
+                <DropDownPicker
+                    open={open}
+                    value={value}
+                    items={items}
+                    setOpen={setOpen}
+                    setValue={setValue}
+                    setItems={setItems}
+                    theme="DARK"
+                    placeholder="Pick a Team"
+                    // style={styles.dropDown}
+                    // textStyle={styles.dropDownText}
+                    // containerStyle={styles.dropDown}
+                    // labelStyle={styles.dropDown}
+                />
+            </View>
+            <View style={styles.dropdownContainer}>
+                <DropDownPicker
+                    open={open}
+                    value={value}
+                    items={items}
+                    setOpen={setOpen}
+                    setValue={setValue}
+                    setItems={setItems}
+                    theme="DARK"
+                    placeholder="Pick a Team"
+                    // style={styles.dropDown}
+                    // textStyle={styles.dropDownText}
+                    // containerStyle={styles.dropDown}
+                    // labelStyle={styles.dropDown}
+                />
+            </View>
+            <View style={styles.dropdownContainer}>
+                <DropDownPicker
+                    open={open}
+                    value={value}
+                    items={items}
+                    setOpen={setOpen}
+                    setValue={setValue}
+                    setItems={setItems}
+                    theme="DARK"
+                    placeholder="Pick a Year"
+                    // style={styles.dropDown}
+                    // textStyle={styles.dropDownText}
+                    // containerStyle={styles.dropDown}
+                    // labelStyle={styles.dropDown}
+                />
             </View>
             <StatusBar style="light" />
         </View>
@@ -68,4 +129,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    dropDown: {
+        backgroundColor: '#444444',
+    },
+    dropDownText: {
+        color: '#dddddd',
+    },
+    dropdownContainer: {
+        marginTop: '10%',
+    }
 })
