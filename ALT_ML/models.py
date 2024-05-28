@@ -69,6 +69,50 @@ def logisticRegressionModel():
     cv_scores = cross_val_score(best_model, X_train_selected, y_train, cv=5)
     print(f'Cross-validated Accuracy: {cv_scores.mean():.4f} ± {cv_scores.std():.4f}')
 
+def logisticRegressionHomeCourt():
+    file = 'FinalMasterDataHomeCourt_updated.csv'
+    data = pd.read_csv(file)
+
+    # Split features and target
+    X = data.drop(['W/L'], axis=1, inplace=False)
+    y = data['W/L']
+
+    # Split data into training and test sets
+    X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.7, random_state=42)
+
+    # Standardize features
+    scaler = StandardScaler()
+    X_train_scaled = scaler.fit_transform(X_train)
+    X_test_scaled = scaler.transform(X_test)
+
+    # Feature selection
+    selector = SelectKBest(f_classif, k=100)  # You can adjust k based on your preference
+    X_train_selected = selector.fit_transform(X_train_scaled, y_train)
+    X_test_selected = selector.transform(X_test_scaled)
+
+    # Hyperparameter tuning with GridSearchCV
+    param_grid = {
+        'C': [0.01, 0.1, 1, 10, 100],
+        'penalty': ['l1', 'l2'],
+        'solver': ['liblinear']
+    }
+
+    grid_search = GridSearchCV(LogisticRegression(max_iter=1000), param_grid, cv=5, n_jobs=-1)
+    grid_search.fit(X_train_selected, y_train)
+
+    # Best model
+    best_model = grid_search.best_estimator_
+    print(f'Best parameters: {grid_search.best_params_}')
+
+    # Evaluate model on test set
+    y_pred = best_model.predict(X_test_selected)
+    test_accuracy = accuracy_score(y_test, y_pred)
+    print(f'Grid Search Test Accuracy: {test_accuracy:.4f}')
+
+    # Cross-validation
+    cv_scores = cross_val_score(best_model, X_train_selected, y_train, cv=5)
+    print(f'Cross-validated Accuracy: {cv_scores.mean():.4f} ± {cv_scores.std():.4f}')
+
 def randomForestModel():
     file = 'FinalMasterData_updated.csv'
     data = pd.read_csv(file)
@@ -163,6 +207,7 @@ def neuralNetModel():
     print(f'True labels: {y_test[:10].values}')
 
 
-# logisticRegressionModel()
+logisticRegressionModel()
 # randomForestModel()
 # neuralNetModel()
+logisticRegressionHomeCourt()
