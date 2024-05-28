@@ -1,24 +1,33 @@
 import axios from 'axios';
-import { checkSchema, validationResult } from 'express-validator';
+import { validationResult } from 'express-validator';
+import { ExpressValidator } from "express-validator";
+import { tradDb} from "../db/connection.mjs";
+import "express-validator"
 
-// Define a validation schema
-const paramSchema = {
-    FGM: { in: ['body'], isNumeric: true, optional: { options: { nullable: true } } },
-    FGpercent: { in: ['body'], isFloat: true, optional: { options: { nullable: true } } },
-    threeMade: { in: ['body'], isNumeric: true, optional: { options: { nullable: true } } },
-    FTM: { in: ['body'], isNumeric: true, optional: { options: { nullable: true } } },
-    ftpercent: { in: ['body'], isFloat: true, optional: { options: { nullable: true } } },
-    DREB: { in: ['body'], isNumeric: true, optional: { options: { nullable: true } } },
-    OREB: { in: ['body'], isNumeric: true, optional: { options: { nullable: true } } },
-    AST: { in: ['body'], isNumeric: true, optional: { options: { nullable: true } } },
-    STL: { in: ['body'], isNumeric: true, optional: { options: { nullable: true } } },
-    BLK: { in: ['body'], isNumeric: true, optional: { options: { nullable: true } } },
-    TOV: { in: ['body'], isNumeric: true, optional: { options: { nullable: true } } },
-    PF: { in: ['body'], isNumeric: true, optional: { options: { nullable: true } } }
+function pick(obj, keys) {
+    return keys.reduce((acc, key) => {
+        if (obj && obj.hasOwnProperty(key)) {
+            acc[key] = obj[key];
+        }
+        return acc;
+    }, {});
+}
+
+export const twoTeamFeatures = async (team1name, year) => {
+    try {
+        let tradCollection = tradDb.collection("NbaTeamStats_" + year)
+
+        // Promise.all runs all promises concurrently.
+        let data = await Promise.all([tradCollection.find({Name: team1name}).toArray()])
+        const keysToKeep = ['fg', 'fg_pct', 'fg3', 'ft', 'ft_pct', 'drb', 'orb', 'ast', 'stl', 'blk', 'tov', 'pf'];
+        const filteredData = pick(data[0][0], keysToKeep);
+        return filteredData
+    } catch (err) {
+        return [0, err]
+    }
 };
 
-export const findLRPred = [
-    checkSchema(paramSchema),
+export const LRTwoTeams =
     async (req, res, next) => {
         try {
             const errors = validationResult(req);
@@ -26,10 +35,14 @@ export const findLRPred = [
                 return res.status(400).json({ success: false, errors: errors.array() });
             }
 
-            const params = req.body; // Parameters are now sent in the body
-
+            let team1name = req.body.team1;
+            let year = req.body.year;
+            let featureData = await twoTeamFeatures(team1name, year)
+            if (featureData[0] === 0){
+                return res.status(400).json("Unable to Access MongoDB");;
+            }
             try {
-                const response = await axios.post('http://127.0.0.1:8000/LR_pred/', params);
+                const response = await axios.post('http://127.0.0.1:8000/LR_pred/', featureData);
                 return res.status(200).json(response.data);
             } catch (error) {
                 if (error.response) {
@@ -50,5 +63,4 @@ export const findLRPred = [
             console.error('Error fetching data:', error);
             return res.status(400).json({ success: false, errors: "BAD DJANGO REQUEST FROM DJANGOMLCONTROLLER" });
         }
-    }
-];
+    };

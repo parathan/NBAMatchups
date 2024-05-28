@@ -7,7 +7,7 @@ import { MatchupData } from '../../interfaces/MatchupData';
 import { teamsNames } from '../../constants/teamNames';
 import axios from 'axios';
 import { Alert, CircularProgress, Grid } from '@mui/material';
-import { orderedPerentile, orderedPerentileCached } from '../../constants/routes';
+import { allTeams, avgData, orderedPerentile, orderedPerentileCached } from '../../constants/routes';
 
 
 /**
@@ -66,7 +66,6 @@ function Prediction() {
 
   // Gets data from route that uses redis cache. If it fails it uses route that doesnt have cache
   function getData() {
-    console.log("hello")
     setFormVisible(false)
     setProgressVisible(true)
     setErrorVisible(false)
@@ -88,7 +87,22 @@ function Prediction() {
   }
 
   function getUncachedData() {
-    axios.post(process.env.REACT_APP_API_URL + orderedPerentile, {
+    axios.post(process.env.REACT_APP_API_URL + avgData, {
+      team1: team1,
+      team2: team2,
+      year: "2023"
+    })
+    .then((response) => {
+      console.log(response.data)
+    })
+    .catch((error) => {
+      console.log("catch error")
+      setProgressVisible(false)
+      setErrorVisible(true)
+      let errorMessage = "Error retrieving from Server\n"
+      setErrorMessage(errorMessage.concat(error))
+    })
+    axios.post(process.env.REACT_APP_API_URL + avgData, {
       team1: team1,
       team2: team2,
       year: "2023"
@@ -98,28 +112,6 @@ function Prediction() {
       setSuccessVisible(true)
       //fg
       console.log(response.data.statistics[12].mean2)
-      //fgp
-      console.log(response.data.statistics[11].mean1)
-      //threeMade
-      console.log(response.data.statistics[16].mean2)
-      //ftm
-      console.log(response.data.statistics[28].mean2)
-      //ftp
-      console.log(response.data.statistics[32].mean1)
-      //DREb
-      console.log(response.data.statistics[18].mean2)
-      //oreb
-      console.log(response.data.statistics[14].mean2)
-      //ast
-      console.log(response.data.statistics[20].mean2)
-      //stl
-      console.log(response.data.statistics[50].mean2)
-      //blk
-      console.log(response.data.statistics[44].mean2)
-      //tov
-      console.log(response.data.statistics[35].mean2)
-      //pf
-      console.log(response.data.statistics[4].mean2)
       setData(response.data.statistics)
       setImageClass(styles.teamName)
     })
@@ -194,7 +186,7 @@ function Prediction() {
               </Grid>
             </Grid>
             <Grid item xs={12}>
-                <button onClick={onSubmit} className={styles.submit}>Check Matchup</button>
+                <button onClick={onSubmit} className={styles.submit}>Predict Winner</button>
             </Grid>
           </div>
           :
@@ -211,38 +203,16 @@ function Prediction() {
           null
         }
         {successVisible ?
-          <Grid container spacing={2} className={imageClass}>
-            <Grid item xs={4}>
+          <Grid container spacing={1} className={styles.predHeader}>
+            <Grid item xs={12}>
               {team1}<br/>
-              <img src={'/Assets/NBALogos/' + team1image} alt={team1} className={styles.logo}/>
-            </Grid>
-            <Grid item xs={4}>
-            </Grid>
-            <Grid item xs={4}>
-              {team2}<br/>
-              <img src={'/Assets/NBALogos/' + team2image} alt={team2} className={styles.logo}/>
+              <img src={'/Assets/NBALogos/' + team1image} alt={team1} className={styles.logo}/><br/>
+              <p>Winner</p>
             </Grid>
           </Grid>
           :
           null
         }
-        
-        {
-          data.map( sliderData =>
-            <MatchupSlider 
-              field1={sliderData.field1}
-              field2={sliderData.field2}
-              PercentileDifference={sliderData.PercentileDifference}
-              absPercentileDifference={sliderData.absPercentileDifference} 
-              team1Percentile1={sliderData.team1Percentile1} 
-              team2Percentile_Op={sliderData.team2Percentile_Op} 
-              TraditionalDifference={sliderData.TraditionalDifference} 
-              team1Trad={sliderData.team1Trad} 
-              team2Trad_Op={sliderData.team2Trad_Op} 
-              mean1={sliderData.mean1}
-              mean2={sliderData.mean2}
-            />
-        )}
       </div>
     </Layout>
   );

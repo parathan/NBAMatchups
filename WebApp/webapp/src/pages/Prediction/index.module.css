@@ -4,6 +4,13 @@
     animation: fade-in 2s;
 }
 
+.predHeader {
+    color: var(--header-font-colour);
+    font-size: calc(3vmin);;
+    padding-top: 5%;
+    animation: fade-in 2s;
+}
+
 .submitGrid {
     padding: 4vh;
 }
