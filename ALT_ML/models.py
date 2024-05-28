@@ -213,3 +213,11 @@ logisticRegressionModel()
 logisticRegressionHomeCourt()
 
 # Notes: Adding Home court advantage doesn't provide any significant improvement as opposed to the original model.
+# Original Model: 
+# Best parameters: {'C': 0.01, 'penalty': 'l1', 'solver': 'liblinear'}
+# Grid Search Test Accuracy: 0.6657
+# Cross-validated Accuracy: 0.6542 ± 0.0170
+# Home Court Model:
+# Best parameters: {'C': 0.01, 'penalty': 'l1', 'solver': 'liblinear'}
+# Grid Search Test Accuracy: 0.6615
+# Cross-validated Accuracy: 0.6562 ± 0.0107
