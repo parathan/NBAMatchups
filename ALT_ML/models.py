@@ -211,3 +211,5 @@ logisticRegressionModel()
 # randomForestModel()
 # neuralNetModel()
 logisticRegressionHomeCourt()
+
+# Notes: Adding Home court advantage doesn't provide any significant improvement as opposed to the original model.
