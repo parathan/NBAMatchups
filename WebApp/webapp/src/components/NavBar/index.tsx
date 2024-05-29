@@ -1,35 +1,92 @@
-import { Sidebar, Menu, MenuItem, SubMenu, sidebarClasses } from "react-pro-sidebar";
-import { Box } from "@mui/material";
-import styles from './index.module.css'
+import React, { useState } from 'react';
+import { Sidebar, Menu, MenuItem, sidebarClasses } from 'react-pro-sidebar';
+import { Box, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { FaHome, FaClipboardList, FaChartBar, FaTachometerAlt, FaBuilding } from 'react-icons/fa';
+import styles from './index.module.css';
 
-import { Link } from "react-router-dom"
+type MenuItemType = 'home' | 'matchups' | 'predictions' | 'dashboard'; // Define the type of menu items
 
-/**
- * The NavBar component provides navigation links to different pages of the application. 
- * It utilizes the react-pro-sidebar library to create a sidebar menu with clickable 
- * items that direct users to various sections of the application.
- * @returns 
- */
 function NavBar() {
-    return (
-        // https://codesandbox.io/p/sandbox/react-dashboard-pnm6fh?file=%2Fsrc%2Fpages%2Fglobal%2Fsidebar%2FMyProSidebar.jsx%3A51%2C6-51%2C9
+  const [collapsed, setCollapsed] = useState(true);
+  const [selectedMenuItem, setSelectedMenuItem] = useState<MenuItemType>('home'); // Initialize selected menu item
 
+  const handleMenuItemClick = (menuItem: MenuItemType) => {
+    setSelectedMenuItem(menuItem);
+  };
+
+  return (
+    <>
+      <Box 
+        className={collapsed ? styles.collapsedOverlay : styles.expandedOverlay}
+        onMouseEnter={() => setCollapsed(false)} 
+        onMouseLeave={() => setCollapsed(true)}
+      >
         <Sidebar
-            rootStyles={{
-                [`.${sidebarClasses.container}`]: {
-                    backgroundColor: '#444444',
-                    color: '#dddddd',
-                },
-            }}
+          collapsed={collapsed}
+          rootStyles={{
+            [`.${sidebarClasses.container}`]: {
+              backgroundColor: '#444444',
+              color: '#dddddd',
+              height: '100vh',
+            },
+          }}
         >
-            <Menu>
-                <MenuItem component={<Link to="/" />}>Home</MenuItem>
-                <MenuItem component={<Link to="/matchups" />}>Team Matchups</MenuItem>
-                <MenuItem component={<Link to="/predictions" />}>Win/Loss Prediction</MenuItem>
-                <MenuItem component={<Link to="/dashboard" />}>Dashboard</MenuItem>
-            </Menu>
+          {/* Company Info */}
+          <Box className={styles.companyInfo}>
+            <FaBuilding size={30} />
+            {!collapsed && <Typography variant="h6">NBAnalytics</Typography>}
+          </Box>
+          
+          {/* Menu Subtitle or Gray Line */}
+          {!collapsed ? (
+            <Box className={styles.menuSubtitle}>
+              <Typography variant="subtitle1">Menu</Typography>
+            </Box>
+          ) : (
+            <div className={styles.grayLine} />
+          )}
+
+          {/* Menu Items */}
+          <Menu>
+            <MenuItem 
+              icon={<FaHome size={20} />} 
+              component={<Link to="/" />} 
+              className={selectedMenuItem === 'home' ? styles.activeMenuItem : ''}
+              onClick={() => handleMenuItemClick('home')}
+            >
+              Home
+            </MenuItem>
+            <MenuItem 
+              icon={<FaClipboardList size={20} />} 
+              component={<Link to="/matchups" />} 
+              className={selectedMenuItem === 'matchups' ? styles.activeMenuItem : ''}
+              onClick={() => handleMenuItemClick('matchups')}
+            >
+              Team Matchups
+            </MenuItem>
+            <MenuItem 
+              icon={<FaChartBar size={20} />} 
+              component={<Link to="/predictions" />} 
+              className={selectedMenuItem === 'predictions' ? styles.activeMenuItem : ''}
+              onClick={() => handleMenuItemClick('predictions')}
+            >
+              Win/Loss Prediction
+            </MenuItem>
+            <MenuItem 
+              icon={<FaTachometerAlt size={20} />} 
+              component={<Link to="/dashboard" />} 
+              className={selectedMenuItem === 'dashboard' ? styles.activeMenuItem : ''}
+              onClick={() => handleMenuItemClick('dashboard')}
+            >
+              Dashboard
+            </MenuItem>
+          </Menu>
         </Sidebar>
-    )
+      </Box>
+      { !collapsed && <div className={styles.overlay} /> }
+    </>
+  );
 }
 
 export default NavBar;
