@@ -1,13 +1,11 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import styles from './index.module.css';
 import Layout from '../../components/Layout/Layout';
-import MatchupSlider from '../../components/MatchupSlider';
-import { MatchupData } from '../../interfaces/MatchupData';
 
 import { teamsNames } from '../../constants/teamNames';
 import axios from 'axios';
-import { Alert, CircularProgress, Grid } from '@mui/material';
-import { allTeams, avgData, orderedPerentile, orderedPerentileCached } from '../../constants/routes';
+import { Button, Alert, CircularProgress, Grid } from '@mui/material';
+import { pred_LR } from '../../constants/routes';
 
 
 /**
@@ -23,12 +21,17 @@ function Prediction() {
   const [successVisible, setSuccessVisible] = useState(false)
   const [team1, setTeam1] = useState("Waiting On Team 1 Choice")
   const [team2, setTeam2] = useState("Waiting On Team 2 Choice")
-  const [year, setYear] = useState("")
   const [errMessage, setErrorMessage] = useState("Error")
-  const [data, setData] = useState<MatchupData[]>([])
+  const [winner, setData] = useState("")
+  const [winnerImage, setWinImg] = useState("")
+  const [winProb, setWinProb] = useState(0)
   const [team1image, setTeam1Image] = useState("nba-logo.png")
   const [team2image, setTeam2Image] = useState("nba-logo.png")
   const [imageClass, setImageClass] = useState(styles.nothing)
+
+  const handleRefresh = () => {
+    window.location.reload();
+  }
 
   function changeTeam1(e: ChangeEvent<HTMLSelectElement>) {
     let newTeam: string = e.target.value;
@@ -60,62 +63,42 @@ function Prediction() {
     } else if (team1 === team2) {
       throwDuplicateTeamError();
     } else {
-      getData();
+      getUncachedData();
     }
   }
 
-  // Gets data from route that uses redis cache. If it fails it uses route that doesnt have cache
-  function getData() {
-    setFormVisible(false)
-    setProgressVisible(true)
-    setErrorVisible(false)
-    axios.post(process.env.REACT_APP_API_URL + orderedPerentileCached, {
-      team1: team1,
-      team2: team2,
-      year: "2023"
-    })
-    .then((response) => {
-      setProgressVisible(false)
-      setSuccessVisible(true)
-      setData(response.data.statistics)
-      setImageClass(styles.teamName)
-    })
-    .catch((error) => {
-      console.log(error)
-      getUncachedData();
-    })
+  function decimalToPercent(num: number): number{
+    return Math.trunc(num * 100) / 100;
   }
 
   function getUncachedData() {
-    axios.post(process.env.REACT_APP_API_URL + avgData, {
-      team1: team1,
-      team2: team2,
-      year: "2023"
-    })
-    .then((response) => {
-      console.log(response.data)
-    })
-    .catch((error) => {
-      console.log("catch error")
-      setProgressVisible(false)
-      setErrorVisible(true)
-      let errorMessage = "Error retrieving from Server\n"
-      setErrorMessage(errorMessage.concat(error))
-    })
-    axios.post(process.env.REACT_APP_API_URL + avgData, {
+    setFormVisible(false)
+    setProgressVisible(true)
+    setErrorVisible(false)
+    axios.post(process.env.REACT_APP_API_URL + pred_LR, {
       team1: team1,
       team2: team2,
       year: "2023"
     })
     .then((response) => {
       setProgressVisible(false)
+      setFormVisible(false)
       setSuccessVisible(true)
-      //fg
-      console.log(response.data.statistics[12].mean2)
-      setData(response.data.statistics)
+      setErrorVisible(false)
+      if(response.data.prob_win >= 0.50){
+        setData(team1)
+        setWinImg(team1image)
+        setWinProb(decimalToPercent(response.data.prob_win))
+      }
+      else{
+        setData(team2)
+        setWinImg(team2image)
+        setWinProb(decimalToPercent(response.data.prob_loss))
+      }
       setImageClass(styles.teamName)
     })
     .catch((error) => {
+      console.log("catch error")
       setProgressVisible(false)
       setErrorVisible(true)
       let errorMessage = "Error retrieving from Server\n"
@@ -204,10 +187,13 @@ function Prediction() {
         }
         {successVisible ?
           <Grid container spacing={1} className={styles.predHeader}>
-            <Grid item xs={12}>
-              {team1}<br/>
-              <img src={'/Assets/NBALogos/' + team1image} alt={team1} className={styles.logo}/><br/>
-              <p>Winner</p>
+            <Grid rowSpacing={1} item xs={12}>
+              {winner}<br/>
+              <img src={'/Assets/NBALogos/' + winnerImage} alt={winner} className={styles.logo}/><br/>
+              <p>{winner} is predicted to win with a confidence of {winProb}%!</p>
+              <Button variant="contained" color="primary" onClick={handleRefresh}>
+                Try Another Prediction!
+              </Button>
             </Grid>
           </Grid>
           :

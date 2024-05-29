@@ -16,7 +16,6 @@ function pick(obj, keys) {
 export const twoTeamFeatures = async (team1name, year) => {
     try {
         let tradCollection = tradDb.collection("NbaTeamStats_" + year)
-
         // Promise.all runs all promises concurrently.
         let data = await Promise.all([tradCollection.find({Name: team1name}).toArray()])
         const keysToKeep = ['fg', 'fg_pct', 'fg3', 'ft', 'ft_pct', 'drb', 'orb', 'ast', 'stl', 'blk', 'tov', 'pf'];

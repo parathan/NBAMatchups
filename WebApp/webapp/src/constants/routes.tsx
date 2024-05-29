@@ -4,4 +4,4 @@ export const orderedPerentile = '/teams/OrderedPercentile';
 export const avgData = '/teams';
 export const allTeamsCached = '/teams/allTeamsCached';
 export const orderedPerentileCached = '/teams/cachedOrderedPercentile';
-export const pred_LR = '/ml/LR_pred';
+export const pred_LR = '/ml/LR_pred/teams';

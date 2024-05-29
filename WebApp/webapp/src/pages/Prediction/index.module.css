@@ -11,6 +11,11 @@
     animation: fade-in 2s;
 }
 
+.predAgain {
+    margin-top: 10%;
+    padding-top: 5%;
+}
+
 .submitGrid {
     padding: 4vh;
 }
