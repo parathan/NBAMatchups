@@ -1,4 +1,5 @@
 import pandas as pd
+from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import VotingClassifier
@@ -108,6 +109,26 @@ def svmModel(X_train_selected, X_test_selected, y_train, y_test):
     best_model = grid_search.best_estimator_
     return best_model
 
+def naiveBayesModel(X_train_selected, X_test_selected, y_train, y_test):
+    model = GaussianNB()
+    param_grid = {
+        'var_smoothing': [1e-09, 1e-08, 1e-07, 1e-06, 1e-05, 1e-04, 1e-03]
+    }
+
+    # Setup GridSearchCV
+    grid_search = GridSearchCV(estimator=model, param_grid=param_grid, cv=5, n_jobs=-1, scoring='accuracy')
+
+    # Fit the model
+    grid_search.fit(X_train_selected, y_train)
+
+    # Check the best parameters and score
+    # print(f"Best parameters found: {grid_search.best_params_}")
+    # print(f"Best cross-validation accuracy: {grid_search.best_score_}")
+
+    # Evaluate on test data
+    best_model = grid_search.best_estimator_
+    return best_model
+
 def evaluate_model(model, X_test, y_test):
     y_pred = model.predict(X_test)
     accuracy = accuracy_score(y_test, y_pred)
@@ -122,8 +143,9 @@ def main():
     # randomForestModel(*processedData)
     ensembleModel = VotingClassifier(estimators=[
         ('lr', logisticRegressionModel(*processedData)),
-        # ('rf', randomForestModel(*processedData)),
-        ('svm', svmModel(*processedData)),
+        ('rf', randomForestModel(*processedData)),
+        # ('svm', svmModel(*processedData)),
+        ('nb', naiveBayesModel(*processedData))
     ], voting='soft')
 
     x_train = processedData[0]
