@@ -22,7 +22,7 @@ def processData():
     X_train_scaled = scaler.fit_transform(X_train)
     X_test_scaled = scaler.transform(X_test)
 
-    with open('scaler.pkl', 'wb') as scaler_file:
+    with open('pickle/scaler.pkl', 'wb') as scaler_file:
         pickle.dump(scaler, scaler_file)
 
     # Feature selection
@@ -83,7 +83,7 @@ def logisticRegressionModel(X_train_selected, X_test_selected, y_train, y_test):
     print("Confusion Matrix:")
     print(confusion_matrix(y_test, y_pred))
 
-    with open('lr_model', 'wb') as model_file:
+    with open('pickle/lr_model', 'wb') as model_file:
         pickle.dump(model, model_file)
 
 

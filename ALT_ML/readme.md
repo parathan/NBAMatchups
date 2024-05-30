@@ -12,3 +12,4 @@ Run dataProcessing.py file
 
 Data is labelled with the later year of the season in mind ie. data labelled 2023 will be for the 2022-23 season  
 
+finalLogisticRegressionModel.py is the script for the final model used and exported through pickle. Pickle folder contains model and scaler pickled, and feature.txt contains features used in feature selection.
