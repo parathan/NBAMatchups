@@ -6,6 +6,7 @@ import { teamsNames } from '../../constants/teamNames';
 import axios from 'axios';
 import { Button, Alert, CircularProgress, Grid } from '@mui/material';
 import { pred_LR } from '../../constants/routes';
+import { decimalToPercent } from '../../util/Math/math';
 
 
 /**
@@ -58,17 +59,13 @@ function Prediction() {
   }
 
   function onSubmit() {
-    if (!(team1 !== "" && team2 !== "")) {
+    if (team1 === "Waiting On Team 1 Choice" || team2 === "Waiting On Team 2 Choice") {
       throwEmptyInputError();
     } else if (team1 === team2) {
       throwDuplicateTeamError();
     } else {
       getUncachedData();
     }
-  }
-
-  function decimalToPercent(num: number): number{
-    return Math.trunc(num * 100) / 100;
   }
 
   function getUncachedData() {
@@ -191,9 +188,9 @@ function Prediction() {
               {winner}<br/>
               <img src={'/Assets/NBALogos/' + winnerImage} alt={winner} className={styles.logo}/><br/>
               <p>{winner} is predicted to win with a confidence of {winProb}%!</p>
-              <Button variant="contained" color="primary" onClick={handleRefresh}>
+              <button onClick={handleRefresh} className={styles.submit}>
                 Try Another Prediction!
-              </Button>
+              </button>
             </Grid>
           </Grid>
           :

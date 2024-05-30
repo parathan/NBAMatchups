@@ -2,7 +2,9 @@
 
 ## Description
 
-The Home component serves as the landing page for the NBAMatchups application. It provides descriptions of the application's features and links to navigate to different pages.
+The Prediction page allows users to input two teams in the given season and uses the api
+to fetch the team's average data and use it with the ml model to determine the which team
+has a higher probability of winning the game.  
 
 ## Usage
 ```
@@ -10,7 +12,7 @@ import Matchups from './Matchups';
 
 function App() {
   return (
-    <Matchups />
+    <Prediction />
   );
 }
 
@@ -30,6 +32,9 @@ This component does not accept any props.
 **team2**: String state to store the name of the second selected team.  
 **year**: String state to store the selected year.  
 **errMessage**: String state to store error messages.  
+**winner**: The team out of the two with the higher win probability.  
+**winnerImage**: The winning teams logo.  
+**winProb**: The win probability of the winning team.  
 **data**: Array state to store matchup data.  
 **team1image**: String state to store the image filename for the first team's logo.  
 **team2image**: String state to store the image filename for the second team's logo.  
@@ -40,7 +45,7 @@ This component does not accept any props.
 **changeTeam2(e: ChangeEvent<HTMLSelectElement>)**: Function to handle the change event when selecting the second team.  
 **changeYear(e: ChangeEvent<HTMLSelectElement>)**: Function to handle the change event when selecting the year.
 **onSubmit()**: Function to validate input and fetch matchup data.  
-**getData()**: Function to fetch matchup data from the server.  
+**getUncachedData()**: Function to fetch matchup data from the server.  
 **throwEmptyInputError()**: Function to handle errors when input fields are empty.  
 **throwDuplicateTeamError()**: Function to handle errors when both selected teams are the same.  
 
