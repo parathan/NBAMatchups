@@ -21,5 +21,4 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('LR_pred/', views.LR_pred),
-    path('prediction/', views.LogPrediction)
 ]
