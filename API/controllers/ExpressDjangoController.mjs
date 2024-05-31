@@ -13,19 +13,60 @@ function pick(obj, keys) {
     }, {});
 }
 
-export const twoTeamFeatures = async (team1name, year) => {
+/**
+ * This function takes an object, removes the id and name fields, and adds suffix
+ * to the end of all the other fields
+ * @param {object} obj - The object that needs to be modified
+ * @param {string} suffix - The string added to the end of all the fields
+ * @returns new object with changed suffix
+ */
+function renameKeysWithSuffix(obj, suffix) {
+    delete obj['_id']
+    delete obj['Name']
+    return Object.keys(obj).reduce((acc, key) => {
+        acc[`${key}${suffix}`] = obj[key];
+        return acc;
+    }, {});
+}
+
+/**
+ * This function takes the average team data for both teams amd returns them as a single
+ * object.
+ * @param {string} team1name - The first team
+ * @param {string} team2name - The second team
+ * @param {string} year - The year in which the data on the teams was taken from
+ * @returns object with both teams data
+ */
+export const twoTeamFeatures = async (team1name, team2name, year) => {
     try {
         let tradCollection = tradDb.collection("NbaTeamStats_" + year)
         // Promise.all runs all promises concurrently.
-        let data = await Promise.all([tradCollection.find({Name: team1name}).toArray()])
-        const keysToKeep = ['fg', 'fg_pct', 'fg3', 'ft', 'ft_pct', 'drb', 'orb', 'ast', 'stl', 'blk', 'tov', 'pf'];
-        const filteredData = pick(data[0][0], keysToKeep);
-        return filteredData
+        let data = await Promise.all(
+            [
+                tradCollection.find({Name: team1name}).toArray(),
+                tradCollection.find({Name: team2name}).toArray()
+            ]
+        )
+        const team1Data = renameKeysWithSuffix(data[0][0], "_x")
+        const team2Data = renameKeysWithSuffix(data[0][0], "_y")
+        const combinedData = {
+            ...team1Data,
+            ...team2Data
+        }
+        return combinedData
     } catch (err) {
         return [0, err]
     }
 };
 
+/**
+ * This method gets both teams average data, and passes it to the python api for processing
+ * through the machine learning model, and returns the result of that prediction.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ * @returns 
+ */
 export const LRTwoTeams =
     async (req, res, next) => {
         try {
@@ -35,8 +76,9 @@ export const LRTwoTeams =
             }
 
             let team1name = req.body.team1;
+            let team2name = req.body.team2;
             let year = req.body.year;
-            let featureData = await twoTeamFeatures(team1name, year)
+            let featureData = await twoTeamFeatures(team1name, team2name, year)
             if (featureData[0] === 0){
                 return res.status(400).json("Unable to Access MongoDB");;
             }
