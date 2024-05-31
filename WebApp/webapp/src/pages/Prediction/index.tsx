@@ -4,9 +4,9 @@ import Layout from '../../components/Layout/Layout';
 
 import { teamsNames } from '../../constants/teamNames';
 import axios from 'axios';
-import { Button, Alert, CircularProgress, Grid } from '@mui/material';
+import { Alert, CircularProgress, Grid } from '@mui/material';
 import { pred_LR } from '../../constants/routes';
-import { decimalToPercent } from '../../util/Math/math';
+import { multby100 } from '../../util/Math/math';
 
 
 /**
@@ -85,12 +85,12 @@ function Prediction() {
       if(response.data.prob_win >= 0.50){
         setData(team1)
         setWinImg(team1image)
-        setWinProb(decimalToPercent(response.data.prob_win))
+        setWinProb(multby100(response.data.prob_win))
       }
       else{
         setData(team2)
         setWinImg(team2image)
-        setWinProb(decimalToPercent(response.data.prob_loss))
+        setWinProb(multby100(response.data.prob_loss))
       }
       setImageClass(styles.teamName)
     })
