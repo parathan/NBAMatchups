@@ -5,10 +5,9 @@
 }
 
 .predHeader {
+    margin-top: 5vh;
     color: var(--header-font-colour);
-    font-size: calc(3vmin);;
-    padding-top: 5%;
-    animation: fade-in 2s;
+    animation: fadeInRight 2s;
 }
 
 .predAgain {
@@ -53,12 +52,6 @@
     opacity: .75;
 }
 
-.slider {
-    padding-top: 5vh;
-    padding-right: 10vh;
-    padding-left: 10vh;
-}
-
 .teamName {
     color: var(--p-font-colour);
     font-size: calc(10px + 2vmin);;
@@ -70,6 +63,11 @@
     height: auto;
 }
 
+.logoResult {
+    width: 50%;
+    height: auto;
+}
+
 @keyframes fade-in {
     from {
         opacity: 0;
@@ -78,6 +76,17 @@
         opacity: 100;
     }
 }
+
+@keyframes fadeInRight {
+    0% {
+       opacity: 0;
+       transform: translateX(40px);
+    }
+    100% {
+       opacity: 1;
+       transform: translateX(0);
+    }
+ }
 
 select {
     /* Reset Select */
@@ -96,7 +105,7 @@ select {
 
 /* CSS */
 .submit {
-    margin-top: 3vh;
+    margin-top: 10vh;
     background-color: var(--secondary-colour);
     border-radius: 4px;
     border-style: none;
@@ -126,4 +135,15 @@ select {
     width: fit-content;
     margin: 0 auto;
     margin-top: 3%;
+}
+
+.results {
+    background-color: var(--secondary-colour);
+    border-radius: 25px;
+    font-size: calc(10px + 1vmin);
+    
+}
+
+.individualResults {
+    padding: 10%
 }

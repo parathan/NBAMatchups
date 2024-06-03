@@ -7,6 +7,7 @@ import axios from 'axios';
 import { Alert, CircularProgress, Grid } from '@mui/material';
 import { pred_LR } from '../../constants/routes';
 import { multby100 } from '../../util/Math/math';
+import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 
 
 /**
@@ -184,14 +185,26 @@ function Prediction() {
         }
         {successVisible ?
           <Grid container spacing={1} className={styles.predHeader}>
-            <Grid rowSpacing={1} item xs={12}>
-              {winner}<br/>
-              <img src={'/Assets/NBALogos/' + winnerImage} alt={winner} className={styles.logo}/><br/>
-              <p>{winner} is predicted to win with a confidence of {winProb}%!</p>
+            <Grid item xs={2.75}></Grid>
+            <Grid item xs={3} className={styles.results}>
+              <div className={styles.individualResults}>
+                <p>{winner} are expected to win!</p>
+                <img src={'/Assets/NBALogos/' + winnerImage} alt={winner} className={styles.logoResult}/><br/>
+              </div>
+            </Grid>
+            <Grid item xs={0.5}></Grid>
+            <Grid item xs={3} className={styles.results}>
+              <div className={styles.individualResults}>
+                <p>{winner} is predicted to win with a confidence of {winProb}%!</p>
+              </div>
+            </Grid>
+            <Grid item xs={2.75}></Grid>
+            <Grid item xs={12}>
               <button onClick={handleRefresh} className={styles.submit}>
                 Try Another Prediction!
               </button>
             </Grid>
+            
           </Grid>
           :
           null
