@@ -8,6 +8,7 @@ import { Alert, CircularProgress, Grid } from '@mui/material';
 import { pred_LR } from '../../constants/routes';
 import { multby100 } from '../../util/Math/math';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
+import CircularPercentage from '../../components/CircularProgress';
 
 
 /**
@@ -188,13 +189,16 @@ function Prediction() {
             <Grid item xs={2.75}></Grid>
             <Grid item xs={3} className={styles.results}>
               <div className={styles.individualResults}>
-                <p>{winner} are expected to win!</p>
+                <p className={styles.individualResultsHeader}>Winner</p>
                 <img src={'/Assets/NBALogos/' + winnerImage} alt={winner} className={styles.logoResult}/><br/>
+                <p>{winner} are expected to win!</p>
               </div>
             </Grid>
             <Grid item xs={0.5}></Grid>
             <Grid item xs={3} className={styles.results}>
               <div className={styles.individualResults}>
+                <p className={styles.individualResultsHeader}>Confidence Score</p>
+                <CircularPercentage percentage={winProb} />
                 <p>{winner} is predicted to win with a confidence of {winProb}%!</p>
               </div>
             </Grid>
