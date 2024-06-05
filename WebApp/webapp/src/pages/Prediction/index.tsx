@@ -8,7 +8,7 @@ import { Alert, CircularProgress, Grid } from '@mui/material';
 import { pred_LR } from '../../constants/routes';
 import { multby100 } from '../../util/Math/math';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
-import CircularPercentage from '../../components/CircularProgress';
+import CircularPercentage from '../../components/CircularPercentage';
 
 
 /**
