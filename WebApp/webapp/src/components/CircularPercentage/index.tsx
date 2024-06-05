@@ -4,9 +4,15 @@ import 'react-circular-progressbar/dist/styles.css';
 
 import styles from './index.module.css';
 
-const CircularPercentage = ({ percentage }: {
+/**
+ * This component is an animated circular progress bar that animates on mounting to display the given percentage
+ * with both text and a circular visual representation.
+ * @param percentage the percentage that is used for the circularProgress bar
+ * @returns Circular progress bar
+ */
+function CircularPercentage({ percentage }: {
     percentage: number
-}) => {
+}) {
   const [animatedPercentage, setAnimatedPercentage] = useState(0);
 
   useEffect(() => {
