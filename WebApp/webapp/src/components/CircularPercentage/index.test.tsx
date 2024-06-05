@@ -1,12 +1,15 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import CircularPercentage from '.';
 
 describe('MatchupSlider', () => {
-    const percentage = 53
 
     it('renders component with correct state', async () => {
-        render(<CircularPercentage percentage={percentage}/>)
+        render(<CircularPercentage percentage={53} />);
+
+        await waitFor(() => {
+            const percentage = screen.getByText('53%');
+            expect(percentage).toBeInTheDocument();
+        });
     })
 })
