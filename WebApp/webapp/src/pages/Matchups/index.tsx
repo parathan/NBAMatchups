@@ -39,17 +39,6 @@ function Matchups() {
   const [team2image, setTeam2Image] = useState("")
   const [imageClass, setImageClass] = useState(styles.nothing)
 
-  const control = useAnimation();
-  const [ref, inView] = useInView();
-
-  useEffect(() => {
-    if (inView) {
-      control.start("visible");
-    } else {
-      control.start("hidden");
-    }
-  }, [control, inView]);
-
   function changeTeam1(e: ChangeEvent<HTMLSelectElement>) {
     let newTeam: string = e.target.value;
     let newTeamImage: string = newTeam.replace(/ /g,"_")
