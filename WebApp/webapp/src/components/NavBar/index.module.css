@@ -16,7 +16,7 @@
   
   .menuSubtitle {
     padding: 1rem;
-    color: var(--font-colour);
+    color: var(--menuFont-colour);
   }
   
   .activeMenuItem {
