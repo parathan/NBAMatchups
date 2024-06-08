@@ -27,8 +27,8 @@ function Home() {
             </p>
         </header>
         <div className={styles.features}>
-          <Grid container spacing={2}>
-            <Grid item xs={4}></Grid>
+          <Grid container spacing={2} rowGap={10}>
+            <Grid item xs={1.5}></Grid>
             <Grid item xs={4}>
               <div className={styles.description}>
                 Matchups is a feature that allows you to compare two teams based on their statistics
@@ -44,6 +44,18 @@ function Home() {
               <button className={styles.featureButton} onClick={() => handleNavigate("/matchups")}>
                 Go to Team Matchups
               </button>
+            </Grid>
+            <Grid item xs={1}></Grid>
+            <Grid item xs={4}>
+              <img src={'/Assets/Screenshots/matchupsPage.png'} alt={"MatchupsPage"} className={styles.screenshot}/>
+            </Grid>
+            <Grid item xs={1.5}></Grid>
+            <Grid item xs={1.5}></Grid>
+            <Grid item xs={4}>
+              <img src={'/Assets/Screenshots/predictionsPage.png'} alt={"PredictionsPage"} className={styles.screenshot}/>
+            </Grid>
+            <Grid item xs={1}></Grid>
+            <Grid item xs={4}>
               <div className={styles.description}>
                 This prediction feature is based on a model that uses previous basketball data and the
                 correlation these statistics have with a team's winning or losing. Using this, given two
@@ -52,7 +64,11 @@ function Home() {
               <button className={styles.featureButton} onClick={() => handleNavigate("/predictions")}>
                   Go to Win/Loss Prediction
               </button>
-              <div className={styles.description}>
+            </Grid>
+            <Grid item xs={1.5}></Grid>
+            <Grid item xs={1.5}></Grid>
+            <Grid item xs={4}>
+            <div className={styles.description}>
                 The Dashboard feature visualizes the trends teams have had in the past few years for the
                 various statistical categories that have been used in this platform. It also allows you to
                 see the comparison between the teams statistical trends for a particular stat against the 
@@ -61,6 +77,16 @@ function Home() {
               <button className={styles.featureButton} onClick={() => handleNavigate("/dashboard")}>
                 Go to Dashboard
               </button>
+            </Grid>
+            <Grid item xs={1}></Grid>
+            <Grid item xs={4}>
+              <img src={'/Assets/Screenshots/dashboardPage.png'} alt={"DashboardPage"} className={styles.screenshot}/>
+            </Grid>
+            <Grid item xs={1.5}></Grid>
+            <Grid item xs={4}></Grid>
+            <Grid item xs={4}>
+              
+              
               <div className={styles.acknowledgmenet}>
                 Acknowledgement
               </div>

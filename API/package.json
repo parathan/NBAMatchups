@@ -11,7 +11,7 @@
   "author": "Parathan Vakeesan",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.6.8",
+    "axios": "^1.7.2",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "expect": "^29.7.0",

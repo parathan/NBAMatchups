@@ -1,6 +1,156 @@
-.header {
-    padding-top: 10%;
+.prediction {
+    padding: 4vh;
     text-align: center;
-    font-size: calc(10px + 2vmin);
+    animation: fade-in 2s;
+}
+
+.predHeader {
+    margin-top: 5vh;
     color: var(--header-font-colour);
-  }
+    animation: fadeInRight 2s;
+}
+
+.predAgain {
+    margin-top: 10%;
+    padding-top: 5%;
+}
+
+.submitGrid {
+    padding: 4vh;
+}
+.fadeout {
+    animation: fade-out 2.5s;
+}
+
+.header {
+    color: var(--header-font-colour);
+    font-size: calc(10px + 3vmin);;
+    padding-bottom: 2vh;
+    margin-top: 1%;
+}
+
+.description {
+    color: var(--p-font-colour);
+}
+
+.input {
+    padding-top: 7vh;
+}
+
+.dropdown {
+    text-align: center;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    background-color: var(--secondary-colour);
+    width: 20em;
+    height: 3em;
+    border-radius: .25em;
+    overflow: hidden;
+}
+
+.dropdown:hover {
+    opacity: .75;
+}
+
+.teamName {
+    color: var(--p-font-colour);
+    font-size: calc(10px + 2vmin);;
+    animation: fade-in 2s;
+}
+
+.logo {
+    width: 30%;
+    height: auto;
+}
+
+.logoResult {
+    width: 50%;
+    height: auto;
+    padding-top: 10%;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 100;
+    }
+}
+
+@keyframes fadeInRight {
+    0% {
+       opacity: 0;
+       transform: translateX(40px);
+    }
+    100% {
+       opacity: 1;
+       transform: translateX(0);
+    }
+ }
+
+select {
+    /* Reset Select */
+    appearance: none;
+    outline: 10px red;
+    border: 0;
+    box-shadow: none;
+    /* Personalize */
+    flex: 1;
+    padding: 0 1em;
+    color: var(--p-font-colour);
+    background-color: var(--darkgray);
+    background-image: none;
+    cursor: pointer;
+}
+
+/* CSS */
+.submit {
+    margin-top: 10vh;
+    background-color: var(--secondary-colour);
+    border-radius: 4px;
+    border-style: none;
+    box-sizing: border-box;
+    color: var(--p-font-colour);
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Farfetch Basis","Helvetica Neue",Arial,sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.5;
+    outline: none;
+    overflow: hidden;
+    padding: 9px 20px 8px;
+    text-align: center;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.submit:hover {
+    opacity: .75;
+}
+
+.errMessage {
+    width: fit-content;
+    margin: 0 auto;
+    margin-top: 3%;
+}
+
+.results {
+    background-color: var(--secondary-colour);
+    border-radius: 25px;
+    font-size: calc(10px + 1vmin);
+    
+}
+
+.individualResults {
+    padding: 10%;
+    font-size: calc(5px + 1vmin);;
+}
+
+.individualResultsHeader {
+    color: var(--header-font-colour);
+    font-size: calc(5px + 2vmin);;
+}

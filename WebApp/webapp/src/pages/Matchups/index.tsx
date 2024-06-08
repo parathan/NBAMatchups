@@ -10,6 +10,14 @@ import axios from 'axios';
 import { Alert, CircularProgress, Grid } from '@mui/material';
 import { orderedPerentile, orderedPerentileCached } from '../../constants/routes';
 
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+
+
+const variant = {
+  visible: { opacity: 1, x: 0 },
+  hidden: { opacity: 0, x: 100 },
+};
 
 /**
  * This matchups page allows users to compare two teams based off opposing stats, and orders these
@@ -196,19 +204,25 @@ function Matchups() {
         
         {
           data.map( sliderData =>
-            <MatchupSlider 
-              field1={sliderData.field1}
-              field2={sliderData.field2}
-              PercentileDifference={sliderData.PercentileDifference}
-              absPercentileDifference={sliderData.absPercentileDifference} 
-              team1Percentile1={sliderData.team1Percentile1} 
-              team2Percentile_Op={sliderData.team2Percentile_Op} 
-              TraditionalDifference={sliderData.TraditionalDifference} 
-              team1Trad={sliderData.team1Trad} 
-              team2Trad_Op={sliderData.team2Trad_Op} 
-              mean1={sliderData.mean1}
-              mean2={sliderData.mean2}
-            />
+            <motion.div
+              variants={variant}
+              initial="hidden" 
+              whileInView="visible"
+            >
+              <MatchupSlider 
+                field1={sliderData.field1}
+                field2={sliderData.field2}
+                PercentileDifference={sliderData.PercentileDifference}
+                absPercentileDifference={sliderData.absPercentileDifference} 
+                team1Percentile1={sliderData.team1Percentile1} 
+                team2Percentile_Op={sliderData.team2Percentile_Op} 
+                TraditionalDifference={sliderData.TraditionalDifference} 
+                team1Trad={sliderData.team1Trad} 
+                team2Trad_Op={sliderData.team2Trad_Op} 
+                mean1={sliderData.mean1}
+                mean2={sliderData.mean2}
+              />
+            </motion.div>
         )}
       </div>
     </Layout>
