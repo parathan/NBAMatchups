@@ -39,7 +39,7 @@ function NavBar() {
           color: '#dddddd',
           height: '100vh',
           position: 'fixed',
-          width: '14%'
+          width: '26vh'
         },
       }}
     >
