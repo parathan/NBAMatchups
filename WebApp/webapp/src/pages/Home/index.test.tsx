@@ -15,7 +15,7 @@ describe('Home Page', () => {
                 <Home />
             </MemoryRouter>
         )
-        const header = await screen.findByText(/Welcome to NBAMatchups/i);
+        const header = await screen.findByText(/Welcome to NBAnalytics/i);
         expect(header).toBeInTheDocument();
     })
 
