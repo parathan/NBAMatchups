@@ -23,7 +23,7 @@ function Home() {
       <div className={styles.homePage}>
         <header className={styles.header}>
             <p>
-              Welcome to NBAMatchups
+              Welcome to NBAnalytics
             </p>
         </header>
         <div className={styles.features}>

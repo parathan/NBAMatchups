@@ -1,35 +1,91 @@
-import { Sidebar, Menu, MenuItem, SubMenu, sidebarClasses } from "react-pro-sidebar";
-import { Box } from "@mui/material";
-import styles from './index.module.css'
+import React, { useState, useEffect } from 'react';
+import { Sidebar, Menu, MenuItem, sidebarClasses } from 'react-pro-sidebar';
+import { Box, Typography } from '@mui/material';
+import { Link, useLocation } from 'react-router-dom';
+import { FaHome, FaClipboardList, FaChartBar, FaTachometerAlt, FaBuilding } from 'react-icons/fa';
+import styles from './index.module.css';
 
-import { Link } from "react-router-dom"
+type MenuItemType = 'home' | 'matchups' | 'predictions' | 'dashboard';
 
-/**
- * The NavBar component provides navigation links to different pages of the application. 
- * It utilizes the react-pro-sidebar library to create a sidebar menu with clickable 
- * items that direct users to various sections of the application.
- * @returns 
- */
 function NavBar() {
-    return (
-        // https://codesandbox.io/p/sandbox/react-dashboard-pnm6fh?file=%2Fsrc%2Fpages%2Fglobal%2Fsidebar%2FMyProSidebar.jsx%3A51%2C6-51%2C9
+  const [selectedMenuItem, setSelectedMenuItem] = useState<MenuItemType>('home');
+  const location = useLocation();
 
-        <Sidebar
-            rootStyles={{
-                [`.${sidebarClasses.container}`]: {
-                    backgroundColor: '#444444',
-                    color: '#dddddd',
-                },
-            }}
+  // Update the selected menu item based on the current path
+  useEffect(() => {
+    switch (location.pathname) {
+      case '/':
+        setSelectedMenuItem('home');
+        break;
+      case '/matchups':
+        setSelectedMenuItem('matchups');
+        break;
+      case '/predictions':
+        setSelectedMenuItem('predictions');
+        break;
+      case '/dashboard':
+        setSelectedMenuItem('dashboard');
+        break;
+      default:
+        setSelectedMenuItem('home');
+    }
+  }, [location.pathname]);
+
+  return (
+    <Sidebar
+      rootStyles={{
+        [`.${sidebarClasses.container}`]: {
+          backgroundColor: '#444444',
+          color: '#dddddd',
+          height: '100vh',
+          position: 'fixed',
+          width: '26vh'
+        },
+      }}
+    >
+      <Box className={styles.companyInfo}>
+        <FaBuilding size={30} />
+        <Typography variant="h6">NBAnalytics</Typography>
+      </Box>
+      <Box className={styles.menuSubtitle}>
+        <Typography variant="subtitle1">Menu</Typography>
+      </Box>
+      <Menu>
+        <MenuItem 
+          icon={<FaHome size={20} />} 
+          component={<Link to="/" />} 
+          className={selectedMenuItem === 'home' ? styles.activeMenuItem : ''}
+          onClick={() => setSelectedMenuItem('home')}
         >
-            <Menu>
-                <MenuItem component={<Link to="/" />}>Home</MenuItem>
-                <MenuItem component={<Link to="/matchups" />}>Team Matchups</MenuItem>
-                <MenuItem component={<Link to="/predictions" />}>Win/Loss Prediction</MenuItem>
-                <MenuItem component={<Link to="/dashboard" />}>Dashboard</MenuItem>
-            </Menu>
-        </Sidebar>
-    )
+          Home
+        </MenuItem>
+        <MenuItem 
+          icon={<FaClipboardList size={20} />} 
+          component={<Link to="/matchups" />} 
+          className={selectedMenuItem === 'matchups' ? styles.activeMenuItem : ''}
+          onClick={() => setSelectedMenuItem('matchups')}
+        >
+          Team Matchups
+        </MenuItem>
+        <MenuItem 
+          icon={<FaChartBar size={20} />} 
+          component={<Link to="/predictions" />} 
+          className={selectedMenuItem === 'predictions' ? styles.activeMenuItem : ''}
+          onClick={() => setSelectedMenuItem('predictions')}
+        >
+          Win/Loss Prediction
+        </MenuItem>
+        <MenuItem 
+          icon={<FaTachometerAlt size={20} />} 
+          component={<Link to="/dashboard" />} 
+          className={selectedMenuItem === 'dashboard' ? styles.activeMenuItem : ''}
+          onClick={() => setSelectedMenuItem('dashboard')}
+        >
+          Dashboard
+        </MenuItem>
+      </Menu>
+    </Sidebar>
+  );
 }
 
 export default NavBar;

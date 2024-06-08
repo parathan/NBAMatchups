@@ -1,0 +1,25 @@
+.collapsedOverlay {
+    transition: opacity 0.3s ease;
+  }
+  
+  .expandedOverlay {
+    transition: opacity 0.3s ease;
+  }
+  
+  .companyInfo {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    gap: 1rem;
+    color: var(--font-colour);
+  }
+  
+  .menuSubtitle {
+    padding: 1rem;
+    color: var(--menuFont-colour);
+  }
+  
+  .activeMenuItem {
+    background-color: var(--background-colour);
+    color: var(--selectedFont-colour);
+  }
