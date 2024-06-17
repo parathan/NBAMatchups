@@ -34,6 +34,11 @@ func GetAllTeams(c *fiber.Ctx) error {
 		totalTeams = append(totalTeams, totalTeam)
 	}
 
+	// add mean as one of the teams
+	var meanTeam models.TotalTeamData
+	meanTeam.TeamName = "MEAN"
+	totalTeams = append(totalTeams, meanTeam)
+
 	// convert years to ints for loop
 	intStartYear, _ := strconv.Atoi(startYear)
 	intEndYear, _ := strconv.Atoi(endYear)
