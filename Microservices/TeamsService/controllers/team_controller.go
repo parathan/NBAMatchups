@@ -98,3 +98,29 @@ func GetAllTeams(c *fiber.Ctx) error {
 		Data:    &fiber.Map{"data": totalTeams},
 	})
 }
+
+func GetTwoTeams(c *fiber.Ctx) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	firstTeam := c.Query("team1")
+	secondTeam := c.Query("team2")
+	year := c.Query("year")
+
+	defer cancel()
+
+	var teamsCollection *mongo.Collection = configs.GetCollection(configs.DB, "NBAMatchups", "NbaTeamStats_" + year)
+	
+	var team1Data models.TeamData
+	err := teamsCollection.FindOne(ctx, bson.M{"Name": firstTeam}).Decode(&team1Data)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var team2Data models.TeamData
+	err = teamsCollection.FindOne(ctx, bson.M{"Name": secondTeam}).Decode(&team2Data)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+
+
+}
