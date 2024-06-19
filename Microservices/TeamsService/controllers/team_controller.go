@@ -109,6 +109,44 @@ func GetAllTeams(c *fiber.Ctx) error {
 	})
 }
 
+func GetTwoTeams(c *fiber.Ctx) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 10 * time.Second)
+
+	// Get body parameters
+	var body requests.TwoTeamRequest
+	if err := c.BodyParser(&body); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "cannot parse JSON",
+		})
+	}
+
+	firstTeam := body.FirstTeam
+	secondTeam := body.SecondTeam
+	year := body.Year
+
+	defer cancel()
+
+	var teamsCollection *mongo.Collection = configs.GetCollection(configs.DB, "NBAMatchups", "NbaTeamStats_" + year)
+	
+	var twoTeamData models.TwoTeamData
+
+	err := teamsCollection.FindOne(ctx, bson.M{"Name": firstTeam}).Decode(&twoTeamData.FirstTeam)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = teamsCollection.FindOne(ctx, bson.M{"Name": secondTeam}).Decode(&twoTeamData.SecondTeam)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return c.Status(http.StatusOK).JSON(responses.TeamResponse{
+		Status:  http.StatusOK,
+		Message: "Success",
+		Data:    &fiber.Map{"data": twoTeamData},
+	})
+}
+
 func GetTwoTeamsML(c *fiber.Ctx) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 

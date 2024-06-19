@@ -8,5 +8,6 @@ import (
 
 func TeamRoute(app *fiber.App) {
 	app.Post("/teams/all", controllers.GetAllTeams)
+	app.Post("/teams/two", controllers.GetTwoTeams)
 	app.Post("/teams/two/ml", controllers.GetTwoTeamsML)
 }

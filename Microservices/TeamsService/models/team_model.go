@@ -10,6 +10,11 @@ type YearlyTeamData struct {
 	YearStats TeamData `json:"yearstats" validate:"required"`
 }
 
+type TwoTeamData struct {
+	FirstTeam  TeamData `json:"firstTeam" validate:"required"`
+	SecondTeam TeamData `json:"secondTeam" validate:"required"`
+}
+
 type TeamData struct {
 	ID               string  `json:"_id" bson:"_id" validate:"required"`
 	NAME             string  `json:"Name" bson:"Name" validate:"required"`
