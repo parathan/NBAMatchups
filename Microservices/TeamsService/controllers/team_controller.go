@@ -8,7 +8,9 @@ import (
 	"teams-service/configs"
 	"teams-service/constants"
 	"teams-service/models"
+	"teams-service/requests"
 	"teams-service/responses"
+	"teams-service/util"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -101,26 +103,75 @@ func GetAllTeams(c *fiber.Ctx) error {
 
 func GetTwoTeams(c *fiber.Ctx) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	firstTeam := c.Query("team1")
-	secondTeam := c.Query("team2")
-	year := c.Query("year")
+
+	// Get body parameters
+	var body requests.TwoTeamRequest
+	if err := c.BodyParser(&body); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "cannot parse JSON",
+		})
+	}
+
+	firstTeam := body.FirstTeam
+	secondTeam := body.SecondTeam
+	year := body.Year
 
 	defer cancel()
 
 	var teamsCollection *mongo.Collection = configs.GetCollection(configs.DB, "NBAMatchups", "NbaTeamStats_" + year)
 	
-	var team1Data models.TeamData
-	err := teamsCollection.FindOne(ctx, bson.M{"Name": firstTeam}).Decode(&team1Data)
+	// Get first team data, put it in json object and add _x suffix to fields
+	team1Data := teamsCollection.FindOne(ctx, bson.M{"Name": firstTeam})
+	if team1Data.Err() != nil {
+		log.Fatal(team1Data.Err())
+	}
+	team1Bson, err := team1Data.Raw()
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	var team2Data models.TeamData
-	err = teamsCollection.FindOne(ctx, bson.M{"Name": secondTeam}).Decode(&team2Data)
-	if err != nil {
+	var team1Json map[string]interface{}
+	if err := bson.Unmarshal(team1Bson, &team1Json); err != nil {
 		log.Fatal(err)
 	}
 
+	delete(team1Json, "Name")
+	delete(team1Json, "_id")
+
+	xTeam := util.RenameKeysWithSuffix(team1Json, "_x")
+
+	// Get second team data, put it in json object and add _y suffix to fields
+	team2Data := teamsCollection.FindOne(ctx, bson.M{"Name": secondTeam})
+	if team1Data.Err() != nil {
+		log.Fatal(team1Data.Err())
+	}
+	team2Bson, err := team2Data.Raw()
+	if err != nil {
+		log.Fatal(err)
+	}
+	var team2Json map[string]interface{}
+	if err := bson.Unmarshal(team2Bson, &team2Json); err != nil {
+		log.Fatal(err)
+	}
+
+	delete(team2Json, "Name")
+	delete(team2Json, "_id")
+
+	yTeam := util.RenameKeysWithSuffix(team2Json, "_y")
+
+	// Combine the two json objects
+	combined := make(map[string]interface{})
+	for key, value := range xTeam {
+		combined[key] = value
+	}
+	for key, value := range yTeam {
+		combined[key] = value
+	}
+
+	return c.Status(http.StatusOK).JSON(responses.TeamResponse{
+		Status:  http.StatusOK,
+		Message: "Success",
+		Data:    &fiber.Map{"data": combined},
+	})
 
 
 }
