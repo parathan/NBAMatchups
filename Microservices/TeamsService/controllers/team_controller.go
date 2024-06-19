@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"context"
-	"log"
 	"net/http"
 	"strconv"
 	"teams-service/configs"
@@ -67,7 +66,7 @@ func GetAllTeams(c *fiber.Ctx) error {
 		}
 
 		if err = teamCur.All(context.Background(), &teamsData); err != nil {
-			log.Fatal(err)
+			return c.Status(fiber.StatusInternalServerError).SendString(err.Error())
 		}
 
 		// Get mean data for the year
@@ -79,7 +78,7 @@ func GetAllTeams(c *fiber.Ctx) error {
 			return c.Status(fiber.StatusInternalServerError).SendString(err.Error())
 		}
 		if err = meanCur.All(context.Background(), &meanData); err != nil {
-			log.Fatal(err)
+			return c.Status(fiber.StatusInternalServerError).SendString(err.Error())
 		}
 
 		// Map of teamsdata so when looking it up in the below for loop, it is constant lookup time rather than O(n)
@@ -132,12 +131,12 @@ func GetTwoTeams(c *fiber.Ctx) error {
 
 	err := teamsCollection.FindOne(ctx, bson.M{"Name": firstTeam}).Decode(&twoTeamData.FirstTeam)
 	if err != nil {
-		log.Fatal(err)
+		return c.Status(fiber.StatusInternalServerError).SendString(err.Error())
 	}
 
 	err = teamsCollection.FindOne(ctx, bson.M{"Name": secondTeam}).Decode(&twoTeamData.SecondTeam)
 	if err != nil {
-		log.Fatal(err)
+		return c.Status(fiber.StatusInternalServerError).SendString(err.Error())
 	}
 
 	return c.Status(http.StatusOK).JSON(responses.TeamResponse{
@@ -169,15 +168,15 @@ func GetTwoTeamsML(c *fiber.Ctx) error {
 	// Get first team data, put it in json object and add _x suffix to fields
 	team1Data := teamsCollection.FindOne(ctx, bson.M{"Name": firstTeam})
 	if team1Data.Err() != nil {
-		log.Fatal(team1Data.Err())
+		return c.Status(fiber.StatusInternalServerError).SendString(team1Data.Err().Error())
 	}
 	team1Bson, err := team1Data.Raw()
 	if err != nil {
-		log.Fatal(err)
+		return c.Status(fiber.StatusInternalServerError).SendString(err.Error())
 	}
 	var team1Json map[string]interface{}
 	if err := bson.Unmarshal(team1Bson, &team1Json); err != nil {
-		log.Fatal(err)
+		return c.Status(fiber.StatusInternalServerError).SendString(err.Error())
 	}
 
 	delete(team1Json, "Name")
@@ -188,15 +187,15 @@ func GetTwoTeamsML(c *fiber.Ctx) error {
 	// Get second team data, put it in json object and add _y suffix to fields
 	team2Data := teamsCollection.FindOne(ctx, bson.M{"Name": secondTeam})
 	if team1Data.Err() != nil {
-		log.Fatal(team1Data.Err())
+		return c.Status(fiber.StatusInternalServerError).SendString(team1Data.Err().Error())
 	}
 	team2Bson, err := team2Data.Raw()
 	if err != nil {
-		log.Fatal(err)
+		return c.Status(fiber.StatusInternalServerError).SendString(err.Error())
 	}
 	var team2Json map[string]interface{}
 	if err := bson.Unmarshal(team2Bson, &team2Json); err != nil {
-		log.Fatal(err)
+		return c.Status(fiber.StatusInternalServerError).SendString(err.Error())
 	}
 
 	delete(team2Json, "Name")
