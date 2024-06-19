@@ -21,8 +21,16 @@ import (
 func GetAllTeams(c *fiber.Ctx) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 
-	startYear := c.Query("startYear")
-	endYear := c.Query("endYear")
+	// Get body parameters
+	var body requests.AllTeamRequest
+	if err := c.BodyParser(&body); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "cannot parse JSON",
+		})
+	}
+
+	startYear := body.StartYear
+	endYear := body.EndYear
 
 	defer cancel()
 
