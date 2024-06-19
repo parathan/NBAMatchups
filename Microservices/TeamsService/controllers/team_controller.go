@@ -12,10 +12,13 @@ import (
 	"teams-service/util"
 	"time"
 
+	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )
+
+var validate = validator.New()
 
 func GetAllTeams(c *fiber.Ctx) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -26,6 +29,10 @@ func GetAllTeams(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"error": "cannot parse JSON",
 		})
+	}
+
+	if validationErr := validate.Struct(&body); validationErr != nil {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": validationErr.Error()})
 	}
 
 	startYear := strconv.Itoa(body.StartYear) 
@@ -119,6 +126,10 @@ func GetTwoTeams(c *fiber.Ctx) error {
 		})
 	}
 
+	if validationErr := validate.Struct(&body); validationErr != nil {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": validationErr.Error()})
+	}
+
 	firstTeam := body.FirstTeam
 	secondTeam := body.SecondTeam
 	year := strconv.Itoa(body.Year)
@@ -155,6 +166,10 @@ func GetTwoTeamsML(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"error": "cannot parse JSON",
 		})
+	}
+
+	if validationErr := validate.Struct(&body); validationErr != nil {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": validationErr.Error()})
 	}
 
 	firstTeam := body.FirstTeam
