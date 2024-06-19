@@ -12,13 +12,10 @@ import (
 	"teams-service/util"
 	"time"
 
-	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )
-
-var validate = validator.New()
 
 func GetAllTeams(c *fiber.Ctx) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -31,9 +28,13 @@ func GetAllTeams(c *fiber.Ctx) error {
 		})
 	}
 
-	if validationErr := validate.Struct(&body); validationErr != nil {
-		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": validationErr.Error()})
+	if validationErr := requests.AllTeamsValidate(body); validationErr != nil {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": validationErr})
 	}
+
+	// if validationErr := validate.Struct(&body); validationErr != nil {
+	// 	return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": validationErr.Error()})
+	// }
 
 	startYear := strconv.Itoa(body.StartYear) 
 	endYear := strconv.Itoa(body.EndYear)
@@ -126,8 +127,8 @@ func GetTwoTeams(c *fiber.Ctx) error {
 		})
 	}
 
-	if validationErr := validate.Struct(&body); validationErr != nil {
-		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": validationErr.Error()})
+	if validationErr := requests.TwoTeamsValidate(body); validationErr != nil {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": validationErr})
 	}
 
 	firstTeam := body.FirstTeam
@@ -168,8 +169,8 @@ func GetTwoTeamsML(c *fiber.Ctx) error {
 		})
 	}
 
-	if validationErr := validate.Struct(&body); validationErr != nil {
-		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": validationErr.Error()})
+	if validationErr := requests.TwoTeamsValidate(body); validationErr != nil {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": validationErr})
 	}
 
 	firstTeam := body.FirstTeam
