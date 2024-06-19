@@ -29,8 +29,8 @@ func GetAllTeams(c *fiber.Ctx) error {
 		})
 	}
 
-	startYear := body.StartYear
-	endYear := body.EndYear
+	startYear := strconv.Itoa(body.StartYear) 
+	endYear := strconv.Itoa(body.EndYear)
 
 	defer cancel()
 
@@ -122,7 +122,7 @@ func GetTwoTeams(c *fiber.Ctx) error {
 
 	firstTeam := body.FirstTeam
 	secondTeam := body.SecondTeam
-	year := body.Year
+	year := strconv.Itoa(body.Year)
 
 	defer cancel()
 
@@ -160,7 +160,7 @@ func GetTwoTeamsML(c *fiber.Ctx) error {
 
 	firstTeam := body.FirstTeam
 	secondTeam := body.SecondTeam
-	year := body.Year
+	year := strconv.Itoa(body.Year)
 
 	defer cancel()
 

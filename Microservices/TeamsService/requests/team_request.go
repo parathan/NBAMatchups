@@ -3,10 +3,10 @@ package requests
 type TwoTeamRequest struct {
 	FirstTeam  string `json:"team1"`
 	SecondTeam string `json:"team2"`
-	Year       string `json:"year"`
+	Year       int    `json:"year"`
 }
 
 type AllTeamRequest struct {
-	StartYear string `json:"startYear"`
-	EndYear   string `json:"endYear"`
+	StartYear int `json:"startYear"`
+	EndYear   int `json:"endYear"`
 }
