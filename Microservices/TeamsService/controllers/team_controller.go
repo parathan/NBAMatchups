@@ -109,7 +109,7 @@ func GetAllTeams(c *fiber.Ctx) error {
 	})
 }
 
-func GetTwoTeams(c *fiber.Ctx) error {
+func GetTwoTeamsML(c *fiber.Ctx) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 
 	// Get body parameters
