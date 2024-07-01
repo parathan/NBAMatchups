@@ -1,0 +1,26 @@
+# Xcode
+# Xcode files
+xcuserdata/
+*.xccheckout
+*.xcscmblueprint
+
+#xcode build
+build/
+DerivedData/
+*.moved-aside
+
+#xcode temporary
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.xcworkspace
+!default.xcworkspace
+
+#swfit package manager
+Packages
+*.xcodeproj/project.xcworkspace
+*.xcodeproj/xcuserdata
+*.swiftpm/Repositories
+
+# CocoaPods
+Pods
