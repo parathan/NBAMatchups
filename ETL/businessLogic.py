@@ -27,6 +27,13 @@ def writeAllStats(year: str):
 
     upsertData(df, year, teamDatabase, tradCollection)
     
+    meanDf = calcMean(df)
+    upsertData(meanDf, year, teamDatabase, meanCollection)
+
+    col = df.pop('Name')
+    percentileDf = calcPercentile(df, col)
+    upsertData(percentileDf, year, teamDatabase, percentileCollection)
+    
     # col = df.pop('Name')
 
     # upsertData(calcPercentile(df, col), year, teamDatabase, percentileCollection)
@@ -67,6 +74,7 @@ def calcPercentile(df: pd.DataFrame, col: pd.Series) -> pd.DataFrame:
 
     Args:
         df (pd.DataFrame): scraped data dataframe to be calculated on
+        col (pd.Series): name to be removed from calculation and added after
 
     Returns:
         pd.DataFrame: 2d dataframe with z-scores from original dataframe
@@ -74,12 +82,15 @@ def calcPercentile(df: pd.DataFrame, col: pd.Series) -> pd.DataFrame:
     if type(df) is not pd.DataFrame:
         raise TypeError("df is not a dataframe")
     
+    year = df.pop('year')
+    
     df2 = df.apply(zscore)
     for column in df2.columns:
         if column in constants.NEGATIVE_STATS:
             df2[column] = df2[column].map(lambda x: x * -1)
     df2 = df2.map(norm.cdf).round(3)
     df2.insert(0, col.name, col)
+    df2.insert(1, year.name, year)
     return df2
 
 def calcMean(df: pd.DataFrame) -> pd.DataFrame:
@@ -95,6 +106,7 @@ def calcMean(df: pd.DataFrame) -> pd.DataFrame:
         raise TypeError("df is not a dataframe")
 
     df2 = df.mean(numeric_only=True).to_frame().transpose().round(3)
+    df2.insert(0, 'Name', "MEAN")
     return df2
 
 def writeStatsToDb(stat: str, df: pd.DataFrame, year: str):
