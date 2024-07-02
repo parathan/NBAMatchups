@@ -1,12 +1,9 @@
-from decouple import config
-import numpy as np
 import pandas as pd
 from webScraper import *
 from dbtransactions import *
 from scipy.stats import zscore
 from scipy.stats import percentileofscore
 from scipy.stats import norm
-from multiprocessing import Process
 import constants
 
 # TODO: Can utilize multiprocessing to run calculations in parallel
@@ -15,6 +12,25 @@ For comparison Stat, percentile is most accurate using cdf function
 Z score data is also stored seperately, as well as std and mean
 Rankpercentile uses dataframe.rank, which may only rank the values rather than distinguish difference
 '''
+
+def writeAllStats(year: str):
+    if type(year) is not str:
+        raise TypeError("year is not a string")
+    
+    df = webScraper(year)
+    
+    teamDatabase = 'NBAMatchups_Team'
+
+    tradCollection = 'NBAMatchups_Team_Traditional'
+    percentileCollection = 'NBAMatchups_Team_Percentile'
+    meanCollection = 'NBAMatchups_Team_Mean'
+
+    upsertData(df, year, teamDatabase, tradCollection)
+    
+    # col = df.pop('Name')
+
+    # upsertData(calcPercentile(df, col), year, teamDatabase, percentileCollection)
+    # upsertData(calcMean(df), year, teamDatabase, meanCollection)
 
 def rawData(year: str):
     """Scrape data and writes it to database

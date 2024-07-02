@@ -58,12 +58,14 @@ def webScraper(year: str) -> pd.DataFrame:
                          'opp_fg_pct_16_xx', 'opp_pct_ast_fg2', 'opp_pct_ast_fg3', 'opp_pct_fga_dunk', 'opp_fg_dunk',
                          'opp_pct_fga_layup', 'opp_fg_layup', 'opp_pct_fg3a_corner', 'opp_fg3_pct_corner']
     
+    intYear = int(year)
+
     try:
-        fieldAdder(soup, 'per_game-team', 1, 31, traditionalFields, False, teamStats)
-        fieldAdder(soup, 'per_game-opponent', 1, 31, oppTraditionalFields, True, teamStats)
-        fieldAdder(soup, 'advanced-team', 2, 32, advancedFields, True, teamStats)
-        fieldAdder(soup, 'shooting-team', 2, 32, shootingFields, True, teamStats)
-        fieldAdder(soup, 'shooting-opponent', 2, 32, oppShootingFields, True, teamStats)
+        fieldAdder(soup, 'per_game-team', 1, 31, traditionalFields, False, teamStats, intYear)
+        fieldAdder(soup, 'per_game-opponent', 1, 31, oppTraditionalFields, True, teamStats, intYear)
+        fieldAdder(soup, 'advanced-team', 2, 32, advancedFields, True, teamStats, intYear)
+        fieldAdder(soup, 'shooting-team', 2, 32, shootingFields, True, teamStats, intYear)
+        fieldAdder(soup, 'shooting-opponent', 2, 32, oppShootingFields, True, teamStats, intYear)
     except:
         raise Exception("Error with web scraper")
 
@@ -71,7 +73,7 @@ def webScraper(year: str) -> pd.DataFrame:
     df = pd.DataFrame(teamStats)
     return df
 
-def fieldAdder(soup: BeautifulSoup, tableName: str, start: int, end: int, fields, teamExists: bool, teamStats: list):
+def fieldAdder(soup: BeautifulSoup, tableName: str, start: int, end: int, fields, teamExists: bool, teamStats: list, year: int):
     '''
     Data is scraped from the given tables and added/updated to the teamStats list
 
@@ -92,6 +94,7 @@ def fieldAdder(soup: BeautifulSoup, tableName: str, start: int, end: int, fields
         name = row.find('a').text
         if not teamExists:
             team["Name"] = name
+            team['year'] = year
             for field in fields:
                 team[field] = float(row.find('td', {'data-stat' : field}).text)
             teamStats.append(team)
