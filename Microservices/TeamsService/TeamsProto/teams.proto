@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package teams;
+
+option go_package = "../TeamsProto";
+
+service TeamsService {
+    rpc GetTwoTeams(TwoTeamsRequest) returns (TwoTeamsResponse);
+}
+
+message TwoTeamsRequest {
+    string team1 = 1;
+    string team2 = 2;
+    int32 year = 3;
+}
+
+message TwoTeamsResponse {
+    Team team1 = 1;
+    Team team2 = 2;
+}
+
+message Team {
+    string test = 1;
+    int32 works = 2;
+}
