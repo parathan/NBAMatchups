@@ -6,6 +6,7 @@ option go_package = "../TeamsProto";
 
 service TeamsService {
     rpc GetTwoTeams(TwoTeamsRequest) returns (TwoTeamsResponse);
+    rpc GetAllTeams(AllTeamsRequest) returns (AllTeamsResponse);
 }
 
 message TwoTeamsRequest {
@@ -14,12 +15,139 @@ message TwoTeamsRequest {
     int32 year = 3;
 }
 
+message AllTeamsRequest {
+    int32 startYear = 1;
+    int32 endYear = 2;
+}
+
 message TwoTeamsResponse {
     Team team1 = 1;
     Team team2 = 2;
 }
 
+message AllTeamsResponse {
+    TotalTeamData data = 1;
+}
+
+
 message Team {
-    string test = 1;
-    int32 works = 2;
+    string id = 1;
+    string name = 2;
+    float g = 3;
+    float mp = 4;
+    float fg = 5;
+    float fga = 6;
+    float fg_pct = 7;
+    float fg3 = 8;
+    float fg3a = 9;
+    float fg3_pct = 10;
+    float fg2 = 11;
+    float fg2a = 12;
+    float fg2_pct = 13;
+    float ft = 14;
+    float fta = 15;
+    float ft_pct = 16;
+    float orb = 17;
+    float drb = 18;
+    float trb = 19;
+    float ast = 20;
+    float stl = 21;
+    float blk = 22;
+    float tov = 23;
+    float pf = 24;
+    float pts = 25;
+    float opp_fg = 26;
+    float opp_fga = 27;
+    float opp_fg_pct = 28;
+    float opp_fg3 = 29;
+    float opp_fg3a = 30;
+    float opp_fg3_pct = 31;
+    float opp_fg2 = 32;
+    float opp_fg2a = 33;
+    float opp_fg2_pct = 34;
+    float opp_ft = 35;
+    float opp_fta = 36;
+    float opp_ft_pct = 37;
+    float opp_orb = 38;
+    float opp_drb = 39;
+    float opp_trb = 40;
+    float opp_ast = 41;
+    float opp_stl = 42;
+    float opp_blk = 43;
+    float opp_tov = 44;
+    float opp_pf = 45;
+    float opp_pts = 46;
+    float age = 47;
+    float wins = 48;
+    float losses = 49;
+    float wins_pyth = 50;
+    float losses_pyth = 51;
+    float mov = 52;
+    float sos = 53;
+    float srs = 54;
+    float off_rtg = 55;
+    float def_rtg = 56;
+    float net_rtg = 57;
+    float pace = 58;
+    float fta_per_fga_pct = 59;
+    float fg3a_per_fga_pct = 60;
+    float ts_pct = 61;
+    float efg_pct = 62;
+    float tov_pct = 63;
+    float orb_pct = 64;
+    float ft_rate = 65;
+    float opp_efg_pct = 66;
+    float opp_tov_pct = 67;
+    float drb_pct = 68;
+    float opp_ft_rate = 69;
+    float avg_dist = 70;
+    float pct_fga_fg2a = 71;
+    float pct_fga_00_03 = 72;
+    float pct_fga_03_10 = 73;
+    float pct_fga_10_16 = 74;
+    float pct_fga_16_xx = 75;
+    float pct_fga_fg3a = 76;
+    float fg_pct_00_03 = 77;
+    float fg_pct_03_10 = 78;
+    float fg_pct_10_16 = 79;
+    float fg_pct_16_xx = 80;
+    float pct_ast_fg2 = 81;
+    float pct_ast_fg3 = 82;
+    float pct_fga_dunk = 83;
+    float fg_dunk = 84;
+    float pct_fga_layup = 85;
+    float fg_layup = 86;
+    float pct_fg3a_corner = 87;
+    float fg3_pct_corner = 88;
+    float opp_avg_dist = 89;
+    float opp_pct_fga_fg2a = 90;
+    float opp_pct_fga_00_03 = 91;
+    float opp_pct_fga_03_10 = 92;
+    float opp_pct_fga_10_16 = 93;
+    float opp_pct_fga_16_xx = 94;
+    float opp_pct_fga_fg3a = 95;
+    float opp_fg_pct_00_03 = 96;
+    float opp_fg_pct_03_10 = 97;
+    float opp_fg_pct_10_16 = 98;
+    float opp_fg_pct_16_xx = 99;
+    float opp_pct_ast_fg2 = 100;
+    float opp_pct_ast_fg3 = 101;
+    float opp_pct_fga_dunk = 102;
+    float opp_fg_dunk = 103;
+    float opp_pct_fga_layup = 104;
+    float opp_fg_layup = 105;
+    float opp_pct_fg3a_corner = 106;
+    float opp_fg3_pct_corner = 107;
+}
+
+// YearlyTeamData message represents yearly statistics for a team.
+message YearlyTeamData {
+    string year = 1;  // Year field
+    Team yearstats = 2;  // TeamData for the year
+}
+
+// TotalTeamData message represents total statistics for a team.
+message TotalTeamData {
+    string teamname = 1;  // TeamName field
+    repeated YearlyTeamData stats = 2;  // List of yearly statistics
 }
