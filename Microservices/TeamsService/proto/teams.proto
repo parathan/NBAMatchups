@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package teams;
 
-option go_package = "../TeamsProto";
+option go_package = "../teamspb";
 
 service TeamsService {
     rpc GetTwoTeams(TwoTeamsRequest) returns (TwoTeamsResponse);

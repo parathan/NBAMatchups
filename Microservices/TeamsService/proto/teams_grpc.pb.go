@@ -4,7 +4,7 @@
 // - protoc             v5.27.2
 // source: teams.proto
 
-package TeamsProto
+package teamspb
 
 import (
 	context "context"
