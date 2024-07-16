@@ -1,4 +1,4 @@
-package models
+package database
 
 type TotalTeamData struct {
 	TeamName string           `json:"teamname" validate:"required"`

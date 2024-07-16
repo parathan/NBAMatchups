@@ -1,11 +1,13 @@
-package configs
+package database
 
 import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 	"time"
 
+	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -25,9 +27,13 @@ func ConnectDB() *mongo.Client {
 	return client
 }
 
-var DB *mongo.Client = ConnectDB()
+func EnvMongoURI() string {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 
-func GetCollection(client *mongo.Client, databaseName string, collectionName string) *mongo.Collection {
-	collection := client.Database(databaseName).Collection(collectionName)
-	return collection
+	return os.Getenv("MONGO_URI")
 }
+
+var Mongo_Client *mongo.Client

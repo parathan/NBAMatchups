@@ -1,18 +1,42 @@
 package main
 
 import (
-	"teams-service/configs"
-	"teams-service/routes"
+	"context"
+	"log"
+	"net"
+	"teams-service/database"
+	teamspb "teams-service/proto"
 
-	"github.com/gofiber/fiber/v2"
+	"google.golang.org/grpc"
 )
 
+type server struct {
+	teamspb.UnimplementedTeamsServiceServer
+}
+
+func (*server) GetTwoTeams(ctx context.Context, req *teamspb.TwoTeamsRequest) (*teamspb.TwoTeamsResponse, error) {
+	return &teamspb.TwoTeamsResponse{}, nil
+}
+
 func main() {
-	app := fiber.New()
+	log.Println("Teams Service")
 
-	configs.ConnectDB()
+	lis, err := net.Listen("tcp", "0.0.0.0:50051")
+	if err != nil {
+		log.Println("ERROR:", err.Error())
+	}
 
-	routes.TeamRoute(app)
+	database.Mongo_Client = database.ConnectDB()
 
-	app.Listen(":6000")
+	defer database.Mongo_Client.Disconnect(context.Background())
+
+	s := grpc.NewServer()
+	teamspb.RegisterTeamsServiceServer(s, &server{})
+
+	log.Printf("Server started at %v", lis.Addr().String())
+
+	err = s.Serve(lis)
+	if err != nil {
+		log.Println("ERROR:", err.Error())
+	}
 }
