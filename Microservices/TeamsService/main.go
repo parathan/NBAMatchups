@@ -8,6 +8,7 @@ import (
 	teamspb "teams-service/proto"
 	"time"
 
+	"go.mongodb.org/mongo-driver/bson"
 	"google.golang.org/grpc"
 )
 
@@ -19,7 +20,32 @@ type server struct {
 }
 
 func (*server) GetTwoTeams(ctx context.Context, req *teamspb.TwoTeamsRequest) (*teamspb.TwoTeamsResponse, error) {
-	return &teamspb.TwoTeamsResponse{}, nil
+	log.Println("Called GetTwoTeams")
+
+	c, cancel := context.WithTimeout(ctx, timeout)
+	defer cancel()
+
+	databaseName := "NBAMatchups_Team"
+	collectionName := "NBAMatchups_Team_Traditional"
+	collection := database.Mongo_Client.Database(databaseName).Collection(collectionName)
+
+	firstTeamReq := req.GetTeam1()
+	secondTeamReq := req.GetTeam2()
+
+	var firstTeam database.TeamData
+	var secondTeam database.TeamData
+
+	err := collection.FindOne(c, bson.M{"Name": firstTeamReq}).Decode(&firstTeam)
+	if err != nil {
+		return nil, err
+	}
+
+	err = collection.FindOne(c, bson.M{"Name": secondTeamReq}).Decode(&secondTeam)
+	if err != nil {
+		return nil, err
+	}
+
+	return &teamspb.TwoTeamsResponse{Team1: nil, Team2: nil}, nil
 }
 
 func main() {
