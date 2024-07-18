@@ -32,16 +32,17 @@ func (*server) GetTwoTeams(ctx context.Context, req *teamspb.TwoTeamsRequest) (*
 
 	firstTeamReq := req.GetTeam1()
 	secondTeamReq := req.GetTeam2()
+	year := req.GetYear()
 
 	var firstTeam database.TeamData
 	var secondTeam database.TeamData
 
-	err := collection.FindOne(c, bson.M{"Name": firstTeamReq}).Decode(&firstTeam)
+	err := collection.FindOne(c, bson.M{"Name": firstTeamReq, "year": year}).Decode(&firstTeam)
 	if err != nil {
 		return nil, err
 	}
 
-	err = collection.FindOne(c, bson.M{"Name": secondTeamReq}).Decode(&secondTeam)
+	err = collection.FindOne(c, bson.M{"Name": secondTeamReq, "year": year}).Decode(&secondTeam)
 	if err != nil {
 		return nil, err
 	}
