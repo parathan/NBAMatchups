@@ -6,6 +6,7 @@ import (
 	"net"
 	"teams-service/database"
 	teamspb "teams-service/proto"
+	"teams-service/util"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -45,13 +46,23 @@ func (*server) GetTwoTeams(ctx context.Context, req *teamspb.TwoTeamsRequest) (*
 		return nil, err
 	}
 
-	return &teamspb.TwoTeamsResponse{Team1: nil, Team2: nil}, nil
+	firstTeamProto, err := util.TeamMapping(firstTeam)
+	if err != nil {
+		return nil, err
+	}
+
+	secondTeamProto, err := util.TeamMapping(secondTeam)
+	if err != nil {
+		return nil, err
+	}
+
+	return &teamspb.TwoTeamsResponse{Team1: firstTeamProto, Team2: secondTeamProto}, nil
 }
 
 func main() {
 	log.Println("Teams Service")
 
-	lis, err := net.Listen("tcp", "0.0.0.0:50051")
+	lis, err := net.Listen("tcp", ":50051")
 	if err != nil {
 		log.Println("ERROR:", err.Error())
 	}
