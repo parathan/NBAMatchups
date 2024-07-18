@@ -6,10 +6,14 @@ import (
 	"net"
 	"teams-service/database"
 	teamspb "teams-service/proto"
+	"time"
 
 	"google.golang.org/grpc"
 )
 
+var (
+	timeout = time.Second
+)
 type server struct {
 	teamspb.UnimplementedTeamsServiceServer
 }
