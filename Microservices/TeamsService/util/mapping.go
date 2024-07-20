@@ -10,6 +10,7 @@ func TeamMapping(team database.TeamData) (*teamspb.Team, error) {
 	newTeam := &teamspb.Team{
 		Id:               team.ID,
 		Name:             team.NAME,
+		Year: 			  float32(team.YEAR),
 		G:                float32(team.G),
 		Mp:               float32(team.MP),
 		Fg:               float32(team.FG),

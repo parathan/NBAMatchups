@@ -18,6 +18,7 @@ type TwoTeamData struct {
 type TeamData struct {
 	ID               string  `json:"_id" bson:"_id" validate:"required"`
 	NAME             string  `json:"Name" bson:"Name" validate:"required"`
+	YEAR             float64 `json:"year" bson:"year" validate:"required"`
 	G                float64 `json:"g" bson:"g" validate:"required"`
 	MP               float64 `json:"mp" bson:"mp" validate:"required"`
 	FG               float64 `json:"fg" bson:"fg" validate:"required"`
