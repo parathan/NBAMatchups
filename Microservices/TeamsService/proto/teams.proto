@@ -141,14 +141,8 @@ message Team {
     float opp_fg3_pct_corner = 108;
 }
 
-// YearlyTeamData message represents yearly statistics for a team.
-message YearlyTeamData {
-    string year = 1;  // Year field
-    Team yearstats = 2;  // TeamData for the year
-}
-
 // TotalTeamData message represents total statistics for a team.
 message TotalTeamData {
     string teamname = 1;  // TeamName field
-    repeated YearlyTeamData stats = 2;  // List of yearly statistics
+    repeated Team stats = 2;  // List of yearly statistics
 }
