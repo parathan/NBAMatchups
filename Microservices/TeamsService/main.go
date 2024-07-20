@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
 	"google.golang.org/grpc"
 )
 
@@ -18,6 +19,23 @@ var (
 )
 type server struct {
 	teamspb.UnimplementedTeamsServiceServer
+}
+
+func findTeam(c context.Context, collection *mongo.Collection, teamName string, year int32) (*teamspb.Team, error) {
+
+	var team database.TeamData
+	err := collection.FindOne(c, bson.M{"Name": teamName, "year": year}).Decode(&team)
+	if err != nil {
+		return nil, err
+	}
+
+	teamProto, err := util.TeamMapping(team)
+	if err != nil {
+		return nil, err
+	}
+
+	return teamProto, nil
+	
 }
 
 func (*server) GetTwoTeams(ctx context.Context, req *teamspb.TwoTeamsRequest) (*teamspb.TwoTeamsResponse, error) {
@@ -33,29 +51,18 @@ func (*server) GetTwoTeams(ctx context.Context, req *teamspb.TwoTeamsRequest) (*
 	firstTeamReq := req.GetTeam1()
 	secondTeamReq := req.GetTeam2()
 	year := req.GetYear()
-
-	var firstTeam database.TeamData
-	var secondTeam database.TeamData
-
-	err := collection.FindOne(c, bson.M{"Name": firstTeamReq, "year": year}).Decode(&firstTeam)
+	
+	firstTeamProto, err := findTeam(c, collection, firstTeamReq, year)
 	if err != nil {
 		return nil, err
 	}
 
-	err = collection.FindOne(c, bson.M{"Name": secondTeamReq, "year": year}).Decode(&secondTeam)
+	secondTeamProto, err := findTeam(c, collection, secondTeamReq, year)
 	if err != nil {
 		return nil, err
 	}
 
-	firstTeamProto, err := util.TeamMapping(firstTeam)
-	if err != nil {
-		return nil, err
-	}
 
-	secondTeamProto, err := util.TeamMapping(secondTeam)
-	if err != nil {
-		return nil, err
-	}
 
 	return &teamspb.TwoTeamsResponse{Team1: firstTeamProto, Team2: secondTeamProto}, nil
 }
