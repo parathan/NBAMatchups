@@ -5,13 +5,12 @@ import (
 	"log"
 	"net"
 	"sync"
+	"teams-service/controller"
 	"teams-service/database"
 	teamspb "teams-service/proto"
-	"teams-service/util"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
 	"google.golang.org/grpc"
 )
 
@@ -20,23 +19,6 @@ var (
 )
 type server struct {
 	teamspb.UnimplementedTeamsServiceServer
-}
-
-func findTeam(c context.Context, collection *mongo.Collection, teamName string, year int32) (*teamspb.Team, error) {
-
-	var team database.TeamData
-	err := collection.FindOne(c, bson.M{"Name": teamName, "year": year}).Decode(&team)
-	if err != nil {
-		return nil, err
-	}
-
-	teamProto, err := util.TeamMapping(team)
-	if err != nil {
-		return nil, err
-	}
-
-	return teamProto, nil
-	
 }
 
 func (*server) GetTwoTeams(ctx context.Context, req *teamspb.TwoTeamsRequest) (*teamspb.TwoTeamsResponse, error) {
@@ -64,12 +46,12 @@ func (*server) GetTwoTeams(ctx context.Context, req *teamspb.TwoTeamsRequest) (*
 
 	go func() {
 		defer wg.Done()
-		firstTeamProto, firstError = findTeam(c, collection, firstTeamReq, year)
+		firstTeamProto, firstError = controller.FindTeam(c, collection, firstTeamReq, year)
 	}()
 
 	go func () {
 		defer wg.Done()
-		secondTeamProto, secondError = findTeam(c, collection, secondTeamReq, year)
+		secondTeamProto, secondError = controller.FindTeam(c, collection, secondTeamReq, year)
 	}()
 
 	wg.Wait()
