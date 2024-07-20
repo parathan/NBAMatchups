@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"net"
+	"sync"
 	"teams-service/database"
 	teamspb "teams-service/proto"
 	"teams-service/util"
@@ -51,18 +52,35 @@ func (*server) GetTwoTeams(ctx context.Context, req *teamspb.TwoTeamsRequest) (*
 	firstTeamReq := req.GetTeam1()
 	secondTeamReq := req.GetTeam2()
 	year := req.GetYear()
-	
-	firstTeamProto, err := findTeam(c, collection, firstTeamReq, year)
-	if err != nil {
-		return nil, err
+
+	var wg sync.WaitGroup
+	wg.Add(2)
+
+	var firstTeamProto *teamspb.Team
+	var secondTeamProto *teamspb.Team
+
+	var firstError error
+	var secondError error
+
+	go func() {
+		defer wg.Done()
+		firstTeamProto, firstError = findTeam(c, collection, firstTeamReq, year)
+	}()
+
+	go func () {
+		defer wg.Done()
+		secondTeamProto, secondError = findTeam(c, collection, secondTeamReq, year)
+	}()
+
+	wg.Wait()
+
+	if firstError != nil {
+		return nil, firstError
 	}
 
-	secondTeamProto, err := findTeam(c, collection, secondTeamReq, year)
-	if err != nil {
-		return nil, err
+	if secondError != nil {
+		return nil, secondError
 	}
-
-
 
 	return &teamspb.TwoTeamsResponse{Team1: firstTeamProto, Team2: secondTeamProto}, nil
 }
