@@ -56,7 +56,7 @@ func FindAllTeams(c context.Context, collection *mongo.Collection, startYear flo
 	for the stats
 	*/
 	var allTeamDataProto []*teamspb.TotalTeamData
-	var teamsMap map[string] int
+	teamsMap := make(map[string]int)
 	count := 0
 
 	for _, teamStat := range allTeamData {
