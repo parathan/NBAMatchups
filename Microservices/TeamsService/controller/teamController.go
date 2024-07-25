@@ -69,10 +69,11 @@ func FindAllTeams(c context.Context, collection *mongo.Collection, startYear flo
 		} else {
 			teamsMap[teamStat.NAME] = count
 			count++
-			newTeamData := teamspb.TotalTeamData{
+			newTeamData := &teamspb.TotalTeamData{
 				Teamname: teamStat.NAME,
+				Stats: []*teamspb.Team{teamProto},
 			}
-			allTeamDataProto = append(allTeamDataProto, &newTeamData)
+			allTeamDataProto = append(allTeamDataProto, newTeamData)
 		}
 	}
 
