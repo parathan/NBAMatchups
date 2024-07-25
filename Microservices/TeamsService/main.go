@@ -10,7 +10,6 @@ import (
 	teamspb "teams-service/proto"
 	"time"
 
-	"go.mongodb.org/mongo-driver/bson"
 	"google.golang.org/grpc"
 )
 
@@ -77,25 +76,19 @@ func (*server) GetAllTeams(ctx context.Context, req *teamspb.AllTeamsRequest) (*
 	collectionName := "NBAMatchups_Team_Traditional"
 	collection := database.Mongo_Client.Database(databaseName).Collection(collectionName)
 
-	var allTeamData []database.TeamData
+	startYearReq := float64(req.GetStartYear())
+	endYearReq := float64(req.GetEndYear())
 
-	cursor, err := collection.Find(c, bson.M{})
+	allTeamData, err := controller.FindAllTeams(c, collection, startYearReq, endYearReq)
 	if err != nil {
 		return nil, err
 	}
-
-	defer cursor.Close(c)
-
-	for cursor.Next(context.Background()) {
-		var teamData database.TeamData
-		cursor.Decode(&teamData)
-		allTeamData = append(allTeamData, teamData)
-	}
+	
 
 	// Need to parse through data and place them in the appropriate team, year format
 	// for all teams response object.
 
-	return &teamspb.AllTeamsResponse{}, nil
+	return &teamspb.AllTeamsResponse{Data: allTeamData}, nil
 }
 
 func main() {

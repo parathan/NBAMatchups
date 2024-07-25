@@ -1,13 +1,8 @@
 package database
 
 type TotalTeamData struct {
-	TeamName string           `json:"teamname" validate:"required"`
-	Stats    []YearlyTeamData `json:"Stats" validate:"required"`
-}
-
-type YearlyTeamData struct {
-	Year      string   `json:"year" validate:"required"`
-	YearStats TeamData `json:"yearstats" validate:"required"`
+	TeamName string     `json:"teamname" validate:"required"`
+	Stats    []TeamData `json:"Stats" validate:"required"`
 }
 
 type TwoTeamData struct {
