@@ -2,7 +2,6 @@ package controller
 
 import (
 	"context"
-	"log"
 
 	"teams-service/database"
 	teamspb "teams-service/proto"
@@ -80,8 +79,6 @@ func FindAllTeams(c context.Context, collection *mongo.Collection, startYear flo
 			allTeamDataProto = append(allTeamDataProto, newTeamData)
 		}
 	}
-
-	log.Printf("Processing team: %v", allTeamDataProto)
-
+	
 	return allTeamDataProto, nil
 }
