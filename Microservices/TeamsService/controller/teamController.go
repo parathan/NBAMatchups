@@ -49,19 +49,21 @@ func FindTeam(c context.Context, collection *mongo.Collection, teamName string, 
 
 }
 
+
 // FindAllTeams retrieves all teams from the database based on the given years
 // and returns the teams in protobuf format.
 //
 // Parameters:
 // - c: the context.Context object for the function.
 // - collection: the mongo.Collection object for the database.
+// - meanCollection: the mongo.Collection object for the mean database.
 // - startYear: the starting year to retrieve teams from.
 // - endYear: the ending year to retrieve teams from.
 //
 // Returns:
 // - []*teamspb.TotalTeamData: the teams in protobuf format.
 // - error: an error if the operation fails.
-func FindAllTeams(c context.Context, collection *mongo.Collection, startYear float64, endYear float64) ([]*teamspb.TotalTeamData, error) {
+func FindAllTeams(c context.Context, collection *mongo.Collection, meanCollection *mongo.Collection, startYear float64, endYear float64) ([]*teamspb.TotalTeamData, error) {
 	// Create a filter to retrieve the teams from the database.
 	filter := bson.M{
 		"year": bson.M{
@@ -85,6 +87,22 @@ func FindAllTeams(c context.Context, collection *mongo.Collection, startYear flo
 			return nil, err
 		}
 		allTeamData = append(allTeamData, teamData)
+	}
+
+	// Execute the database query to retrieve the mean data.
+	meanCurs, err := meanCollection.Find(c, filter)
+	if err != nil {
+		return nil, err
+	}
+	defer meanCurs.Close(c)
+
+	// Decode each mean year from the cursor and store it in the allTeamData slice.
+	for meanCurs.Next(context.Background()) {
+		var meanData database.TeamData
+		if err := meanCurs.Decode(&meanData); err != nil {
+			return nil, err
+		}
+		allTeamData = append(allTeamData, meanData)
 	}
 
 	// Create a map to store which position the team is in the allteamsdata slice

@@ -73,20 +73,20 @@ func (*server) GetAllTeams(ctx context.Context, req *teamspb.AllTeamsRequest) (*
 	defer cancel()
 
 	databaseName := "NBAMatchups_Team"
+
 	collectionName := "NBAMatchups_Team_Traditional"
 	collection := database.Mongo_Client.Database(databaseName).Collection(collectionName)
+
+	meanCollectionName := "NBAMatchups_Team_Mean"
+	meanCollection := database.Mongo_Client.Database(databaseName).Collection(meanCollectionName)
 
 	startYearReq := float64(req.GetStartYear())
 	endYearReq := float64(req.GetEndYear())
 
-	allTeamData, err := controller.FindAllTeams(c, collection, startYearReq, endYearReq)
+	allTeamData, err := controller.FindAllTeams(c, collection, meanCollection, startYearReq, endYearReq)
 	if err != nil {
 		return nil, err
 	}
-	
-
-	// Need to parse through data and place them in the appropriate team, year format
-	// for all teams response object.
 
 	return &teamspb.AllTeamsResponse{Data: allTeamData}, nil
 }
