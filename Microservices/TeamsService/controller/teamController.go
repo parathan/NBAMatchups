@@ -2,6 +2,7 @@ package controller
 
 import (
 	"context"
+	"log"
 
 	"teams-service/database"
 	teamspb "teams-service/proto"
@@ -44,7 +45,9 @@ func FindAllTeams(c context.Context, collection *mongo.Collection, startYear flo
 	var allTeamData []database.TeamData
 	for cursor.Next(context.Background()) {
 		var teamData database.TeamData
-		cursor.Decode(&teamData)
+		if err := cursor.Decode(&teamData); err != nil {
+			return nil, err
+		}
 		allTeamData = append(allTeamData, teamData)
 	}
 
@@ -64,6 +67,7 @@ func FindAllTeams(c context.Context, collection *mongo.Collection, startYear flo
 		if err != nil {
 			return nil, err
 		}
+
 		if index, ok := teamsMap[teamStat.NAME]; ok {
 			allTeamDataProto[index].Stats = append(allTeamDataProto[index].Stats, teamProto)
 		} else {
@@ -76,6 +80,8 @@ func FindAllTeams(c context.Context, collection *mongo.Collection, startYear flo
 			allTeamDataProto = append(allTeamDataProto, newTeamData)
 		}
 	}
+
+	log.Printf("Processing team: %v", allTeamDataProto)
 
 	return allTeamDataProto, nil
 }
