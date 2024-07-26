@@ -125,3 +125,8 @@ func FindAllTeams(c context.Context, collection *mongo.Collection, startYear flo
 
 	return allTeamDataProto, nil 
 }
+
+func OrderTeams(c context.Context, team1 *teamspb.Team, team2 *teamspb.Team, mean *teamspb.Team) (*teamspb.TwoTeamsOrderedResponse, error) {
+	// Need to implement function that takes team data and seperates and orders it for the fields
+	return &teamspb.TwoTeamsOrderedResponse{}, nil
+}

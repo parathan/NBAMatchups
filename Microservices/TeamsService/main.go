@@ -91,6 +91,67 @@ func (*server) GetAllTeams(ctx context.Context, req *teamspb.AllTeamsRequest) (*
 	return &teamspb.AllTeamsResponse{Data: allTeamData}, nil
 }
 
+func (*server) GetTwoTeamsOrdered(ctx context.Context, req *teamspb.TwoTeamsRequest) (*teamspb.TwoTeamsOrderedResponse, error) {
+	log.Println("Called GetTwoTeamsOrdered")
+
+	c, cancel := context.WithTimeout(ctx, timeout)
+	defer cancel()
+
+	databaseName := "NBAMatchups_Team"
+
+	teamCollectionName := "NBAMatchups_Team_Traditional"
+	teamCollection := database.Mongo_Client.Database(databaseName).Collection(teamCollectionName)
+
+	meanCollectionName := "NBAMatchups_Team_Mean"
+	meanCollection := database.Mongo_Client.Database(databaseName).Collection(meanCollectionName)
+
+	firstTeamReq := req.GetTeam1()
+	secondTeamReq := req.GetTeam2()
+	year := req.GetYear()
+
+	var wg sync.WaitGroup
+	wg.Add(3)
+
+	var firstTeamProto *teamspb.Team
+	var secondTeamProto *teamspb.Team
+	var meanProto *teamspb.Team
+
+	var firstError error
+	var secondError error
+	var meanError error
+
+	go func() {
+		defer wg.Done()
+		firstTeamProto, firstError = controller.FindTeam(c, teamCollection, firstTeamReq, year)
+	}()
+
+	go func () {
+		defer wg.Done()
+		secondTeamProto, secondError = controller.FindTeam(c, teamCollection, secondTeamReq, year)
+	}()
+
+	go func () {
+		defer wg.Done()
+		meanProto, secondError = controller.FindTeam(c, meanCollection, "MEAN", year)
+	}()
+
+	wg.Wait()
+
+	if firstError != nil {
+		return nil, firstError
+	}
+
+	if secondError != nil {
+		return nil, secondError
+	}
+
+	if meanError != nil {
+		return nil, meanError
+	}
+
+	return controller.OrderTeams(c, firstTeamProto, secondTeamProto, meanProto)
+}
+
 func main() {
 	log.Println("Teams Service")
 
