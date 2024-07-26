@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	TeamsService_GetTwoTeams_FullMethodName = "/teams.TeamsService/GetTwoTeams"
-	TeamsService_GetAllTeams_FullMethodName = "/teams.TeamsService/GetAllTeams"
+	TeamsService_GetTwoTeams_FullMethodName        = "/teams.TeamsService/GetTwoTeams"
+	TeamsService_GetAllTeams_FullMethodName        = "/teams.TeamsService/GetAllTeams"
+	TeamsService_GetTwoTeamsOrdered_FullMethodName = "/teams.TeamsService/GetTwoTeamsOrdered"
 )
 
 // TeamsServiceClient is the client API for TeamsService service.
@@ -29,6 +30,7 @@ const (
 type TeamsServiceClient interface {
 	GetTwoTeams(ctx context.Context, in *TwoTeamsRequest, opts ...grpc.CallOption) (*TwoTeamsResponse, error)
 	GetAllTeams(ctx context.Context, in *AllTeamsRequest, opts ...grpc.CallOption) (*AllTeamsResponse, error)
+	GetTwoTeamsOrdered(ctx context.Context, in *TwoTeamsRequest, opts ...grpc.CallOption) (*TwoTeamsOrderedResponse, error)
 }
 
 type teamsServiceClient struct {
@@ -59,12 +61,23 @@ func (c *teamsServiceClient) GetAllTeams(ctx context.Context, in *AllTeamsReques
 	return out, nil
 }
 
+func (c *teamsServiceClient) GetTwoTeamsOrdered(ctx context.Context, in *TwoTeamsRequest, opts ...grpc.CallOption) (*TwoTeamsOrderedResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TwoTeamsOrderedResponse)
+	err := c.cc.Invoke(ctx, TeamsService_GetTwoTeamsOrdered_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TeamsServiceServer is the server API for TeamsService service.
 // All implementations must embed UnimplementedTeamsServiceServer
 // for forward compatibility
 type TeamsServiceServer interface {
 	GetTwoTeams(context.Context, *TwoTeamsRequest) (*TwoTeamsResponse, error)
 	GetAllTeams(context.Context, *AllTeamsRequest) (*AllTeamsResponse, error)
+	GetTwoTeamsOrdered(context.Context, *TwoTeamsRequest) (*TwoTeamsOrderedResponse, error)
 	mustEmbedUnimplementedTeamsServiceServer()
 }
 
@@ -77,6 +90,9 @@ func (UnimplementedTeamsServiceServer) GetTwoTeams(context.Context, *TwoTeamsReq
 }
 func (UnimplementedTeamsServiceServer) GetAllTeams(context.Context, *AllTeamsRequest) (*AllTeamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllTeams not implemented")
+}
+func (UnimplementedTeamsServiceServer) GetTwoTeamsOrdered(context.Context, *TwoTeamsRequest) (*TwoTeamsOrderedResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTwoTeamsOrdered not implemented")
 }
 func (UnimplementedTeamsServiceServer) mustEmbedUnimplementedTeamsServiceServer() {}
 
@@ -127,6 +143,24 @@ func _TeamsService_GetAllTeams_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TeamsService_GetTwoTeamsOrdered_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TwoTeamsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TeamsServiceServer).GetTwoTeamsOrdered(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TeamsService_GetTwoTeamsOrdered_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TeamsServiceServer).GetTwoTeamsOrdered(ctx, req.(*TwoTeamsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // TeamsService_ServiceDesc is the grpc.ServiceDesc for TeamsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -141,6 +175,10 @@ var TeamsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAllTeams",
 			Handler:    _TeamsService_GetAllTeams_Handler,
+		},
+		{
+			MethodName: "GetTwoTeamsOrdered",
+			Handler:    _TeamsService_GetTwoTeamsOrdered_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

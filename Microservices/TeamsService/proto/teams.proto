@@ -7,6 +7,7 @@ option go_package = "../teamspb";
 service TeamsService {
     rpc GetTwoTeams(TwoTeamsRequest) returns (TwoTeamsResponse);
     rpc GetAllTeams(AllTeamsRequest) returns (AllTeamsResponse);
+    rpc GetTwoTeamsOrdered(TwoTeamsRequest) returns (TwoTeamsOrderedResponse);
 }
 
 message TwoTeamsRequest {
@@ -27,6 +28,12 @@ message TwoTeamsResponse {
 
 message AllTeamsResponse {
     repeated TotalTeamData data = 1;
+}
+
+message TwoTeamsOrderedResponse {
+    string team1 = 1;
+    string team2 = 2;
+    repeated OrderedField statistics = 3;
 }
 
 
@@ -145,4 +152,18 @@ message Team {
 message TotalTeamData {
     string teamname = 1;  // TeamName field
     repeated Team stats = 2;  // List of yearly statistics
+}
+
+message OrderedField {
+    string field1 = 1;
+    string field2 = 2;
+    float percentile_difference = 3;
+    float abs_percentile_difference = 4;
+    float team1_percentile = 5;
+    float team2_op_percentile = 6;
+    float trad_difference = 7;
+    float team1_trad = 8;
+    float team2_op_trad = 9;
+    float mean1 = 10;
+    float mean2 = 11;
 }
