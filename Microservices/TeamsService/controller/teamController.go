@@ -92,6 +92,9 @@ func FindAllTeams(c context.Context, collection *mongo.Collection, startYear flo
 	// If the key exists, then it appends it to the appropriate index (the value of the key)
 	// else it creates the key, as well as the element in the array with the teamname and empty array
 	// for the stats
+	// Note: This grabs all the data at once, rather than individually using goroutines
+	// Uinsg goroutines may be faster, as it would be able to get the data filetered automatically,
+	// but would use many more resources (30 db calls rather than 1)
 	var allTeamDataProto []*teamspb.TotalTeamData
 	teamsMap := make(map[string]int)
 	count := 0
