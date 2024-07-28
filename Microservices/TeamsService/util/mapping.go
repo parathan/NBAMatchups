@@ -5,6 +5,19 @@ import (
 	teamspb "teams-service/proto"
 )
 
+// TeamMapping maps a database.TeamData to a teamspb.Team.
+//
+// It takes a database.TeamData as input and returns a *teamspb.Team and
+// an error. It creates a new teamspb.Team by converting the fields of the
+// input database.TeamData to float32. The resulting teamspb.Team is then
+// returned.
+//
+// Parameters:
+// - team: The database.TeamData to be mapped.
+//
+// Returns:
+// - *teamspb.Team: The mapped teamspb.Team.
+// - error: An error if the mapping fails.
 func TeamMapping(team database.TeamData) (*teamspb.Team, error) {
 
 	newTeam := &teamspb.Team{

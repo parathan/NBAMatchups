@@ -15,6 +15,9 @@ import (
 // ConnectDB connects to the MongoDB database using the provided URI.
 // It returns a pointer to the MongoDB client.
 // It logs an error and terminates the program if there is any error in the connection process.
+//
+// Returns:
+// - *mongo.Client: A pointer to the MongoDB client.
 func ConnectDB() *mongo.Client {
 	// Create a context with a timeout of 10 seconds.
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -44,10 +47,15 @@ func ConnectDB() *mongo.Client {
 }
 
 
+
 // EnvMongoURI loads the environment variables from the .env file and returns the
 // value of the MONGO_URI environment variable.
+//
 // It logs an error and terminates the program if there is any error in loading the
 // .env file.
+//
+// Returns:
+// - string: The value of the MONGO_URI environment variable.
 func EnvMongoURI() string {
 	// Load the environment variables from the .env file.
 	err := godotenv.Load()
