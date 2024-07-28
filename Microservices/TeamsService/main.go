@@ -105,20 +105,37 @@ func (*server) GetTwoTeamsOrdered(ctx context.Context, req *teamspb.TwoTeamsRequ
 	meanCollectionName := "NBAMatchups_Team_Mean"
 	meanCollection := database.Mongo_Client.Database(databaseName).Collection(meanCollectionName)
 
+	percentileCollectionName := "NBAMatchups_Team_Percentile"
+	percentileCollection := database.Mongo_Client.Database(databaseName).Collection(percentileCollectionName)
+
 	firstTeamReq := req.GetTeam1()
 	secondTeamReq := req.GetTeam2()
 	year := req.GetYear()
 
 	var wg sync.WaitGroup
-	wg.Add(3)
+	wg.Add(5)
 
+	var firstPercentileProto *teamspb.Team
+	var secondPercentileProto *teamspb.Team
 	var firstTeamProto *teamspb.Team
 	var secondTeamProto *teamspb.Team
 	var meanProto *teamspb.Team
 
+	var firstPercentileError error
+	var secondPercentileError error
 	var firstError error
 	var secondError error
 	var meanError error
+
+	go func() {
+		defer wg.Done()
+		firstPercentileProto, firstPercentileError = controller.FindTeam(c, percentileCollection, firstTeamReq, year)
+	}()
+
+	go func() {
+		defer wg.Done()
+		secondPercentileProto, secondPercentileError = controller.FindTeam(c, percentileCollection, secondTeamReq, year)
+	}()
 
 	go func() {
 		defer wg.Done()
@@ -132,10 +149,18 @@ func (*server) GetTwoTeamsOrdered(ctx context.Context, req *teamspb.TwoTeamsRequ
 
 	go func () {
 		defer wg.Done()
-		meanProto, secondError = controller.FindTeam(c, meanCollection, "MEAN", year)
+		meanProto, meanError = controller.FindTeam(c, meanCollection, "MEAN", year)
 	}()
 
 	wg.Wait()
+
+	if firstPercentileError != nil {
+		return nil, firstPercentileError
+	}
+
+	if secondPercentileError != nil {
+		return nil, secondPercentileError
+	}
 
 	if firstError != nil {
 		return nil, firstError
@@ -149,7 +174,7 @@ func (*server) GetTwoTeamsOrdered(ctx context.Context, req *teamspb.TwoTeamsRequ
 		return nil, meanError
 	}
 
-	return controller.OrderTeams(c, firstTeamProto, secondTeamProto, meanProto)
+	return controller.OrderTeams(c, firstPercentileProto, secondPercentileProto, firstTeamProto, secondTeamProto, meanProto)
 }
 
 func main() {
