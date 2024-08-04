@@ -2,7 +2,10 @@ package controller
 
 import (
 	"context"
+	"math"
+	"sort"
 
+	"teams-service/constants"
 	"teams-service/database"
 	teamspb "teams-service/proto"
 	"teams-service/util"
@@ -146,5 +149,36 @@ func FindAllTeams(c context.Context, collection *mongo.Collection, meanCollectio
 
 func OrderTeams(c context.Context, team1Percentile *teamspb.Team, team2Percentile *teamspb.Team, team1 *teamspb.Team, team2 *teamspb.Team, mean *teamspb.Team) (*teamspb.TwoTeamsOrderedResponse, error) {
 	// Need to implement function that takes team data and seperates and orders it for the fields
-	return &teamspb.TwoTeamsOrderedResponse{}, nil
+	var list []*teamspb.OrderedField
+
+	for _, field := range constants.OpposingStats {
+		difference := util.TeamAccess[field[0]](team1) - util.TeamAccess[field[1]](team2)
+		percentileDiff := util.TeamAccess[field[0]](team1Percentile) - util.TeamAccess[field[1]](team2Percentile)
+
+		orderedField := &teamspb.OrderedField{
+			Field1: field[0],
+			Field2: field[1],
+			PercentileDifference: float32(percentileDiff),
+			AbsPercentileDifference: float32(math.Abs(float64(percentileDiff))),
+			Team1Percentile: float32(util.TeamAccess[field[0]](team1Percentile)),
+			Team2OpPercentile: float32(util.TeamAccess[field[1]](team2Percentile)),
+			TradDifference: float32(difference),
+			Team1Trad: float32(util.TeamAccess[field[0]](team1)),
+			Team2OpTrad: float32(util.TeamAccess[field[1]](team2)),
+			Mean1: float32(util.TeamAccess[field[0]](mean)),
+			Mean2: float32(util.TeamAccess[field[1]](mean)),
+		}
+
+		list = append(list, orderedField)
+	}
+
+	sort.Slice(list, func(i, j int) bool {
+		return list[i].AbsPercentileDifference > list[j].AbsPercentileDifference
+	})
+
+	return &teamspb.TwoTeamsOrderedResponse{
+		Team1: team1.Name,
+		Team2: team2.Name,
+		Statistics: list,
+	}, nil
 }
