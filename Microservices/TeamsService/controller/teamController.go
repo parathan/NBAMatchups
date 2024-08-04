@@ -165,9 +165,10 @@ func FindAllTeams(c context.Context, collection *mongo.Collection, meanCollectio
 // - a pointer to a teamspb.TwoTeamsOrderedResponse object containing the ordered statistics between the two teams
 // - an error object if there was an error during the function execution
 func OrderTeams(c context.Context, team1Percentile *teamspb.Team, team2Percentile *teamspb.Team, team1 *teamspb.Team, team2 *teamspb.Team, mean *teamspb.Team) (*teamspb.TwoTeamsOrderedResponse, error) {
-	var list []*teamspb.OrderedField
+	var orderedFields []*teamspb.OrderedField
 
 	for _, field := range constants.OpposingStats {
+		// Since no deep computations, may not be need for goroutines
 		difference := util.TeamAccess[field[0]](team1) - util.TeamAccess[field[1]](team2)
 		percentileDiff := util.TeamAccess[field[0]](team1Percentile) - util.TeamAccess[field[1]](team2Percentile)
 
@@ -185,16 +186,16 @@ func OrderTeams(c context.Context, team1Percentile *teamspb.Team, team2Percentil
 			Mean2: float32(util.TeamAccess[field[1]](mean)),
 		}
 
-		list = append(list, orderedField)
+		orderedFields = append(orderedFields, orderedField)
 	}
 
-	sort.Slice(list, func(i, j int) bool {
-		return list[i].AbsPercentileDifference > list[j].AbsPercentileDifference
+	sort.Slice(orderedFields, func(i, j int) bool {
+		return orderedFields[i].AbsPercentileDifference > orderedFields[j].AbsPercentileDifference
 	})
 
 	return &teamspb.TwoTeamsOrderedResponse{
 		Team1: team1.Name,
 		Team2: team2.Name,
-		Statistics: list,
+		Statistics: orderedFields,
 	}, nil
 }
