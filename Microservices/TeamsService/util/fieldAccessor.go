@@ -28,6 +28,9 @@ func GetField(obj interface{}, fieldName  string) (interface{}, error) {
 
 type Getter func(team *teamspb.Team) float32
 
+// Using Getter method like this instead of GetField method above as reflect function
+// may have extra overhead. While this is more code to maintain, these getter functions are O(1)
+// lookup time, meaning it will not impact performance as much
 var TeamAccess = map[string]Getter{
 	"fg": func(team *teamspb.Team) float32 { return team.Fg },
     "opp_fg": func(team *teamspb.Team) float32 { return team.OppFg },

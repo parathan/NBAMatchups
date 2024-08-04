@@ -147,8 +147,24 @@ func FindAllTeams(c context.Context, collection *mongo.Collection, meanCollectio
 	return allTeamDataProto, nil 
 }
 
+// OrderTeams takes in four team objects and their corresponding percentile objects, and returns a TwoTeamsOrderedResponse object
+// containing the ordered statistics between the two teams. The function iterates through each opposing statistic, calculates the
+// difference and percentile difference between the two teams, and creates an OrderedField object for each statistic. These
+// OrderedField objects are then appended to a list, which is sorted by the absolute percentile difference. The function then
+// returns a TwoTeamsOrderedResponse object containing the names of the two teams and the sorted list of OrderedField objects.
+//
+// Parameters:
+// - c: the context.Context object for the function
+// - team1Percentile: a pointer to a teamspb.Team object representing the percentile data for team1
+// - team2Percentile: a pointer to a teamspb.Team object representing the percentile data for team2
+// - team1: a pointer to a teamspb.Team object representing team1
+// - team2: a pointer to a teamspb.Team object representing team2
+// - mean: a pointer to a teamspb.Team object representing the mean data for the teams
+//
+// Returns:
+// - a pointer to a teamspb.TwoTeamsOrderedResponse object containing the ordered statistics between the two teams
+// - an error object if there was an error during the function execution
 func OrderTeams(c context.Context, team1Percentile *teamspb.Team, team2Percentile *teamspb.Team, team1 *teamspb.Team, team2 *teamspb.Team, mean *teamspb.Team) (*teamspb.TwoTeamsOrderedResponse, error) {
-	// Need to implement function that takes team data and seperates and orders it for the fields
 	var list []*teamspb.OrderedField
 
 	for _, field := range constants.OpposingStats {
