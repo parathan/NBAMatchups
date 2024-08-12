@@ -2,6 +2,7 @@ package controller
 
 import (
 	"api-gateway/config"
+	"api-gateway/requests"
 	"context"
 	"encoding/json"
 	"net/http"
@@ -15,10 +16,16 @@ func TwoteamsController(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var reqBody requests.TwoTeamsRequest
+	if err := json.NewDecoder(r.Body).Decode(&reqBody); err != nil {
+		http.Error(w, "Invalid JSON body", http.StatusBadRequest)
+		return
+	}
+
 	req := &teamspb.TwoTeamsRequest{
-		Team1: "Toronto Raptors",
-		Team2: "Sacramento Kings",
-		Year:  2022,
+		Team1: reqBody.Team1,
+		Team2: reqBody.Team2,
+		Year:  reqBody.Year,
 	}
 
 	res, err := teamsClient.GetTwoTeams(context.Background(), req)
