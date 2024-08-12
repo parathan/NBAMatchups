@@ -5,11 +5,13 @@ import (
 	"api-gateway/requests"
 	"context"
 	"encoding/json"
+	"log"
 	"net/http"
 	teamspb "teams-service/proto"
 )
 
 func TwoteamsController(w http.ResponseWriter, r *http.Request) {
+	log.Print("twoteamsController called")
 	teamsClient, err := config.CreateGrpcClient("localhost:50051")
 	if err != nil {
 		http.Error(w, "failed to connect to grpc service", http.StatusInternalServerError)
@@ -39,6 +41,7 @@ func TwoteamsController(w http.ResponseWriter, r *http.Request) {
 }
 
 func TwoTeamsOrderedController(w http.ResponseWriter, r *http.Request) {
+	log.Print("TwoTeamsOrderedController called")
 	teamsClient, err := config.CreateGrpcClient("localhost:50051")
 	if err != nil {
 		http.Error(w, "failed to connect to grpc service", http.StatusInternalServerError)
@@ -68,6 +71,7 @@ func TwoTeamsOrderedController(w http.ResponseWriter, r *http.Request) {
 }
 
 func AllTeamsController(w http.ResponseWriter, r *http.Request) {
+	log.Print("AllTeamsController called")
 	teamsClient, err := config.CreateGrpcClient("localhost:50051")
 	if err != nil {
 		http.Error(w, "failed to connect to grpc service", http.StatusInternalServerError)
