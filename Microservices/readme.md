@@ -15,3 +15,8 @@ protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=p
 
 # Testing  
 Currently using Kreya to test the grpc calls.  
+
+# Development
+When working on the microservices, only open the miroservices folder itself and not the whole nbamatchups folder to ensure the go.work file located in the microservice works.  
+
+When development is done and microservices is ready to be pushed to prod, can replace modules with github names instead and remove the need for a go.work file.  
