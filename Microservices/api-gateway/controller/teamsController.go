@@ -10,9 +10,13 @@ import (
 	teamspb "teams-service/proto"
 )
 
+// TwoteamsController handles HTTP requests for getting TwoTeams data.
+//
+// It takes an http.ResponseWriter and an http.Request as parameters.
+// It returns no values, but writes the response to the http.ResponseWriter.
 func TwoteamsController(w http.ResponseWriter, r *http.Request) {
 	log.Print("twoteamsController called")
-	teamsClient, err := config.CreateGrpcClient("localhost:50051")
+	teamsClient, err := config.CreateTeamsGrpcClient("localhost:50051")
 	if err != nil {
 		http.Error(w, "failed to connect to grpc service", http.StatusInternalServerError)
 		return
@@ -40,9 +44,13 @@ func TwoteamsController(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(res)
 }
 
+// TwoTeamsOrderedController handles HTTP requests for getting TwoTeamsOrdered data.
+//
+// It takes an http.ResponseWriter and an http.Request as parameters.
+// It returns no values, but writes the response to the http.ResponseWriter.
 func TwoTeamsOrderedController(w http.ResponseWriter, r *http.Request) {
 	log.Print("TwoTeamsOrderedController called")
-	teamsClient, err := config.CreateGrpcClient("localhost:50051")
+	teamsClient, err := config.CreateTeamsGrpcClient("localhost:50051")
 	if err != nil {
 		http.Error(w, "failed to connect to grpc service", http.StatusInternalServerError)
 		return
@@ -70,9 +78,13 @@ func TwoTeamsOrderedController(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(res)
 }
 
+// AllTeamsController handles HTTP requests for getting allTeams data.
+//
+// It takes an http.ResponseWriter and an http.Request as parameters.
+// It returns no values, but writes the response to the http.ResponseWriter.
 func AllTeamsController(w http.ResponseWriter, r *http.Request) {
 	log.Print("AllTeamsController called")
-	teamsClient, err := config.CreateGrpcClient("localhost:50051")
+	teamsClient, err := config.CreateTeamsGrpcClient("localhost:50051")
 	if err != nil {
 		http.Error(w, "failed to connect to grpc service", http.StatusInternalServerError)
 		return

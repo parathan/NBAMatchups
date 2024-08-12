@@ -6,6 +6,11 @@ import (
 	"net/http"
 )
 
+// main is the entry point of the Go program.
+//
+// It sets up the API endpoints for the teams service and starts the server.
+// No parameters.
+// No return values.
 func main() {
 	http.HandleFunc("/api/v1/teams/twoteams", controller.TwoteamsController)
 	http.HandleFunc("/api/v1/teams/twoteamsordered", controller.TwoTeamsOrderedController)
