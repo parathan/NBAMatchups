@@ -1,8 +1,8 @@
-## API Gateway  
+# API Gateway  
 
 To run the api gateway, enter `go run main.go` in the terminal.  
 
-# Routes
+## Routes
 
 **GetTwoTeams**:  
 http://localhost:8080/api/v1/teams/twoteams  
@@ -13,7 +13,7 @@ Example JSON body input:
   "year": 2020
 }  
 
-**GetTwoTeamsOrdered**:
+**GetTwoTeamsOrdered**:  
 http://localhost:8080/api/v1/teams/twoteamsordered  
 Example JSON body input:  
 {
