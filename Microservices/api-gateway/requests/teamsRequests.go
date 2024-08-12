@@ -5,3 +5,8 @@ type TwoTeamsRequest struct {
 	Team2 string `json:"team2"`
 	Year  int32  `json:"year"`
 }
+
+type AllTeamsRequest struct {
+	StartYear int32 `json:"startYear"`
+	EndYear   int32 `json:"endYear"`
+}
