@@ -30,3 +30,29 @@ Example JSON body input:
     "startYear": 2019,
     "endYear": 2023
 }  
+
+**GetTwoTeamsCached**:  
+http://localhost:8080/api/v1/teams/twoteamscached  
+Example JSON body input:  
+{
+  "team1": "Toronto Raptors",
+  "team2": "Sacramento Kings",
+  "year": 2020
+}  
+
+**GetTwoTeamsOrderedCached**:  
+http://localhost:8080/api/v1/teams/twoteamsorderedcached  
+Example JSON body input:  
+{
+  "team1": "Toronto Raptors",
+  "team2": "Sacramento Kings",
+  "year": 2020
+}  
+
+**GetAllTeamsCached**:  
+http://localhost:8080/api/v1/teams/allteamscached  
+Example JSON body input:  
+{
+    "startYear": 2019,
+    "endYear": 2023
+}  

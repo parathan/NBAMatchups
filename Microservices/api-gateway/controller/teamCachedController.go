@@ -18,8 +18,7 @@ import (
 // It takes an http.ResponseWriter and an http.Request as parameters.
 // It returns no values, but writes the response to the http.ResponseWriter.
 func TwoteamsCachedController(w http.ResponseWriter, r *http.Request) {
-	log.Print("twoteamsController called")
-	
+	log.Print("twoteamsController cached called")
 
 	var reqBody requests.TwoTeamsRequest
 	if err := json.NewDecoder(r.Body).Decode(&reqBody); err != nil {
@@ -72,12 +71,7 @@ func TwoteamsCachedController(w http.ResponseWriter, r *http.Request) {
 // It takes an http.ResponseWriter and an http.Request as parameters.
 // It returns no values, but writes the response to the http.ResponseWriter.
 func TwoTeamsOrderedCachedController(w http.ResponseWriter, r *http.Request) {
-	log.Print("TwoTeamsOrderedController called")
-	teamsClient, err := config.CreateTeamsGrpcClient("localhost:50051")
-	if err != nil {
-		http.Error(w, "failed to connect to grpc service", http.StatusInternalServerError)
-		return
-	}
+	log.Print("TwoTeamsOrderedController cached called")
 
 	var reqBody requests.TwoTeamsRequest
 	if err := json.NewDecoder(r.Body).Decode(&reqBody); err != nil {
@@ -85,20 +79,44 @@ func TwoTeamsOrderedCachedController(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	req := &teamspb.TwoTeamsRequest{
-		Team1: reqBody.Team1,
-		Team2: reqBody.Team2,
-		Year:  reqBody.Year,
-	}
+	cacheKey := "API_GATEWAY_TWOTEAMSORDERED_" + reqBody.Team1 + "_" + reqBody.Team2 + "_" + strconv.Itoa(int(reqBody.Year))
 
-	res, err := teamsClient.GetTwoTeamsOrdered(context.Background(), req)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+	redisClient := config.GetRedis()
+	res, err := redisClient.Get(context.Background(), cacheKey).Result()
+	if err == redis.Nil {
+		teamsClient, err := config.CreateTeamsGrpcClient("localhost:50051")
+		if err != nil {
+			http.Error(w, "failed to connect to grpc service", http.StatusInternalServerError)
+			return
+		}
+
+		req := &teamspb.TwoTeamsRequest{
+			Team1: reqBody.Team1,
+			Team2: reqBody.Team2,
+			Year:  reqBody.Year,
+		}
+	
+		res, err := teamsClient.GetTwoTeamsOrdered(context.Background(), req)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		resJson, _ := json.Marshal(res)
+
+		redisClient.Set(context.Background(), cacheKey, resJson, 0).Err() 
+
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(resJson)
+	} else if err != nil {
+		// Redis error
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
+	} else {
+		// Cache hit, return cached data
+		w.Header().Set("Content-Type", "application/json")
+		w.Write([]byte(res))
 	}
-
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(res)
 }
 
 // AllTeamsCachedController handles HTTP requests for getting allTeams data.
@@ -106,12 +124,7 @@ func TwoTeamsOrderedCachedController(w http.ResponseWriter, r *http.Request) {
 // It takes an http.ResponseWriter and an http.Request as parameters.
 // It returns no values, but writes the response to the http.ResponseWriter.
 func AllTeamsCachedController(w http.ResponseWriter, r *http.Request) {
-	log.Print("AllTeamsController called")
-	teamsClient, err := config.CreateTeamsGrpcClient("localhost:50051")
-	if err != nil {
-		http.Error(w, "failed to connect to grpc service", http.StatusInternalServerError)
-		return
-	}
+	log.Print("AllTeamsController cached called")
 
 	var reqBody requests.AllTeamsRequest
 	if err := json.NewDecoder(r.Body).Decode(&reqBody); err != nil {
@@ -119,17 +132,41 @@ func AllTeamsCachedController(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	req := &teamspb.AllTeamsRequest{
-		StartYear: reqBody.StartYear,
-		EndYear:   reqBody.EndYear,
-	}
+	cacheKey := "API_GATEWAY_ALLTEAMS_" + strconv.Itoa(int(reqBody.StartYear)) + "_" + strconv.Itoa(int(reqBody.EndYear))
 
-	res, err := teamsClient.GetAllTeams(context.Background(), req)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+	redisClient := config.GetRedis()
+	res, err := redisClient.Get(context.Background(), cacheKey).Result()
+	if err == redis.Nil {
+		teamsClient, err := config.CreateTeamsGrpcClient("localhost:50051")
+		if err != nil {
+			http.Error(w, "failed to connect to grpc service", http.StatusInternalServerError)
+			return
+		}
+
+		req := &teamspb.AllTeamsRequest{
+			StartYear: reqBody.StartYear,
+			EndYear:   reqBody.EndYear,
+		}
+	
+		res, err := teamsClient.GetAllTeams(context.Background(), req)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		resJson, _ := json.Marshal(res)
+
+		redisClient.Set(context.Background(), cacheKey, resJson, 0).Err() 
+
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(resJson)
+	} else if err != nil {
+		// Redis error
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
+	} else {
+		// Cache hit, return cached data
+		w.Header().Set("Content-Type", "application/json")
+		w.Write([]byte(res))
 	}
-
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(res)
 }
