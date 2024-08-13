@@ -8,9 +8,12 @@ import (
 	"teams-service/controller"
 	"teams-service/database"
 	teamspb "teams-service/proto"
+	"teams-service/validations"
 	"time"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 var (
@@ -22,6 +25,10 @@ type server struct {
 
 func (*server) GetTwoTeams(ctx context.Context, req *teamspb.TwoTeamsRequest) (*teamspb.TwoTeamsResponse, error) {
 	log.Println("Called GetTwoTeams")
+
+	if err := validations.ValidateTwoTeamsRequest(req); err != nil {
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
 
 	c, cancel := context.WithTimeout(ctx, timeout)
 	defer cancel()
@@ -69,6 +76,10 @@ func (*server) GetTwoTeams(ctx context.Context, req *teamspb.TwoTeamsRequest) (*
 func (*server) GetAllTeams(ctx context.Context, req *teamspb.AllTeamsRequest) (*teamspb.AllTeamsResponse, error) {
 	log.Println("Called GetAllTeams")
 
+	if err := validations.ValidateAllTeamsRequest(req); err != nil {
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
+
 	c, cancel := context.WithTimeout(ctx, timeout)
 	defer cancel()
 
@@ -93,6 +104,10 @@ func (*server) GetAllTeams(ctx context.Context, req *teamspb.AllTeamsRequest) (*
 
 func (*server) GetTwoTeamsOrdered(ctx context.Context, req *teamspb.TwoTeamsRequest) (*teamspb.TwoTeamsOrderedResponse, error) {
 	log.Println("Called GetTwoTeamsOrdered")
+
+	if err := validations.ValidateTwoTeamsRequest(req); err != nil {
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
 
 	c, cancel := context.WithTimeout(ctx, timeout)
 	defer cancel()
