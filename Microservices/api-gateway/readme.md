@@ -1,6 +1,7 @@
 # API Gateway  
 
 To run the api gateway, enter `go run main.go` in the terminal.  
+Ensure that the redis server is running prior to running the api gateway, ensuring routes utilizing the cache work as expected
 
 ## Routes
 
