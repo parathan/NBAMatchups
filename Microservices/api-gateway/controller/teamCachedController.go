@@ -13,7 +13,8 @@ import (
 	"github.com/go-redis/redis/v8"
 )
 
-// TwoteamsCachedController handles HTTP requests for getting TwoTeams data.
+// TwoteamsCachedController handles HTTP requests for getting TwoTeams data that also uses
+// a redis cache.
 //
 // It takes an http.ResponseWriter and an http.Request as parameters.
 // It returns no values, but writes the response to the http.ResponseWriter.
@@ -86,7 +87,8 @@ func TwoteamsCachedController(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// TwoTeamsOrderedCachedController handles HTTP requests for getting TwoTeamsOrdered data.
+// TwoTeamsOrderedCachedController handles HTTP requests for getting TwoTeamsOrdered data
+// that also uses a redis cache.
 //
 // It takes an http.ResponseWriter and an http.Request as parameters.
 // It returns no values, but writes the response to the http.ResponseWriter.
@@ -159,7 +161,8 @@ func TwoTeamsOrderedCachedController(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// AllTeamsCachedController handles HTTP requests for getting allTeams data.
+// AllTeamsCachedController handles HTTP requests for getting allTeams data
+// that also uses a redis cache.
 //
 // It takes an http.ResponseWriter and an http.Request as parameters.
 // It returns no values, but writes the response to the http.ResponseWriter.
