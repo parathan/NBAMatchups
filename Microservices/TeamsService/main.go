@@ -8,7 +8,7 @@ import (
 	"teams-service/controller"
 	"teams-service/database"
 	teamspb "teams-service/proto"
-	"teams-service/validations"
+	validations "teams-service/validation"
 	"time"
 
 	"google.golang.org/grpc"
