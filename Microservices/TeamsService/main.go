@@ -24,7 +24,7 @@ func main() {
 	defer database.Mongo_Client.Disconnect(context.Background())
 
 	s := grpc.NewServer()
-	teamspb.RegisterTeamsServiceServer(s, &server.Server{}) // server &server{})
+	teamspb.RegisterTeamsServiceServer(s, &server.Server{})
 
 	log.Printf("Server started at %v", lis.Addr().String())
 

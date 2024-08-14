@@ -2,6 +2,7 @@ package controller
 
 import (
 	"api-gateway/config"
+	"api-gateway/constants"
 	"api-gateway/requests"
 	"context"
 	"encoding/json"
@@ -18,13 +19,13 @@ func TwoteamsController(w http.ResponseWriter, r *http.Request) {
 	log.Print("twoteamsController called")
 	teamsClient, err := config.CreateTeamsGrpcClient("localhost:50051")
 	if err != nil {
-		http.Error(w, "failed to connect to grpc service", http.StatusInternalServerError)
+		http.Error(w, constants.FAILED_TO_CONNECT_TO_GRPC, http.StatusInternalServerError)
 		return
 	}
 
 	var reqBody requests.TwoTeamsRequest
 	if err := json.NewDecoder(r.Body).Decode(&reqBody); err != nil {
-		http.Error(w, "Invalid JSON body", http.StatusBadRequest)
+		http.Error(w, constants.INVALID_JSON_BODY, http.StatusBadRequest)
 		return
 	}
 
@@ -52,13 +53,13 @@ func TwoTeamsOrderedController(w http.ResponseWriter, r *http.Request) {
 	log.Print("TwoTeamsOrderedController called")
 	teamsClient, err := config.CreateTeamsGrpcClient("localhost:50051")
 	if err != nil {
-		http.Error(w, "failed to connect to grpc service", http.StatusInternalServerError)
+		http.Error(w, constants.FAILED_TO_CONNECT_TO_GRPC, http.StatusInternalServerError)
 		return
 	}
 
 	var reqBody requests.TwoTeamsRequest
 	if err := json.NewDecoder(r.Body).Decode(&reqBody); err != nil {
-		http.Error(w, "Invalid JSON body", http.StatusBadRequest)
+		http.Error(w, constants.INVALID_JSON_BODY, http.StatusBadRequest)
 		return
 	}
 
@@ -86,13 +87,13 @@ func AllTeamsController(w http.ResponseWriter, r *http.Request) {
 	log.Print("AllTeamsController called")
 	teamsClient, err := config.CreateTeamsGrpcClient("localhost:50051")
 	if err != nil {
-		http.Error(w, "failed to connect to grpc service", http.StatusInternalServerError)
+		http.Error(w, constants.FAILED_TO_CONNECT_TO_GRPC, http.StatusInternalServerError)
 		return
 	}
 
 	var reqBody requests.AllTeamsRequest
 	if err := json.NewDecoder(r.Body).Decode(&reqBody); err != nil {
-		http.Error(w, "Invalid JSON body", http.StatusBadRequest)
+		http.Error(w, constants.INVALID_JSON_BODY, http.StatusBadRequest)
 		return
 	}
 
