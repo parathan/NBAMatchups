@@ -1,0 +1,19 @@
+{
+  "id": "26084c15-aa7d-4ea9-b9d4-b0e172f157be",
+  "importStreams": [
+    {
+      "id": "d841b045-4014-4947-9740-5a792610198c",
+      "name": "proto-file",
+      "importerName": "ProtoFile",
+      "createMissingOperations": true,
+      "options": {
+        "files": [
+          "../protos/predict.proto"
+        ],
+        "importPaths": []
+      }
+    }
+  ],
+  "authConfigs": [],
+  "certificates": []
+}
