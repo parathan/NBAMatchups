@@ -2,6 +2,7 @@ package controller
 
 import (
 	"api-gateway/config"
+	"api-gateway/constants"
 	"api-gateway/requests"
 	"context"
 	"encoding/json"
@@ -24,7 +25,7 @@ func TwoteamsCachedController(w http.ResponseWriter, r *http.Request) {
 	// Decode the request body into a TwoTeamsRequest
 	var reqBody requests.TwoTeamsRequest
 	if err := json.NewDecoder(r.Body).Decode(&reqBody); err != nil {
-		http.Error(w, "Invalid JSON body", http.StatusBadRequest)
+		http.Error(w, constants.INVALID_JSON_BODY, http.StatusBadRequest)
 		return
 	}
 
@@ -40,7 +41,7 @@ func TwoteamsCachedController(w http.ResponseWriter, r *http.Request) {
 		// If the response is not cached, get the response from the teams service
 		teamsClient, err := config.CreateTeamsGrpcClient("localhost:50051")
 		if err != nil {
-			http.Error(w, "failed to connect to grpc service", http.StatusInternalServerError)
+			http.Error(w, constants.FAILED_TO_CONNECT_TO_GRPC, http.StatusInternalServerError)
 			return
 		}
 
@@ -69,7 +70,7 @@ func TwoteamsCachedController(w http.ResponseWriter, r *http.Request) {
 		// Redis error, get the response from the teams service
 		teamsClient, err := config.CreateTeamsGrpcClient("localhost:50051")
 		if err != nil {
-			http.Error(w, "failed to connect to grpc service", http.StatusInternalServerError)
+			http.Error(w, constants.FAILED_TO_CONNECT_TO_GRPC, http.StatusInternalServerError)
 			return
 		}
 
@@ -110,7 +111,7 @@ func TwoTeamsOrderedCachedController(w http.ResponseWriter, r *http.Request) {
 	var reqBody requests.TwoTeamsRequest
 	if err := json.NewDecoder(r.Body).Decode(&reqBody); err != nil {
 		// If the request body is invalid, return a bad request error
-		http.Error(w, "Invalid JSON body", http.StatusBadRequest)
+		http.Error(w, constants.INVALID_JSON_BODY, http.StatusBadRequest)
 		return
 	}
 
@@ -127,7 +128,7 @@ func TwoTeamsOrderedCachedController(w http.ResponseWriter, r *http.Request) {
 		teamsClient, err := config.CreateTeamsGrpcClient("localhost:50051")
 		if err != nil {
 			// If there is an error connecting to the teams service, return an internal server error
-			http.Error(w, "failed to connect to grpc service", http.StatusInternalServerError)
+			http.Error(w, constants.FAILED_TO_CONNECT_TO_GRPC, http.StatusInternalServerError)
 			return
 		}
 
@@ -160,7 +161,7 @@ func TwoTeamsOrderedCachedController(w http.ResponseWriter, r *http.Request) {
 		teamsClient, err := config.CreateTeamsGrpcClient("localhost:50051")
 		if err != nil {
 			// If there is an error connecting to the teams service, return an internal server error
-			http.Error(w, "failed to connect to grpc service", http.StatusInternalServerError)
+			http.Error(w, constants.FAILED_TO_CONNECT_TO_GRPC, http.StatusInternalServerError)
 			return
 		}
 
@@ -204,7 +205,7 @@ func AllTeamsCachedController(w http.ResponseWriter, r *http.Request) {
 	var reqBody requests.AllTeamsRequest
 	if err := json.NewDecoder(r.Body).Decode(&reqBody); err != nil {
 		// If the request body is invalid, return a bad request error
-		http.Error(w, "Invalid JSON body", http.StatusBadRequest)
+		http.Error(w, constants.INVALID_JSON_BODY, http.StatusBadRequest)
 		return
 	}
 
@@ -221,7 +222,7 @@ func AllTeamsCachedController(w http.ResponseWriter, r *http.Request) {
 		teamsClient, err := config.CreateTeamsGrpcClient("localhost:50051")
 		if err != nil {
 			// If there is an error connecting to the teams service, return an internal server error
-			http.Error(w, "failed to connect to grpc service", http.StatusInternalServerError)
+			http.Error(w, constants.FAILED_TO_CONNECT_TO_GRPC, http.StatusInternalServerError)
 			return
 		}
 
@@ -253,7 +254,7 @@ func AllTeamsCachedController(w http.ResponseWriter, r *http.Request) {
 		teamsClient, err := config.CreateTeamsGrpcClient("localhost:50051")
 		if err != nil {
 			// If there is an error connecting to the teams service, return an internal server error
-			http.Error(w, "failed to connect to grpc service", http.StatusInternalServerError)
+			http.Error(w, constants.FAILED_TO_CONNECT_TO_GRPC, http.StatusInternalServerError)
 			return
 		}
 
