@@ -21,6 +21,15 @@ type Server struct {
 	teamspb.UnimplementedTeamsServiceServer
 }
 
+// GetTwoTeams retrieves two teams from the database based on the team names and year.
+//
+// Parameters:
+// - ctx: the context.Context object for the function.
+// - req: the *teamspb.TwoTeamsRequest object containing the team names and year.
+//
+// Returns:
+// - *teamspb.TwoTeamsResponse: the response containing the two teams in protobuf format.
+// - error: an error if the operation fails.
 func (*Server) GetTwoTeams(ctx context.Context, req *teamspb.TwoTeamsRequest) (*teamspb.TwoTeamsResponse, error) {
 	log.Println("Called GetTwoTeams")
 
@@ -71,6 +80,15 @@ func (*Server) GetTwoTeams(ctx context.Context, req *teamspb.TwoTeamsRequest) (*
 	return &teamspb.TwoTeamsResponse{Team1: firstTeamProto, Team2: secondTeamProto}, nil
 }
 
+// GetAllTeams retrieves all teams from the database based on the given years.
+//
+// Parameters:
+// - ctx: the context.Context object for the function.
+// - req: the *teamspb.AllTeamsRequest object containing the start and end years.
+//
+// Returns:
+// - *teamspb.AllTeamsResponse: the response containing all teams in protobuf format.
+// - error: an error if the operation fails.
 func (*Server) GetAllTeams(ctx context.Context, req *teamspb.AllTeamsRequest) (*teamspb.AllTeamsResponse, error) {
 	log.Println("Called GetAllTeams")
 
@@ -100,6 +118,17 @@ func (*Server) GetAllTeams(ctx context.Context, req *teamspb.AllTeamsRequest) (*
 	return &teamspb.AllTeamsResponse{Data: allTeamData}, nil
 }
 
+// GetTwoTeamsOrdered retrieves two teams from the database based on the team names and year,
+// and orders them based on their percentile differences for opposing statistics.
+//
+// Parameters:
+// - ctx: the context.Context object for the function.
+// - req: the *teamspb.TwoTeamsRequest object containing the team names and year.
+//
+// Returns:
+// - *teamspb.TwoTeamsOrderedResponse: the response containing the two teams in protobuf format,
+//   ordered based on their percentile differences for opposing statistics.
+// - error: an error if the operation fails.
 func (*Server) GetTwoTeamsOrdered(ctx context.Context, req *teamspb.TwoTeamsRequest) (*teamspb.TwoTeamsOrderedResponse, error) {
 	log.Println("Called GetTwoTeamsOrdered")
 
