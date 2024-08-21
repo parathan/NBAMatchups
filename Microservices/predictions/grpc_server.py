@@ -3,28 +3,31 @@ from concurrent import futures
 import predict_pb2_grpc
 import predict_pb2
 from ML import lr_predict
+from ML import constants
 
 class PredictionService(predict_pb2_grpc.PredictionServiceServicer):
     def Predict(self, request, context):
         # Extract features from the request
-        features = request.features
+        params = []
+        features = constants.FEATURE_LIST
+        for feature in features:
+            feature_value = getattr(request, feature, None)  # Safely access attribute
+            if feature_value is not None:
+                params.append(feature_value)
         
         # Validate the features
-        if not self.validate_features(features):
+        if not self.validate_features(params):
             context.set_details("Bad or Missing Request Parameter")
             context.set_code(grpc.StatusCode.INVALID_ARGUMENT)
             return predict_pb2.PredictionResponse()
 
         try:
-            # Perform prediction
-            print("Received features:", features)
             # Convert features to the format expected by your prediction function
-            prediction = lr_predict.predict(features)
+            prediction = lr_predict.predict(params)
             
             # Return the response
             return predict_pb2.PredictionResponse(
-                prob_loss=prediction[0],
-                prob_win=prediction[1]
+                prediction=prediction[1]
             )
         except Exception as e:
             context.set_details(str(e))

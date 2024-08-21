@@ -11,9 +11,9 @@ def LR_pred(request):
         params = []
 
         features = constants.FEATURE_LIST
-        
+        print(data)
         for feature in features:
-            params.append(data.get(feature))
+            params.append(data[feature])
         
         if validatePOSTParam(params):
             return JsonResponse({"Error": "Bad or Missing Request Parameter"}, status=400)
