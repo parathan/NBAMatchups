@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import styles from './index.module.css';
 import Layout from '../../components/Layout/Layout';
 
@@ -7,7 +7,6 @@ import axios from 'axios';
 import { Alert, CircularProgress, Grid } from '@mui/material';
 import { pred_LR } from '../../constants/routes';
 import { multby100 } from '../../util/Math/math';
-import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import CircularPercentage from '../../components/CircularPercentage';
 
 
@@ -30,7 +29,6 @@ function Prediction() {
   const [winProb, setWinProb] = useState(0)
   const [team1image, setTeam1Image] = useState("nba-logo.png")
   const [team2image, setTeam2Image] = useState("nba-logo.png")
-  const [imageClass, setImageClass] = useState(styles.nothing)
 
   const handleRefresh = () => {
     window.location.reload();
@@ -94,7 +92,6 @@ function Prediction() {
         setWinImg(team2image)
         setWinProb(multby100(response.data.prob_loss))
       }
-      setImageClass(styles.teamName)
     })
     .catch((error) => {
       console.log("catch error")
