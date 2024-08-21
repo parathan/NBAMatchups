@@ -43,10 +43,12 @@ function NavBar() {
         },
       }}
     >
-      <Box className={styles.companyInfo}>
-        <FaBuilding size={30} />
-        <Typography variant="h6">NBAnalytics</Typography>
-      </Box>
+      <Link to="/" onClick={() => setSelectedMenuItem('home')} className={styles.link}>
+        <Box className={styles.companyInfo}>
+          <FaBuilding size={30} />
+          <Typography variant="h6">NBAnalytics</Typography>
+        </Box>
+      </Link>
       <Box className={styles.menuSubtitle}>
         <Typography variant="subtitle1">Menu</Typography>
       </Box>
