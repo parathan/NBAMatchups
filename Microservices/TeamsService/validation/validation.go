@@ -52,5 +52,9 @@ func ValidateAllTeamsRequest(req *teamspb.AllTeamsRequest) error {
 		return errors.New("EndYear is not a valid year")
 	}
 
+	if req.StartYear > req.EndYear {
+		return errors.New("StartYear cannot be greater than EndYear")
+	}
+
 	return nil
 }

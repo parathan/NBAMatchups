@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"sync"
+	"teams-service/constants"
 	"teams-service/controller"
 	"teams-service/database"
 	teamspb "teams-service/proto"
@@ -40,8 +41,8 @@ func (*Server) GetTwoTeams(ctx context.Context, req *teamspb.TwoTeamsRequest) (*
 	c, cancel := context.WithTimeout(ctx, timeout)
 	defer cancel()
 
-	databaseName := "NBAMatchups_Team"
-	collectionName := "NBAMatchups_Team_Traditional"
+	databaseName := constants.DATABASE_NAME
+	collectionName := constants.TRADITION_COLLECTION_NAME
 	collection := database.Mongo_Client.Database(databaseName).Collection(collectionName)
 
 	firstTeamReq := req.GetTeam1()
@@ -99,12 +100,12 @@ func (*Server) GetAllTeams(ctx context.Context, req *teamspb.AllTeamsRequest) (*
 	c, cancel := context.WithTimeout(ctx, timeout)
 	defer cancel()
 
-	databaseName := "NBAMatchups_Team"
+	databaseName := constants.DATABASE_NAME
 
-	collectionName := "NBAMatchups_Team_Traditional"
+	collectionName := constants.TRADITION_COLLECTION_NAME
 	collection := database.Mongo_Client.Database(databaseName).Collection(collectionName)
 
-	meanCollectionName := "NBAMatchups_Team_Mean"
+	meanCollectionName := constants.MEAN_COLLECTION_NAME
 	meanCollection := database.Mongo_Client.Database(databaseName).Collection(meanCollectionName)
 
 	startYearReq := float64(req.GetStartYear())
@@ -139,15 +140,15 @@ func (*Server) GetTwoTeamsOrdered(ctx context.Context, req *teamspb.TwoTeamsRequ
 	c, cancel := context.WithTimeout(ctx, timeout)
 	defer cancel()
 
-	databaseName := "NBAMatchups_Team"
+	databaseName := constants.DATABASE_NAME
 
-	teamCollectionName := "NBAMatchups_Team_Traditional"
+	teamCollectionName := constants.TRADITION_COLLECTION_NAME
 	teamCollection := database.Mongo_Client.Database(databaseName).Collection(teamCollectionName)
 
-	meanCollectionName := "NBAMatchups_Team_Mean"
+	meanCollectionName := constants.MEAN_COLLECTION_NAME
 	meanCollection := database.Mongo_Client.Database(databaseName).Collection(meanCollectionName)
 
-	percentileCollectionName := "NBAMatchups_Team_Percentile"
+	percentileCollectionName := constants.PERCENTILE_COLLECTION_NAME
 	percentileCollection := database.Mongo_Client.Database(databaseName).Collection(percentileCollectionName)
 
 	firstTeamReq := req.GetTeam1()
