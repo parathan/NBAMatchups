@@ -1,0 +1,13 @@
+{
+  "details": {
+    "methodFqn": "PredictionService.Predict"
+  },
+  "requests": [
+    {
+      "location": "Predict-request.json"
+    }
+  ],
+  "operationType": "unary",
+  "invokerName": "grpc",
+  "importStreamId": "8003143f-f6b2-4845-8a9a-fdbca23da18c"
+}
