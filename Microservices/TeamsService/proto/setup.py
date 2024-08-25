@@ -7,7 +7,5 @@ setup(
     install_requires=[
         'grpcio',
         'protobuf',
-        'grpc',
-        'warnings'
     ],
 )
