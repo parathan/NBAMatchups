@@ -6,7 +6,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         'grpcio',
-        'google.protobuf',
+        'protobuf',
         'grpc',
         'warnings'
     ],
