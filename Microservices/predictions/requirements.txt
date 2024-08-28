@@ -1,0 +1,1 @@
+git+https://github.com/parathan/NBAMatchups.git@NBAM-127-organize-teams-proto#egg=teams_python&subdirectory=Microservices/TeamsService/proto/teams_python

@@ -2,6 +2,8 @@ import grpc
 from concurrent import futures
 import predict_pb2_grpc
 import predict_pb2
+import teams_python as teams
+
 from ML import lr_predict
 from ML import constants
 
@@ -22,6 +24,19 @@ class PredictionService(predict_pb2_grpc.PredictionServiceServicer):
             return predict_pb2.PredictionResponse()
 
         try:
+
+            channel = grpc.insecure_channel('localhost:50051')
+            stub = teams.teams_pb2_grpc.TeamsServiceStub(channel)
+
+            request = teams.teams_pb2.TwoTeamsRequest(
+                team1="Toronto Raptors",
+                team2="Boston Celtics",
+                year=2022
+            )
+
+            response = stub.GetTwoTeams(request)
+            print(response)
+
             # Convert features to the format expected by your prediction function
             prediction = lr_predict.predict(params)
             
