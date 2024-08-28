@@ -3,7 +3,7 @@
 import grpc
 import warnings
 
-from . import teams_pb2 as teams__pb2
+import teams_pb2 as teams__pb2
 
 GRPC_GENERATED_VERSION = '1.63.0'
 GRPC_VERSION = grpc.__version__
