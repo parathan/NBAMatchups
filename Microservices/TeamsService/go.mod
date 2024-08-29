@@ -1,4 +1,4 @@
-module teams-service
+module github.com/parathan/NBAMatchups/Microservices/TeamsService
 
 go 1.22.4
 
