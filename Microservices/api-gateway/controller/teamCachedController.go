@@ -9,9 +9,10 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-	teamspb "teams-service/proto"
 
 	"github.com/go-redis/redis/v8"
+
+	teamspb "github.com/parathan/NBAMatchups/Microservices/TeamsService/proto"
 )
 
 // TwoteamsCachedController handles HTTP requests for getting TwoTeams data that also uses
