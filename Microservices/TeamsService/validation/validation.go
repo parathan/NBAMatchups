@@ -3,8 +3,8 @@ package validations
 import (
 	"errors"
 
-	"github.com/parathan/NBAMatchups/Microservices/TeamsService/constants"
-	teamspb "github.com/parathan/NBAMatchups/Microservices/TeamsService/proto"
+	"teams-service/constants"
+	teamspb "teams-service/proto"
 )
 
 func ValidateTwoTeamsRequest(req *teamspb.TwoTeamsRequest) error {

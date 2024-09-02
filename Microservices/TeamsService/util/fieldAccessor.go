@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"reflect"
 
-	teamspb "github.com/parathan/NBAMatchups/Microservices/TeamsService/proto"
+	teamspb "teams-service/proto"
 )
 
 func GetField(obj interface{}, fieldName  string) (interface{}, error) {
