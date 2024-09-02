@@ -9,7 +9,7 @@ import (
 	"log"
 	"net/http"
 
-	teamspb "github.com/parathan/NBAMatchups/Microservices/TeamsService/proto"
+	teamspb "teams-service/proto"
 )
 
 // TwoteamsController handles HTTP requests for getting TwoTeams data.

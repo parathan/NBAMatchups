@@ -12,7 +12,7 @@ import (
 
 	"github.com/go-redis/redis/v8"
 
-	teamspb "github.com/parathan/NBAMatchups/Microservices/TeamsService/proto"
+	teamspb "teams-service/proto"
 )
 
 // TwoteamsCachedController handles HTTP requests for getting TwoTeams data that also uses
