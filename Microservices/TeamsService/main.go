@@ -5,9 +5,9 @@ import (
 	"log"
 	"net"
 
-	"teams-service/database"
-	teamspb "teams-service/proto"
-	"teams-service/server"
+	"github.com/parathan/NBAMatchups/Microservicesteams-service/database"
+	teamspb "github.com/parathan/NBAMatchups/Microservicesteams-service/proto"
+	"github.com/parathan/NBAMatchups/Microservicesteams-service/server"
 
 	"google.golang.org/grpc"
 )

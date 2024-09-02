@@ -5,10 +5,10 @@ import (
 	"math"
 	"sort"
 
-	"teams-service/constants"
-	"teams-service/database"
-	teamspb "teams-service/proto"
-	"teams-service/util"
+	"github.com/parathan/NBAMatchups/Microservicesteams-service/constants"
+	"github.com/parathan/NBAMatchups/Microservicesteams-service/database"
+	teamspb "github.com/parathan/NBAMatchups/Microservicesteams-service/proto"
+	"github.com/parathan/NBAMatchups/Microservicesteams-service/util"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"

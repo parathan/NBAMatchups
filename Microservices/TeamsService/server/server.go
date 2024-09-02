@@ -6,10 +6,10 @@ import (
 	"sync"
 	"time"
 
-	"teams-service/controller"
-	"teams-service/database"
-	teamspb "teams-service/proto"
-	validations "teams-service/validation"
+	"github.com/parathan/NBAMatchups/Microservicesteams-service/controller"
+	"github.com/parathan/NBAMatchups/Microservicesteams-service/database"
+	teamspb "github.com/parathan/NBAMatchups/Microservicesteams-service/proto"
+	validations "github.com/parathan/NBAMatchups/Microservicesteams-service/validation"
 
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

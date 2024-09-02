@@ -1,8 +1,9 @@
 package util
 
 import (
-	"teams-service/database"
-	teamspb "teams-service/proto"
+	teamspb "github.com/parathan/NBAMatchups/Microservicesteams-service/proto"
+
+	"github.com/parathan/NBAMatchups/Microservicesteams-service/database"
 )
 
 // TeamMapping maps a database.TeamData to a teamspb.Team.
