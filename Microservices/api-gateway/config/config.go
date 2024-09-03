@@ -1,7 +1,7 @@
 package config
 
 import (
-	teamspb "teams-service/proto"
+	teamspb "github.com/parathan/NBAMatchups/Microservices/TeamsService/proto"
 
 	"google.golang.org/grpc"
 )
