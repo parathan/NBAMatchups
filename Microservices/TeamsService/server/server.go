@@ -4,11 +4,12 @@ import (
 	"context"
 	"log"
 	"sync"
-	"teams-service/controller"
-	"teams-service/database"
-	teamspb "teams-service/proto"
-	validations "teams-service/validation"
 	"time"
+
+	"github.com/parathan/NBAMatchups/Microservices/TeamsService/controller"
+	"github.com/parathan/NBAMatchups/Microservices/TeamsService/database"
+	teamspb "github.com/parathan/NBAMatchups/Microservices/TeamsService/proto"
+	validations "github.com/parathan/NBAMatchups/Microservices/TeamsService/validation"
 
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
