@@ -9,33 +9,32 @@ from ML import constants
 
 class PredictionService(predict_pb2_grpc.PredictionServiceServicer):
     def Predict(self, request, context):
-        # Extract features from the request
-        params = []
-        features = constants.FEATURE_LIST
-        for feature in features:
-            feature_value = getattr(request, feature, None)  # Safely access attribute
-            if feature_value is not None:
-                params.append(feature_value)
-        
-        # Validate the features
-        if not self.validate_features(params):
-            context.set_details("Bad or Missing Request Parameter")
-            context.set_code(grpc.StatusCode.INVALID_ARGUMENT)
-            return predict_pb2.PredictionResponse()
-
         try:
-
             channel = grpc.insecure_channel('localhost:50051')
             stub = teams.teams_pb2_grpc.TeamsServiceStub(channel)
 
-            request = teams.teams_pb2.TwoTeamsRequest(
-                team1="Toronto Raptors",
-                team2="Boston Celtics",
-                year=2022
+            twoTeamRequest = teams.teams_pb2.TwoTeamsRequest(
+                team1=request.team1,
+                team2=request.team2,
+                year=request.year
             )
 
-            response = stub.GetTwoTeams(request)
-            print(response)
+            response = stub.GetTwoTeams(twoTeamRequest)
+            params = []
+            team_list = constants.TEAM_LIST
+            features = constants.FEATURE_LIST
+
+            # Extract features from the request in team1 first
+            for team in team_list:
+                team = getattr(response, team, None)  # Safely access attribute teams
+                for feature in features:
+                    feature_value = getattr(team, feature, None)  # Safely access attribute features for team
+                    if isinstance(feature_value, (int, float)):
+                        params.append(feature_value)
+                    else:
+                        context.set_details("Bad or Missing Request Parameter: From "+ team + " " + feature)
+                        context.set_code(grpc.StatusCode.INVALID_ARGUMENT)
+                        return predict_pb2.PredictionResponse()
 
             # Convert features to the format expected by your prediction function
             prediction = lr_predict.predict(params)
@@ -48,11 +47,7 @@ class PredictionService(predict_pb2_grpc.PredictionServiceServicer):
             context.set_details(str(e))
             context.set_code(grpc.StatusCode.INTERNAL)
             return predict_pb2.PredictionResponse()
-
-    def validate_features(self, features):
-        # Ensure all features are of the expected type (int or float)
-        return all(isinstance(item, (int, float)) for item in features)
-
+    
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     predict_pb2_grpc.add_PredictionServiceServicer_to_server(PredictionService(), server)
