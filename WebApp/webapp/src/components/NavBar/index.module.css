@@ -23,3 +23,7 @@
     background-color: var(--background-colour);
     color: var(--selectedFont-colour);
   }
+
+  .link {
+    text-decoration: none;
+  }

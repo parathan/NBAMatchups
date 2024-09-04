@@ -1,6 +1,5 @@
-import React, { ChangeEvent, useState } from 'react';
 import styles from './index.module.css';
-import { Grid, Slider, ThemeProvider, createMuiTheme, createTheme, makeStyles } from '@mui/material';
+import { Grid, Slider, ThemeProvider, createTheme } from '@mui/material';
 
 import { MatchupData } from '../../interfaces/MatchupData';
 import { statsMap } from '../../constants/statDictionary';

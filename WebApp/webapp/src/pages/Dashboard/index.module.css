@@ -33,6 +33,7 @@
     height: 3em;
     border-radius: .25em;
     overflow: hidden;
+    font-size: large;
 }
 
 .dropdown:hover {

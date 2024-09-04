@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import styles from './index.module.css';
 import Layout from '../../components/Layout/Layout';
 import MatchupSlider from '../../components/MatchupSlider';
@@ -10,8 +10,7 @@ import axios from 'axios';
 import { Alert, CircularProgress, Grid } from '@mui/material';
 import { orderedPerentile, orderedPerentileCached } from '../../constants/routes';
 
-import { motion, useAnimation } from "framer-motion";
-import { useInView } from "react-intersection-observer";
+import { motion } from "framer-motion";
 
 
 const variant = {
@@ -203,8 +202,9 @@ function Matchups() {
         }
         
         {
-          data.map( sliderData =>
+          data.map( (sliderData, index) =>
             <motion.div
+              key={index}
               variants={variant}
               initial="hidden" 
               whileInView="visible"

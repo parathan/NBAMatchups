@@ -6,6 +6,10 @@ import (
 
 var RedisClient *redis.Client
 
+// InitRedis initializes a Redis client with the provided options.
+//
+// No parameters.
+// No return values.
 func InitRedis() {
 	RedisClient = redis.NewClient(&redis.Options{
 		Addr:     "localhost:6379",

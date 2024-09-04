@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import styles from './index.module.css';
 import Layout from "../../components/Layout/Layout";
 import { Alert, CircularProgress, Grid } from '@mui/material';
@@ -22,20 +22,21 @@ import {
   import { Line } from 'react-chartjs-2';
 import { statsMap } from '../../constants/statDictionary';
 import { allTeams, allTeamsCached } from '../../constants/routes';
+import colours from '../../constants/colours';
 
 const testData: ChartFormat = {
     labels: ["2019", "2020", "2021", "2022", "2023"],
     datasets: [
         {
             label: "Data",
-            backgroundColor: "rgb(255, 99, 132)", // Setting up the background color for the dataset
-            borderColor: "rgb(255, 99, 132)",
+            backgroundColor: colours.RED, // Setting up the background color for the dataset
+            borderColor: colours.RED,
             data: []
         },
         {
             label: "League Average",
-            backgroundColor: "rgb(53, 162, 235)", // Setting up the background color for the dataset
-            borderColor: "rgba(53, 162, 235, 0.5)",
+            backgroundColor: colours.BLUE, // Setting up the background color for the dataset
+            borderColor: colours.BLUE,
             data: []
         }
     ]
@@ -54,15 +55,38 @@ ChartJS.register(
 const options = {
     responsive: true,
     plugins: {
-      legend: {
-        position: 'top' as const,
-      },
-      title: {
-        display: true,
-        text: 'Chart.js Line Chart',
-      },
+        legend: {
+            position: 'top' as const,
+            labels: {
+                color: colours.P_FONT_COLOUR,
+                font: {
+                    size: 18
+                }
+            }
+        },
+        title: {
+            display: false,
+        }
     },
-  };
+    scales: {
+        x: {
+            ticks: {
+                color: colours.P_FONT_COLOUR,
+                font: {
+                    size: 15
+                }
+            },
+        },
+        y: {
+            ticks: {
+                color: colours.P_FONT_COLOUR,
+                font: {
+                    size: 15
+                }
+            },
+        }
+    },
+};
 
 
 /**
