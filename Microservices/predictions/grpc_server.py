@@ -32,7 +32,7 @@ class PredictionService(predict_pb2_grpc.PredictionServiceServicer):
                     if isinstance(feature_value, (int, float)):
                         params.append(feature_value)
                     else:
-                        context.set_details("Bad or Missing Request Parameter: From Team 1 " + feature)
+                        context.set_details("Bad or Missing Request Parameter: From " team + " " + feature)
                         context.set_code(grpc.StatusCode.INVALID_ARGUMENT)
                         return predict_pb2.PredictionResponse()
 
