@@ -3,6 +3,8 @@ package config
 import (
 	teamspb "github.com/parathan/NBAMatchups/Microservices/TeamsService/proto"
 
+	predictions "prediction-service/prediction-service"
+
 	"google.golang.org/grpc"
 )
 
@@ -16,4 +18,12 @@ func CreateTeamsGrpcClient(address string) (teamspb.TeamsServiceClient, error) {
 		return nil, err
 	}
 	return teamspb.NewTeamsServiceClient(conn), nil
+}
+
+func CreatePredictionsGrpcClient(address string) (predictions.PredictionServiceClient, error) {
+	conn, err := grpc.Dial(address, grpc.WithInsecure())
+	if err != nil {
+		return nil, err
+	}
+	return predictions.NewPredictionServiceClient(conn), nil
 }
