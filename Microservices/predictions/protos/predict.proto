@@ -2,8 +2,6 @@ syntax = "proto3";
 
 package predictions;
 
-option go_package = "path/to/your/package/predictions";
-
 service PredictionService {
     rpc Predict(PredictionRequest) returns (PredictionResponse);
 }

@@ -1,8 +1,8 @@
 {
-  "id": "f6b5839b-818c-4857-bd00-e60545c61ac9",
+  "id": "a140687f-5ea6-4a65-aadf-3add6948e54b",
   "importStreams": [
     {
-      "id": "438ad88a-0da3-49d7-a8ff-c6e68784ba7b",
+      "id": "27fdb328-bcbb-46f6-9f1e-7ceb0f3c7ed9",
       "name": "proto-file",
       "importerName": "ProtoFile",
       "createMissingOperations": true,

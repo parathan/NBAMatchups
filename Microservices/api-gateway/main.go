@@ -24,6 +24,8 @@ func main() {
 	http.HandleFunc("/api/v1/teams/twoteamsorderedcached", controller.TwoTeamsOrderedCachedController)
 	http.HandleFunc("/api/v1/teams/allteamscached", controller.AllTeamsCachedController)
 
+	http.HandleFunc("/api/v1/prediction", controller.PredictController)
+
 	log.Println("Server starting on port 8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }

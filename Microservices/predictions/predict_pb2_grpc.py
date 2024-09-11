@@ -40,7 +40,7 @@ class PredictionServiceStub(object):
             channel: A grpc.Channel.
         """
         self.Predict = channel.unary_unary(
-                '/PredictionService/Predict',
+                '/predictions.PredictionService/Predict',
                 request_serializer=predict__pb2.PredictionRequest.SerializeToString,
                 response_deserializer=predict__pb2.PredictionResponse.FromString,
                 _registered_method=True)
@@ -65,9 +65,9 @@ def add_PredictionServiceServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'PredictionService', rpc_method_handlers)
+            'predictions.PredictionService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('PredictionService', rpc_method_handlers)
+    server.add_registered_method_handlers('predictions.PredictionService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -88,7 +88,7 @@ class PredictionService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/PredictionService/Predict',
+            '/predictions.PredictionService/Predict',
             predict__pb2.PredictionRequest.SerializeToString,
             predict__pb2.PredictionResponse.FromString,
             options,

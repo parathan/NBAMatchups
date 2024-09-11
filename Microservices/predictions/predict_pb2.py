@@ -14,17 +14,17 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rpredict.proto\"?\n\x11PredictionRequest\x12\r\n\x05team1\x18\x01 \x01(\t\x12\r\n\x05team2\x18\x02 \x01(\t\x12\x0c\n\x04year\x18\x03 \x01(\x05\"(\n\x12PredictionResponse\x12\x12\n\nprediction\x18\x01 \x01(\x02\x32G\n\x11PredictionService\x12\x32\n\x07Predict\x12\x12.PredictionRequest\x1a\x13.PredictionResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rpredict.proto\x12\x0bpredictions\"?\n\x11PredictionRequest\x12\r\n\x05team1\x18\x01 \x01(\t\x12\r\n\x05team2\x18\x02 \x01(\t\x12\x0c\n\x04year\x18\x03 \x01(\x05\"(\n\x12PredictionResponse\x12\x12\n\nprediction\x18\x01 \x01(\x02\x32_\n\x11PredictionService\x12J\n\x07Predict\x12\x1e.predictions.PredictionRequest\x1a\x1f.predictions.PredictionResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'predict_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_PREDICTIONREQUEST']._serialized_start=17
-  _globals['_PREDICTIONREQUEST']._serialized_end=80
-  _globals['_PREDICTIONRESPONSE']._serialized_start=82
-  _globals['_PREDICTIONRESPONSE']._serialized_end=122
-  _globals['_PREDICTIONSERVICE']._serialized_start=124
-  _globals['_PREDICTIONSERVICE']._serialized_end=195
+  _globals['_PREDICTIONREQUEST']._serialized_start=30
+  _globals['_PREDICTIONREQUEST']._serialized_end=93
+  _globals['_PREDICTIONRESPONSE']._serialized_start=95
+  _globals['_PREDICTIONRESPONSE']._serialized_end=135
+  _globals['_PREDICTIONSERVICE']._serialized_start=137
+  _globals['_PREDICTIONSERVICE']._serialized_end=232
 # @@protoc_insertion_point(module_scope)

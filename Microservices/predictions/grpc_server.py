@@ -6,9 +6,10 @@ import teams_python as teams
 
 from ML import lr_predict
 from ML import constants
-
+print("Starting gRPC server")
 class PredictionService(predict_pb2_grpc.PredictionServiceServicer):
     def Predict(self, request, context):
+        print("Received request")
         try:
             channel = grpc.insecure_channel('localhost:50051')
             stub = teams.teams_pb2_grpc.TeamsServiceStub(channel)

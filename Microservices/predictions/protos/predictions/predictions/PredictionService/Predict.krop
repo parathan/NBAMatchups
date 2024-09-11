@@ -1,6 +1,6 @@
 {
   "details": {
-    "methodFqn": "PredictionService.Predict"
+    "methodFqn": "predictions.PredictionService.Predict"
   },
   "requests": [
     {
@@ -9,5 +9,5 @@
   ],
   "operationType": "unary",
   "invokerName": "grpc",
-  "importStreamId": "438ad88a-0da3-49d7-a8ff-c6e68784ba7b"
+  "importStreamId": "27fdb328-bcbb-46f6-9f1e-7ceb0f3c7ed9"
 }
