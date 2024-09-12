@@ -32,13 +32,6 @@ const SliderLabels = styled(Box)(({ theme }) => ({
   color: 'var(--p-font-colour)',
 }));
 
-const IconTextContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  marginTop: theme.spacing(3),
-  color: 'var(--p-font-colour)',
-}));
 
 const MatchupSlider = (props: MatchupData) => {
   const value = [
