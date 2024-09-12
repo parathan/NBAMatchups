@@ -5,7 +5,7 @@ import Layout from '../../components/Layout/Layout';
 import { teamsNames } from '../../constants/teamNames';
 import axios from 'axios';
 import { Alert, CircularProgress, Grid } from '@mui/material';
-import { pred_LR } from '../../constants/routes';
+import { predictionMicroservice } from '../../constants/routes';
 import { multby100 } from '../../util/Math/math';
 import CircularPercentage from '../../components/CircularPercentage';
 
@@ -72,25 +72,25 @@ function Prediction() {
     setFormVisible(false)
     setProgressVisible(true)
     setErrorVisible(false)
-    axios.post(process.env.REACT_APP_API_URL + pred_LR, {
+    axios.post(process.env.REACT_APP_API_URL_MICRO + predictionMicroservice, {
       team1: team1,
       team2: team2,
-      year: "2023"
+      year: 2023
     })
     .then((response) => {
       setProgressVisible(false)
       setFormVisible(false)
       setSuccessVisible(true)
       setErrorVisible(false)
-      if(response.data.prob_win >= 0.50){
+      if(response.data.prediction >= 0.50){
         setData(team1)
         setWinImg(team1image)
-        setWinProb(multby100(response.data.prob_win))
+        setWinProb(multby100(response.data.prediction))
       }
       else{
         setData(team2)
         setWinImg(team2image)
-        setWinProb(multby100(response.data.prob_loss))
+        setWinProb(multby100(1 - response.data.prediction))
       }
     })
     .catch((error) => {
