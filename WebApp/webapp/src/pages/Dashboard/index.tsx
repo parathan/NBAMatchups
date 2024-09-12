@@ -21,7 +21,7 @@ import {
   } from 'chart.js';
   import { Line } from 'react-chartjs-2';
 import { statsMap } from '../../constants/statDictionary';
-import { allTeams, allTeamsCached } from '../../constants/routes';
+import { allTeamsMicroservice } from '../../constants/routes';
 import colours from '../../constants/colours';
 
 const testData: ChartFormat = {
@@ -116,36 +116,16 @@ function Dashboard() {
     useEffect(() => {
         // Gets data from route that uses redis cache. If it fails it uses route that doesnt have cache
         const getCachedData = async () => {
-            axios.post(process.env.REACT_APP_API_URL + allTeamsCached, {
+            axios.post(process.env.REACT_APP_API_URL_MICRO + allTeamsMicroservice, {
                 startYear: startYear,
                 endYear: endYear
             })
             .then((response) => {
-                setData(response.data)
+                setData(response.data.data)
                 setProgress(false)
     
-                let meanData: TotalTeamData | undefined = response.data.find((givenTeam: { teamName: string; }) => {
-                    return givenTeam.teamName === "MEAN"
-                })
-                setMeanData(meanData)
-            })
-            .catch((error) => {
-                console.log(error)
-                getUncachedData();
-            })
-        }
-
-        const getUncachedData = async () => {
-            axios.post(process.env.REACT_APP_API_URL + allTeams, {
-                startYear: startYear,
-                endYear: endYear
-            })
-            .then((response) => {
-                setData(response.data)
-                setProgress(false)
-    
-                let meanData: TotalTeamData | undefined = response.data.find((givenTeam: { teamName: string; }) => {
-                    return givenTeam.teamName === "MEAN"
+                let meanData: TotalTeamData | undefined = response.data.data.find((givenTeam: { teamname: string; }) => {
+                    return givenTeam.teamname === "MEAN"
                 })
                 setMeanData(meanData)
             })
@@ -164,18 +144,18 @@ function Dashboard() {
     function establishData(team: string, field: string) {
         let labelName = statsMap.get(field) || ""
         let teamData: TotalTeamData | undefined = data.find(givenTeam => {
-            return givenTeam.teamName === team
+            return givenTeam.teamname === team
         })
 
         let fieldData: number[] = []
-        teamData?.stats.forEach(function (yearlyStat) {
-            fieldData.push(Number(yearlyStat.yearStats[field as keyof TeamData]))
+        teamData?.stats.forEach(function (teamStat) {
+            fieldData.push(Number(teamStat[field as keyof TeamData]))
             // setDisplayData(oldArray => [...oldArray, Number(yearlyStat.yearStats[field as keyof TeamData])])
         })
 
         let averageData: number[] = []
-        meanData?.stats.forEach(function (yearlyStat) {
-            averageData.push(Number(yearlyStat.yearStats[field as keyof TeamData]))
+        meanData?.stats.forEach(function (meanStat) {
+            averageData.push(Number(meanStat[field as keyof TeamData]))
             // setDisplayData(oldArray => [...oldArray, Number(yearlyStat.yearStats[field as keyof TeamData])])
         })
 
@@ -197,7 +177,6 @@ function Dashboard() {
             ]
         }
         setChartData(newChart)
-        console.log("Both")
     }
 
     function changeTeam(e: ChangeEvent<HTMLSelectElement>) {
