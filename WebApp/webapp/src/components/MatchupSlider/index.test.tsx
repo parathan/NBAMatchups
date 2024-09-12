@@ -5,17 +5,17 @@ import MatchupSlider from '.';
 
 describe('MatchupSlider', () => {
     const defaultProps = {
-        team1Percentile1: 40,
-        team2Percentile_Op: 60,
+        team1_percentile: 40,
+        team2_op_percentile: 60,
         field1: 'fg3',
         field2: 'opp_fg3',
-        team1Trad: 50,
-        team2Trad_Op: 60,
+        team1_trad: 50,
+        team2_op_trad: 60,
         mean1: 55,
         mean2: 65,
-        absPercentileDifference: 0.2,
-        TraditionalDifference: "10",
-        PercentileDifference: "20"
+        abs_percentile_difference: 0.2,
+        trad_difference: 10,
+        percentile_difference: 20
     };
 
     it('renders component with correct state', async () => {

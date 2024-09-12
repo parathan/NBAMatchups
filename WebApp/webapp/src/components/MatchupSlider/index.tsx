@@ -15,19 +15,19 @@ import { perc2color } from '../../util/Color/color';
  * @returns 
  */
 function MatchupSlider(props: MatchupData) {
-    const value = [props.team1Percentile1 < props.team2Percentile_Op ? multby100(props.team1Percentile1) : multby100(props.team2Percentile_Op), 
-        props.team1Percentile1 >= props.team2Percentile_Op ? multby100(props.team1Percentile1) : multby100(props.team2Percentile_Op)];
-    const field1 = props.team1Percentile1 < props.team2Percentile_Op ? statsMap.get(props.field1) : statsMap.get(props.field2);
-    const field2 = props.team1Percentile1 >= props.team2Percentile_Op ? statsMap.get(props.field1) : statsMap.get(props.field2);
-    const trad1 = props.team1Percentile1 < props.team2Percentile_Op ? props.team1Trad : props.team2Trad_Op;
-    const trad2 = props.team1Percentile1 >= props.team2Percentile_Op ? props.team1Trad : props.team2Trad_Op;
-    const mean1 = props.team1Percentile1 < props.team2Percentile_Op ? props.mean1 : props.mean2;
-    const mean2 = props.team1Percentile1 >= props.team2Percentile_Op ? props.mean1 : props.mean2;
+    const value = [props.team1_percentile < props.team2_op_percentile ? multby100(props.team1_percentile) : multby100(props.team2_op_percentile), 
+        props.team1_percentile >= props.team2_op_percentile ? multby100(props.team1_percentile) : multby100(props.team2_op_percentile)];
+    const field1 = props.team1_percentile < props.team2_op_percentile ? statsMap.get(props.field1) : statsMap.get(props.field2);
+    const field2 = props.team1_percentile >= props.team2_op_percentile ? statsMap.get(props.field1) : statsMap.get(props.field2);
+    const trad1 = props.team1_percentile < props.team2_op_percentile ? props.team1_trad : props.team2_op_trad;
+    const trad2 = props.team1_percentile >= props.team2_op_percentile ? props.team1_trad : props.team2_op_trad;
+    const mean1 = props.team1_percentile < props.team2_op_percentile ? props.mean1 : props.mean2;
+    const mean2 = props.team1_percentile >= props.team2_op_percentile ? props.mean1 : props.mean2;
 
     const customTheme = createTheme({
         palette: {
             primary: {
-                main: perc2color(props.absPercentileDifference * 100),
+                main: perc2color(props.abs_percentile_difference * 100),
             }
         }
     })

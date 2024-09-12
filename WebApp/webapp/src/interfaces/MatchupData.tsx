@@ -7,13 +7,13 @@
 export interface MatchupData {
     field1: string, // statistic field for first team
     field2: string, // statistic field for second team (opposite field of field1)
-    PercentileDifference: string, // Percentile Difference
-    absPercentileDifference: number, // Absolute Percentile Difference
-    team1Percentile1: number, // percentile of the first team's first stat in comparison to the rest of the leagues values
-    team2Percentile_Op: number, // percentile of the second team's second stat in comparison to the rest of the leagues values
-    TraditionalDifference: string, // Difference between actual values
-    team1Trad: number, // value of the first team's first stat
-    team2Trad_Op: number, // value of the second team's second stat
+    percentile_difference: number, // Percentile Difference
+    abs_percentile_difference: number, // Absolute Percentile Difference
+    team1_percentile: number, // percentile of the first team's first stat in comparison to the rest of the leagues values
+    team2_op_percentile: number, // percentile of the second team's second stat in comparison to the rest of the leagues values
+    trad_difference: number, // Difference between actual values
+    team1_trad: number, // value of the first team's first stat
+    team2_op_trad: number, // value of the second team's second stat
     mean1: number, // average of the first stat
     mean2: number // average of the second stat
 }

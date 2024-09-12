@@ -8,7 +8,7 @@ import { teamsNames } from '../../constants/teamNames';
 import { years } from '../../constants/years';
 import axios from 'axios';
 import { Alert, CircularProgress, Grid } from '@mui/material';
-import { orderedPerentile, orderedPerentileCached } from '../../constants/routes';
+import { orderedPerentileMicroservice } from '../../constants/routes';
 
 import { motion } from "framer-motion";
 
@@ -73,32 +73,16 @@ function Matchups() {
     setFormVisible(false)
     setProgressVisible(true)
     setErrorVisible(false)
-    axios.post(process.env.REACT_APP_API_URL + orderedPerentileCached, {
+    axios.post(process.env.REACT_APP_API_URL_MICRO + orderedPerentileMicroservice, {
       team1: team1,
       team2: team2,
-      year: year
+      year: parseInt(year)
     })
     .then((response) => {
+
+      console.log(response.data)
       setProgressVisible(false)
       
-      setSuccessVisible(true)
-      setData(response.data.statistics)
-      setImageClass(styles.teamName)
-    })
-    .catch((error) => {
-      console.log(error)
-      getUncachedData();
-    })
-  }
-
-  function getUncachedData() {
-    axios.post(process.env.REACT_APP_API_URL + orderedPerentile, {
-      team1: team1,
-      team2: team2,
-      year: year
-    })
-    .then((response) => {
-      setProgressVisible(false)
       setSuccessVisible(true)
       setData(response.data.statistics)
       setImageClass(styles.teamName)
@@ -212,13 +196,13 @@ function Matchups() {
               <MatchupSlider 
                 field1={sliderData.field1}
                 field2={sliderData.field2}
-                PercentileDifference={sliderData.PercentileDifference}
-                absPercentileDifference={sliderData.absPercentileDifference} 
-                team1Percentile1={sliderData.team1Percentile1} 
-                team2Percentile_Op={sliderData.team2Percentile_Op} 
-                TraditionalDifference={sliderData.TraditionalDifference} 
-                team1Trad={sliderData.team1Trad} 
-                team2Trad_Op={sliderData.team2Trad_Op} 
+                percentile_difference={sliderData.percentile_difference}
+                abs_percentile_difference={sliderData.abs_percentile_difference} 
+                team1_percentile={sliderData.team1_percentile} 
+                team2_op_percentile={sliderData.team2_op_percentile} 
+                trad_difference={sliderData.trad_difference} 
+                team1_trad={sliderData.team1_trad} 
+                team2_op_trad={sliderData.team2_op_trad} 
                 mean1={sliderData.mean1}
                 mean2={sliderData.mean2}
               />
