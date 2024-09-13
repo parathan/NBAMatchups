@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import styles from './index.module.css';
 
 import Layout from '../../components/Layout/Layout';
@@ -6,12 +5,6 @@ import { Grid } from '@mui/material';
 
 
 function About() {
-
-  const navigate = useNavigate();
-
-  function handleNavigate(route: string) {
-      navigate(route)
-  }
 
   return (
     <Layout>
