@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import { Sidebar, Menu, MenuItem, sidebarClasses } from 'react-pro-sidebar';
 import { Box, Typography } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
-import { FaHome, FaClipboardList, FaChartBar, FaTachometerAlt, FaBuilding } from 'react-icons/fa';
+import { FaHome, FaClipboardList, FaChartBar, FaTachometerAlt, FaBuilding, FaInfoCircle  } from 'react-icons/fa';
 import styles from './index.module.css';
 
-type MenuItemType = 'home' | 'matchups' | 'predictions' | 'dashboard';
+type MenuItemType = 'home' | 'matchups' | 'predictions' | 'dashboard' | 'about';
 
 function NavBar() {
   const [selectedMenuItem, setSelectedMenuItem] = useState<MenuItemType>('home');
@@ -25,6 +25,9 @@ function NavBar() {
         break;
       case '/dashboard':
         setSelectedMenuItem('dashboard');
+        break;
+      case '/about':
+        setSelectedMenuItem('about');
         break;
       default:
         setSelectedMenuItem('home');
@@ -84,6 +87,14 @@ function NavBar() {
           onClick={() => setSelectedMenuItem('dashboard')}
         >
           Dashboard
+        </MenuItem>
+        <MenuItem 
+          icon={<FaInfoCircle size={20} />} 
+          component={<Link to="/about" />} 
+          className={selectedMenuItem === 'about' ? styles.activeMenuItem : ''}
+          onClick={() => setSelectedMenuItem('about')}
+        >
+          About
         </MenuItem>
       </Menu>
     </Sidebar>

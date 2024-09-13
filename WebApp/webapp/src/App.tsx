@@ -5,9 +5,11 @@ import Home from './pages/Home';
 import Matchups from './pages/Matchups';
 import Prediction from './pages/Prediction';
 import Dashboard from './pages/Dashboard';
+import About from './pages/About';
 import Unknown from './pages/Unknown';
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+
 
 
 function App() {
@@ -19,6 +21,7 @@ function App() {
           <Route path="/matchups" element={<Matchups/>} />
           <Route path="/predictions" element={<Prediction/>} />
           <Route path="/dashboard" element={<Dashboard/>} />
+          <Route path='/about' element={<About/>} />
           <Route path="/*" element={<Unknown />} />
         </Routes>
       </Router>
