@@ -15,8 +15,8 @@ describe('Home Page', () => {
                 <About />
             </MemoryRouter>
         )
-        const header = await screen.findByText(/About/i);
-        expect(header).toBeInTheDocument();
+        const headerArray = screen.getAllByText(/About/i);
+        expect(headerArray.length).toBe(2);
     })
 
     it('contains acknowledgement', () => {
