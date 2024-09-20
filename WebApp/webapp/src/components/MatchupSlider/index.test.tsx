@@ -27,7 +27,7 @@ describe('MatchupSlider Component', () => {
     );
 
     // Check that the field names are displayed
-    expect(screen.getByText('Field Goals vs Opponent Field Goals')).toBeInTheDocument();
+    expect(screen.getByText('Opponent Field Goals vs Field Goals')).toBeInTheDocument();
 
     // Check that the team stats and league averages are displayed
     expect(screen.getByText('Team Stat: 30')).toBeInTheDocument();
