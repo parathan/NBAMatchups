@@ -9,8 +9,8 @@ describe('MatchupSlider Component', () => {
     team1_percentile: 0.7,
     team2_op_percentile: 0.5,
     percentile_difference: 0.2,
-    field1: 'field1',
-    field2: 'field2',
+    field1: 'fg',
+    field2: 'opp_fg',
     team1_trad: 30,
     team2_op_trad: 25,
     trad_difference: 5,
@@ -26,9 +26,8 @@ describe('MatchupSlider Component', () => {
       </MemoryRouter>
     );
 
-    // Check that the titles are correctly rendered
-    const fieldHeader = await screen.findByText('field1 vs field2');
-    expect(fieldHeader).toBeInTheDocument();
+    // Check that the field names are displayed
+    expect(screen.getByText('Field Goals vs Opponent Field Goals')).toBeInTheDocument();
 
     // Check that the team stats and league averages are displayed
     expect(screen.getByText('Team Stat: 30')).toBeInTheDocument();
