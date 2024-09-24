@@ -5,7 +5,7 @@ import _mockDataJson from './mockDataJson.json'
 import _orderedPercentileData from './orderedPercentileData.json'
 
 // allTeamsMockData is mock data for the /teams/allTeams route
-export const allTeamsMockData: TotalTeamData[] = _mockDataJson as TotalTeamData[];
+export const allTeamsMockData: TotalTeamData[] = _mockDataJson.data as TotalTeamData[];
 
 // orderedPercentileMockData is mock data for the /teams/OrderedPercentile route
 export const orderedPercentileMockData: OrderedPercentile = _orderedPercentileData as OrderedPercentile;
