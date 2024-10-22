@@ -218,5 +218,5 @@ func (*Server) GetTwoTeamsOrdered(ctx context.Context, req *teamspb.TwoTeamsRequ
 		return nil, meanError
 	}
 
-	return controller.OrderTeams(c, firstPercentileProto, secondPercentileProto, firstTeamProto, secondTeamProto, meanProto)
+	return controller.OrderTeams(firstPercentileProto, secondPercentileProto, firstTeamProto, secondTeamProto, meanProto)
 }
