@@ -12,7 +12,7 @@ import (
 
 	"github.com/go-redis/redis/v8"
 
-	predictions "prediction-service/prediction-service"
+	predictions "github.com/parathan/NBAMatchups/Microservices/predictions/prediction-service"
 )
 
 // PredictCachedController handles HTTP requests for getting prediction data that also uses a redis cache.

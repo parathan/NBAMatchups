@@ -9,7 +9,7 @@ import (
 	"log"
 	"net/http"
 
-	predictions "prediction-service/prediction-service"
+	predictions "github.com/parathan/NBAMatchups/Microservices/predictions/prediction-service"
 )
 
 // TwoteamsController handles HTTP requests for getting TwoTeams data.

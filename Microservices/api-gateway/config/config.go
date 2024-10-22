@@ -3,7 +3,7 @@ package config
 import (
 	teamspb "github.com/parathan/NBAMatchups/Microservices/TeamsService/proto"
 
-	predictions "prediction-service/prediction-service"
+	predictions "github.com/parathan/NBAMatchups/Microservices/predictions/prediction-service"
 
 	"google.golang.org/grpc"
 )
