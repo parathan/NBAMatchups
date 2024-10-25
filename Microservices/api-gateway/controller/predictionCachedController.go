@@ -21,13 +21,9 @@ import (
 // It returns no values, but writes the response to the http.ResponseWriter.
 //
 // The cache key is generated from the request body and the response is cached for 0 seconds.
-//
 // If the response is not cached, it gets the response from the predictions service and caches it.
-//
 // If there is an error from the predictions service, it returns an internal server error.
-//
 // If there is an error from the redis client, it gets the response from the predictions service and returns it.
-//
 // If there is an error from the json marshal function, it returns a bad request error.
 func PredictCachedController(w http.ResponseWriter, r *http.Request) {
 	log.Print("predictController cached called")

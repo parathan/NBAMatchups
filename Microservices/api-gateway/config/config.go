@@ -21,6 +21,10 @@ func CreateTeamsGrpcClient(address string) (teamspb.TeamsServiceClient, error) {
     return teamspb.NewTeamsServiceClient(conn), nil
 }
 
+// CreatePredictionsGrpcClient creates a new gRPC client connection to the Prediction Service.
+//
+// The address parameter specifies the address of the Prediction Service.
+// Returns a PredictionServiceClient instance and an error if the connection fails.
 func CreatePredictionsGrpcClient(address string) (predictions.PredictionServiceClient, error) {
     conn, err := grpc.Dial(address, grpc.WithTransportCredentials(insecure.NewCredentials()))
     if err != nil {
