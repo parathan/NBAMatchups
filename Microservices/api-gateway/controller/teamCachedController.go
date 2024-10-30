@@ -40,7 +40,7 @@ func TwoteamsCachedController(w http.ResponseWriter, r *http.Request) {
 	res, err := redisClient.Get(context.Background(), cacheKey).Result()
 	if err == redis.Nil {
 		// If the response is not cached, get the response from the teams service
-		teamsClient, err := config.CreateTeamsGrpcClient("localhost:50051")
+		teamsClient, err := config.CreateTeamsGrpcClient(config.EnvTeamsService())
 		if err != nil {
 			http.Error(w, constants.FAILED_TO_CONNECT_TO_GRPC, http.StatusInternalServerError)
 			return
@@ -69,7 +69,7 @@ func TwoteamsCachedController(w http.ResponseWriter, r *http.Request) {
 		w.Write(resJson)
 	} else if err != nil {
 		// Redis error, get the response from the teams service
-		teamsClient, err := config.CreateTeamsGrpcClient("localhost:50051")
+		teamsClient, err := config.CreateTeamsGrpcClient(config.EnvTeamsService())
 		if err != nil {
 			http.Error(w, constants.FAILED_TO_CONNECT_TO_GRPC, http.StatusInternalServerError)
 			return
@@ -126,7 +126,7 @@ func TwoTeamsOrderedCachedController(w http.ResponseWriter, r *http.Request) {
 	res, err := redisClient.Get(context.Background(), cacheKey).Result()
 	if err == redis.Nil {
 		// If the response is not cached, get the response from the teams service
-		teamsClient, err := config.CreateTeamsGrpcClient("localhost:50051")
+		teamsClient, err := config.CreateTeamsGrpcClient(config.EnvTeamsService())
 		if err != nil {
 			// If there is an error connecting to the teams service, return an internal server error
 			http.Error(w, constants.FAILED_TO_CONNECT_TO_GRPC, http.StatusInternalServerError)
@@ -159,7 +159,7 @@ func TwoTeamsOrderedCachedController(w http.ResponseWriter, r *http.Request) {
 		w.Write(resJson)
 	} else if err != nil {
 		// Redis error, get the response from the teams service
-		teamsClient, err := config.CreateTeamsGrpcClient("localhost:50051")
+		teamsClient, err := config.CreateTeamsGrpcClient(config.EnvTeamsService())
 		if err != nil {
 			// If there is an error connecting to the teams service, return an internal server error
 			http.Error(w, constants.FAILED_TO_CONNECT_TO_GRPC, http.StatusInternalServerError)
@@ -220,7 +220,7 @@ func AllTeamsCachedController(w http.ResponseWriter, r *http.Request) {
 	res, err := redisClient.Get(context.Background(), cacheKey).Result()
 	if err == redis.Nil {
 		// If the response is not cached, get the response from the teams service
-		teamsClient, err := config.CreateTeamsGrpcClient("localhost:50051")
+		teamsClient, err := config.CreateTeamsGrpcClient(config.EnvTeamsService())
 		if err != nil {
 			// If there is an error connecting to the teams service, return an internal server error
 			http.Error(w, constants.FAILED_TO_CONNECT_TO_GRPC, http.StatusInternalServerError)
@@ -252,7 +252,7 @@ func AllTeamsCachedController(w http.ResponseWriter, r *http.Request) {
 		w.Write(resJson)
 	} else if err != nil {
 		// Redis error, get the response from the teams service
-		teamsClient, err := config.CreateTeamsGrpcClient("localhost:50051")
+		teamsClient, err := config.CreateTeamsGrpcClient(config.EnvTeamsService())
 		if err != nil {
 			// If there is an error connecting to the teams service, return an internal server error
 			http.Error(w, constants.FAILED_TO_CONNECT_TO_GRPC, http.StatusInternalServerError)

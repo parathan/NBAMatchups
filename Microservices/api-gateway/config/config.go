@@ -1,6 +1,10 @@
 package config
 
 import (
+	"log"
+	"os"
+
+	"github.com/joho/godotenv"
 	teamspb "github.com/parathan/NBAMatchups/Microservices/TeamsService/proto"
 
 	predictions "github.com/parathan/NBAMatchups/Microservices/predictions/prediction-service"
@@ -31,4 +35,47 @@ func CreatePredictionsGrpcClient(address string) (predictions.PredictionServiceC
         return nil, err
     }
     return predictions.NewPredictionServiceClient(conn), nil
+}
+
+// EnvTeamsService returns the value of the TEAMS_SERVICE environment variable.
+//
+// It loads the environment variables from the .env file and returns the value of the
+// TEAMS_SERVICE environment variable.
+//
+// If there is an error loading the .env file, it logs a fatal error and terminates
+// the program.
+//
+// Returns:
+// - string: The value of the TEAMS_SERVICE environment variable.
+
+func EnvTeamsService() string {
+	// Load the environment variables from the .env file.
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	// Return the value of the TEAMS_SERVICE environment variable.
+	return os.Getenv("TEAMS_SERVICE")
+}
+
+// EnvPredictionsService returns the value of the PREDICTIONS_SERVICE environment variable.
+//
+// It loads the environment variables from the .env file and returns the value of the
+// PREDICTIONS_SERVICE environment variable.
+//
+// If there is an error loading the .env file, it logs a fatal error and terminates
+// the program.
+//
+// Returns:
+// - string: The value of the PREDICTIONS_SERVICE environment variable.
+func EnvPredictionsService() string {
+    // Load the environment variables from the .env file.
+    err := godotenv.Load()
+    if err != nil {
+        log.Fatal("Error loading .env file")
+    }
+
+    // Return the value of the PREDICTION_SERVICE environment variable.
+    return os.Getenv("PREDICTION_SERVICE")
 }
