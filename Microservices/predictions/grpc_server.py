@@ -1,5 +1,6 @@
 import grpc
 from concurrent import futures
+import os
 import predict_pb2_grpc
 import predict_pb2
 import teams_python as teams
@@ -11,7 +12,7 @@ class PredictionService(predict_pb2_grpc.PredictionServiceServicer):
     def Predict(self, request, context):
         print("Received request")
         try:
-            channel = grpc.insecure_channel('localhost:50051')
+            channel = grpc.insecure_channel(os.environ.get('TEAMS_SERVICE', 'localhost:50051'))
             stub = teams.teams_pb2_grpc.TeamsServiceStub(channel)
 
             twoTeamRequest = teams.teams_pb2.TwoTeamsRequest(
