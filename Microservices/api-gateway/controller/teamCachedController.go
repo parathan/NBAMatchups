@@ -31,7 +31,7 @@ func TwoteamsCachedController(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Generate the cache key based on the request
-	cacheKey := "API_GATEWAY_TWOTEAMS_" + reqBody.Team1 + "_" + reqBody.Team2 + "_" + strconv.Itoa(int(reqBody.Year))
+	cacheKey := constants.REDIS_TWOTEAMS + reqBody.Team1 + "_" + reqBody.Team2 + "_" + strconv.Itoa(int(reqBody.Year))
 
 	// Get the redis client
 	redisClient := config.GetRedis()
@@ -117,7 +117,7 @@ func TwoTeamsOrderedCachedController(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Generate the cache key based on the request
-	cacheKey := "API_GATEWAY_TWOTEAMSORDERED_" + reqBody.Team1 + "_" + reqBody.Team2 + "_" + strconv.Itoa(int(reqBody.Year))
+	cacheKey := constants.REDIS_TWOTEAMS_ORDERED + reqBody.Team1 + "_" + reqBody.Team2 + "_" + strconv.Itoa(int(reqBody.Year))
 
 	// Get the redis client
 	redisClient := config.GetRedis()
@@ -211,7 +211,7 @@ func AllTeamsCachedController(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Generate the cache key based on the request
-	cacheKey := "API_GATEWAY_ALLTEAMS_" + strconv.Itoa(int(reqBody.StartYear)) + "_" + strconv.Itoa(int(reqBody.EndYear))
+	cacheKey := constants.REDIS_ALLTEAMS + strconv.Itoa(int(reqBody.StartYear)) + "_" + strconv.Itoa(int(reqBody.EndYear))
 
 	// Get the redis client
 	redisClient := config.GetRedis()

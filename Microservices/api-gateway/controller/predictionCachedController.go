@@ -36,7 +36,7 @@ func PredictCachedController(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Generate the cache key based on the request
-	cacheKey := "API_GATEWAY_PREDICTION_" + reqBody.Team1 + "_" + reqBody.Team2 + "_" + strconv.Itoa(int(reqBody.Year))
+	cacheKey := constants.REDIS_PREDICTION + reqBody.Team1 + "_" + reqBody.Team2 + "_" + strconv.Itoa(int(reqBody.Year))
 
 	// Get the redis client
 	redisClient := config.GetRedis()
