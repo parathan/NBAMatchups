@@ -37,56 +37,49 @@ func CreatePredictionsGrpcClient(address string) (predictions.PredictionServiceC
     return predictions.NewPredictionServiceClient(conn), nil
 }
 
-// EnvTeamsService returns the value of the TEAMS_SERVICE environment variable.
-//
-// It loads the environment variables from the .env file and returns the value of the
-// TEAMS_SERVICE environment variable.
-//
-// If there is an error loading the .env file, it logs a fatal error and terminates
-// the program.
-//
-// Returns:
-// - string: The value of the TEAMS_SERVICE environment variable.
 
+// EnvTeamsService loads the environment variable for the Teams Service from the .env file.
+// If the environment variable is not set, it returns the default value of "localhost:50051".
+// Returns the value of the environment variable as a string.
 func EnvTeamsService() string {
-	// Load the environment variables from the .env file.
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-
-	// Return the value of the TEAMS_SERVICE environment variable.
-	return os.Getenv("TEAMS_SERVICE")
+    return loadEnvVariable("TEAMS_SERVICE", "localhost:50051")
 }
 
-// EnvPredictionsService returns the value of the PREDICTIONS_SERVICE environment variable.
+// EnvPredictionsService loads the environment variable for the Prediction Service from the .env file.
+// If the environment variable is not set, it returns the default value of "localhost:50052".
+// Returns the value of the environment variable as a string.
+func EnvPredictionsService() string {
+    return loadEnvVariable("PREDICTION_SERVICE", "localhost:50052")
+}
+
+// EnvGatewayPort loads the environment variable for the API Gateway port from the .env file.
+// If the environment variable is not set, it returns the default value of ":8080".
+// Returns the value of the environment variable as a string.
+func EnvGatewayPort() string {
+    return loadEnvVariable("API_GATEWAY_PORT", ":8080")
+}
+
+// loadEnvVariable loads the environment variable for the given key from the .env file.
+// If the key does not exist in the .env file, it returns the defaultValue.
+// If there is an error loading the .env file, it logs an error and terminates the program.
 //
-// It loads the environment variables from the .env file and returns the value of the
-// PREDICTIONS_SERVICE environment variable.
-//
-// If there is an error loading the .env file, it logs a fatal error and terminates
-// the program.
+// Parameters:
+// - key string: The key to load the environment variable from.
+// - defaultValue string: The default value to return if the key does not exist in the .env file.
 //
 // Returns:
-// - string: The value of the PREDICTIONS_SERVICE environment variable.
-func EnvPredictionsService() string {
+// - string: The value of the environment variable for the given key, or the defaultValue if the key does not exist.
+func loadEnvVariable(key string, defaultValue string) string {
     // Load the environment variables from the .env file.
     err := godotenv.Load()
     if err != nil {
         log.Fatal("Error loading .env file")
     }
 
-    // Return the value of the PREDICTION_SERVICE environment variable.
-    return os.Getenv("PREDICTION_SERVICE")
-}
-
-func EnvGatewayPort() string {
-    // Load the environment variables from the .env file.
-    err := godotenv.Load()
-    if err != nil {
-        log.Fatal("Error loading .env file")
+    // Return the value of the key environment variable.
+    value := os.Getenv(key)
+    if value == "" {
+        return defaultValue
     }
-
-    // Return the value of the GATEWAY_PORT environment variable.
-    return os.Getenv("API_GATEWAY_PORT")
+    return value
 }
