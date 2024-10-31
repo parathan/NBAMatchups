@@ -53,6 +53,8 @@ func main() {
     // Wrap the router with the CORS middleware
     corsHandler := corsMiddleware(mux)
 
-    log.Println("Server starting on port 8080")
-    log.Fatal(http.ListenAndServe(":8080", corsHandler))
+    port := config.EnvGatewayPort()
+
+    log.Println("Server starting on port ", port)
+    log.Fatal(http.ListenAndServe(port, corsHandler))
 }

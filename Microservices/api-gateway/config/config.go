@@ -79,3 +79,14 @@ func EnvPredictionsService() string {
     // Return the value of the PREDICTION_SERVICE environment variable.
     return os.Getenv("PREDICTION_SERVICE")
 }
+
+func EnvGatewayPort() string {
+    // Load the environment variables from the .env file.
+    err := godotenv.Load()
+    if err != nil {
+        log.Fatal("Error loading .env file")
+    }
+
+    // Return the value of the GATEWAY_PORT environment variable.
+    return os.Getenv("API_GATEWAY_PORT")
+}
