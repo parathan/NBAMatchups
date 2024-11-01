@@ -20,7 +20,7 @@ func PredictController(w http.ResponseWriter, r *http.Request) {
 	log.Print("predictController called")
 
 	// Create a gRPC client for the predictions service
-	predictionsClient, err := config.CreatePredictionsGrpcClient("localhost:50052")
+	predictionsClient, err := config.CreatePredictionsGrpcClient(config.EnvPredictionsService())
 	if err != nil {
 		http.Error(w, constants.FAILED_TO_CONNECT_TO_GRPC, http.StatusInternalServerError)
 		return
