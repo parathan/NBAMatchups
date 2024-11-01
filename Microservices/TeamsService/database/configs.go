@@ -47,24 +47,26 @@ func ConnectDB() *mongo.Client {
 }
 
 
-
-// EnvMongoURI loads the environment variables from the .env file and returns the
-// value of the MONGO_URI environment variable.
-//
-// It logs an error and terminates the program if there is any error in loading the
-// .env file.
-//
-// Returns:
-// - string: The value of the MONGO_URI environment variable.
 func EnvMongoURI() string {
-	// Load the environment variables from the .env file.
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	return loadEnvVariable("MONGO_URI", "")
+}
+func EnvServicePort() string {
+	return loadEnvVariable("TEAM_SERVICE_PORT", ":50051")
+}
 
-	// Return the value of the MONGO_URI environment variable.
-	return os.Getenv("MONGO_URI")
+func loadEnvVariable(key string, defaultValue string) string {
+    // Load the environment variables from the .env file.
+    err := godotenv.Load()
+    if err != nil {
+        log.Fatal("Error loading .env file")
+    }
+
+    // Return the value of the key environment variable.
+    value := os.Getenv(key)
+    if value == "" {
+        return defaultValue
+    }
+    return value
 }
 
 var Mongo_Client *mongo.Client

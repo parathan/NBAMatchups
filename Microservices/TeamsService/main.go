@@ -15,7 +15,7 @@ import (
 func main() {
 	log.Println("Teams Service")
 
-	lis, err := net.Listen("tcp", ":50051")
+	lis, err := net.Listen("tcp", database.EnvServicePort())
 	if err != nil {
 		log.Println("ERROR:", err.Error())
 	}
