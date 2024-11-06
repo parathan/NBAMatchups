@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  api-gateway:
+    build: ./api-gateway
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - teamsservice
+      - predictionservice
+    networks:
+      - microservices-network
+
+  teamsservice:
+    build: ./teamsservice
+    container_name: teamsservice
+    ports:
+      - "50051:50051"
+    networks:
+      - microservices-network
+
+  predictionservice:
+    build: ./predictions
+    container_name: predictionservice
+    ports:
+      - "50052:50052"
+    depends_on:
+      - redis
+    networks:
+      - microservices-network
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - microservices-network
+
+networks:
+  microservices-network:
