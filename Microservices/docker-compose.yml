@@ -4,6 +4,8 @@ services:
   api-gateway:
     build: ./api-gateway
     container_name: api-gateway
+    env_file:
+      - ./api-gateway/.env
     ports:
       - "8080:8080"
     depends_on:
@@ -15,6 +17,8 @@ services:
   teamsservice:
     build: ./teamsservice
     container_name: teamsservice
+    env_file:
+      - ./teamsservice/.env
     ports:
       - "50051:50051"
     networks:
@@ -23,6 +27,8 @@ services:
   predictionservice:
     build: ./predictions
     container_name: predictionservice
+    env_file:
+      - ./predictions/.env
     ports:
       - "50052:50052"
     depends_on:
