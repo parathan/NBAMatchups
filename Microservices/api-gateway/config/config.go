@@ -56,7 +56,7 @@ func EnvPredictionsService() string {
 // If the environment variable is not set, it returns the default value of ":8080".
 // Returns the value of the environment variable as a string.
 func EnvGatewayPort() string {
-    return loadEnvVariable("API_GATEWAY_PORT", ":8080")
+    return ":" + loadEnvVariable("API_GATEWAY_PORT", "8080")
 }
 
 // loadEnvVariable loads the environment variable for the given key from the .env file.
