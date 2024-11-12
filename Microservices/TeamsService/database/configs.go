@@ -51,7 +51,7 @@ func EnvMongoURI() string {
 	return loadEnvVariable("MONGO_URI", "")
 }
 func EnvServicePort() string {
-	return loadEnvVariable("TEAM_SERVICE_PORT", ":50051")
+	return ":" + loadEnvVariable("TEAM_SERVICE_PORT", "50051")
 }
 
 func loadEnvVariable(key string, defaultValue string) string {
