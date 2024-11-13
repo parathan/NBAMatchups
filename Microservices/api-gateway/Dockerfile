@@ -8,8 +8,6 @@ WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
 
-COPY .env ./
-
 # Copy the remaining source code
 COPY . .
 
