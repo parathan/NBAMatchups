@@ -11,6 +11,11 @@ services:
       - predictionservice
     networks:
       - microservices-network
+    environment:
+      - TEAMS_SERVICE=teamsservice:50051
+      - PREDICTION_SERVICE=predictionservice:50052
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
 
   teamsservice:
     build: ./teamsservice
@@ -30,8 +35,7 @@ services:
     networks:
       - microservices-network
     environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
+      - TEAMS_SERVICE=teamsservice:50051
 
   redis:
     image: redis:alpine
