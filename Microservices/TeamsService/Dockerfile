@@ -17,5 +17,6 @@ RUN go build -o /teamsservice
 FROM alpine:latest
 WORKDIR /root/
 COPY --from=builder /teamsservice .
+COPY .env .
 EXPOSE 50051
 CMD ["./teamsservice"]
