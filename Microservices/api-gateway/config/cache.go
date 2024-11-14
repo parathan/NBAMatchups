@@ -12,7 +12,7 @@ var RedisClient *redis.Client
 // No return values.
 func InitRedis() {
 	RedisClient = redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
+		Addr:     EnvRedis(),
 		Password: "", // no password set
 		DB:       0,  // use default DB
 	})

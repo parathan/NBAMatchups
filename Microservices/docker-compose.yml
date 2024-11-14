@@ -14,8 +14,7 @@ services:
     environment:
       - TEAMS_SERVICE=teamsservice:50051
       - PREDICTION_SERVICE=predictionservice:50052
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
+      - REDIS=redis:6379
 
   teamsservice:
     build: ./teamsservice

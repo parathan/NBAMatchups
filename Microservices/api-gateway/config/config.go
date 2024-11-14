@@ -59,6 +59,13 @@ func EnvGatewayPort() string {
     return ":" + loadEnvVariable("API_GATEWAY_PORT", "8080")
 }
 
+// EnvRedis loads the environment variable for the Redis server from the .env file.
+// If the environment variable is not set, it returns the default value of "localhost:6379".
+// Returns the value of the environment variable as a string.
+func EnvRedis() string {
+    return loadEnvVariable("REDIS", "localhost:6379")
+}
+
 // loadEnvVariable loads the environment variable for the given key from the .env file.
 // If the key does not exist in the .env file, it returns the defaultValue.
 // If there is an error loading the .env file, it logs an error and terminates the program.
