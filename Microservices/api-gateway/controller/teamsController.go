@@ -20,7 +20,7 @@ func TwoteamsController(w http.ResponseWriter, r *http.Request) {
 	log.Print("twoteamsController called")
 
 	// Create a gRPC client for the teams service
-	teamsClient, err := config.CreateTeamsGrpcClient("localhost:50051")
+	teamsClient, err := config.CreateTeamsGrpcClient(config.EnvTeamsService())
 	if err != nil {
 		http.Error(w, constants.FAILED_TO_CONNECT_TO_GRPC, http.StatusInternalServerError)
 		return
@@ -60,7 +60,7 @@ func TwoTeamsOrderedController(w http.ResponseWriter, r *http.Request) {
 	log.Print("TwoTeamsOrderedController called")
 
 	// Create a gRPC client for the teams service
-	teamsClient, err := config.CreateTeamsGrpcClient("localhost:50051")
+	teamsClient, err := config.CreateTeamsGrpcClient(config.EnvTeamsService())
 	if err != nil {
 		http.Error(w, constants.FAILED_TO_CONNECT_TO_GRPC, http.StatusInternalServerError)
 		return
@@ -100,7 +100,7 @@ func AllTeamsController(w http.ResponseWriter, r *http.Request) {
 	log.Print("AllTeamsController called")
 
 	// Create a gRPC client for the teams service
-	teamsClient, err := config.CreateTeamsGrpcClient("localhost:50051")
+	teamsClient, err := config.CreateTeamsGrpcClient(config.EnvTeamsService())
 	if err != nil {
 		http.Error(w, constants.FAILED_TO_CONNECT_TO_GRPC, http.StatusInternalServerError)
 		return
