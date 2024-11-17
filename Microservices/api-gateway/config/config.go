@@ -80,7 +80,6 @@ func loadEnvVariable(key string, defaultValue string) string {
     // Load the environment variables from the .env file.
     err := godotenv.Load()
     if err != nil {
-        // Docker error is coming here
         log.Fatal("Error loading .env file")
     }
 
