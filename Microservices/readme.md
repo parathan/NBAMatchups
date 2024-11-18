@@ -1,7 +1,12 @@
-# API Gateway
+# Microservices
 
-## Run service  
-To run service enter `go run main.go` in terminal.  
+## Run Microservices  
+Option 1 (Recommended):  
+1. Open Docker  
+2. in cmd run `docker-compose build` and `docker-compose up`  
+
+Option 2:
+1. Run run.bat  
 
 ## Routes  
 **GetTwoTeams**:  
