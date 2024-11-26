@@ -3,28 +3,10 @@ package main
 import (
 	"api-gateway/config"
 	"api-gateway/controller"
+	"api-gateway/middleware"
 	"log"
 	"net/http"
 )
-
-// CORS middleware to add headers for cross-origin requests.
-func corsMiddleware(next http.Handler) http.Handler {
-    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-        // Add CORS headers
-        w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
-        w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-        w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
-
-        // If it's a preflight request, return OK status immediately
-        if r.Method == http.MethodOptions {
-            w.WriteHeader(http.StatusOK)
-            return
-        }
-
-        // Call the next handler in the chain
-        next.ServeHTTP(w, r)
-    })
-}
 
 // main is the entry point of the Go program.
 //
@@ -51,7 +33,7 @@ func main() {
     mux.HandleFunc("/api/v1/prediction/cached", controller.PredictCachedController)
 
     // Wrap the router with the CORS middleware
-    corsHandler := corsMiddleware(mux)
+    corsHandler := middleware.CorsMiddleware(mux)
 
     port := config.EnvGatewayPort()
 
