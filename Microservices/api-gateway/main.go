@@ -21,15 +21,10 @@ func main() {
     mux := http.NewServeMux()
 
     // Register routes
-    mux.HandleFunc("/api/v1/teams/twoteams", controller.TwoteamsController)
-    mux.HandleFunc("/api/v1/teams/twoteamsordered", controller.TwoTeamsOrderedController)
-    mux.HandleFunc("/api/v1/teams/allteams", controller.AllTeamsController)
-
     mux.HandleFunc("/api/v1/teams/twoteamscached", controller.TwoteamsCachedController)
     mux.HandleFunc("/api/v1/teams/twoteamsorderedcached", controller.TwoTeamsOrderedCachedController)
     mux.HandleFunc("/api/v1/teams/allteamscached", controller.AllTeamsCachedController)
 
-    mux.HandleFunc("/api/v1/prediction", controller.PredictController)
     mux.HandleFunc("/api/v1/prediction/cached", controller.PredictCachedController)
 
     // Wrap the router with the CORS middleware
