@@ -10,6 +10,25 @@ from ML import constants
 print("Starting gRPC server")
 class PredictionService(predict_pb2_grpc.PredictionServiceServicer):
     def Predict(self, request, context):
+        """
+        Prediction RPC
+
+        This function receives a request for a prediction,
+        communicates with the TeamsService to get the required
+        features, and then passes those features to the ML
+        prediction function to get a prediction result.
+
+        Args:
+            request: A PredictionRequest with the two teams and the year.
+            context: The context of the RPC.
+
+        Returns:
+            A PredictionResponse with the prediction result.
+
+        Raises:
+            grpc.StatusCode.INVALID_ARGUMENT: If the request is invalid.
+            grpc.StatusCode.INTERNAL: If an unexpected error occurs.
+        """
         print("Received request")
         try:
             channel = grpc.insecure_channel(os.environ.get('TEAMS_SERVICE', 'localhost:50051'))
@@ -51,6 +70,14 @@ class PredictionService(predict_pb2_grpc.PredictionServiceServicer):
             return predict_pb2.PredictionResponse()
     
 def serve():
+    """
+    Start the gRPC server
+
+    This function starts an insecure gRPC server, 
+    registers the PredictionService with it, and 
+    starts listening on port 50052.
+
+    """
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     predict_pb2_grpc.add_PredictionServiceServicer_to_server(PredictionService(), server)
     server.add_insecure_port('[::]:50052')
