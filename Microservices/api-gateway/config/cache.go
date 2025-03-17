@@ -11,11 +11,11 @@ var RedisClient *redis.Client
 // No parameters.
 // No return values.
 func InitRedis() {
-	RedisClient = redis.NewClient(&redis.Options{
-		Addr:     EnvRedis(),
-		Password: "", // no password set
-		DB:       0,  // use default DB
-	})
+
+	redisURL := "rediss://default:" + EnvRedisPassword()+ "@" + EnvRedis()
+	opt, _ := redis.ParseURL(redisURL)
+  	RedisClient = redis.NewClient(opt)
+
 }
 
 func GetRedis() *redis.Client {

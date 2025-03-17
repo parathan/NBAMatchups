@@ -63,7 +63,11 @@ func EnvGatewayPort() string {
 // If the environment variable is not set, it returns the default value of "localhost:6379".
 // Returns the value of the environment variable as a string.
 func EnvRedis() string {
-    return loadEnvVariable("REDIS", "localhost:6379")
+    return loadEnvVariable("REDIS_ADDR", "localhost:6379")
+}
+
+func EnvRedisPassword() string {
+    return loadEnvVariable("REDIS_PASSWORD", "")
 }
 
 // loadEnvVariable loads the environment variable for the given key from the .env file.
