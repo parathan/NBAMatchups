@@ -15,7 +15,7 @@ COPY . .
 RUN go build -o /api-gateway
 
 # Final stage: create a minimal image to run the service.
-FROM alpine:latest
+FROM gcr.io/distroless/base-debian12
 WORKDIR /root/
 COPY --from=builder /api-gateway .
 COPY .env .

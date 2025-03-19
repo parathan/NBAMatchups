@@ -14,7 +14,7 @@ COPY . .
 RUN go build -o /teamsservice
 
 # Final stage: minimal image to run the binary
-FROM alpine:latest
+FROM gcr.io/distroless/base-debian12
 WORKDIR /root/
 COPY --from=builder /teamsservice .
 COPY .env .
