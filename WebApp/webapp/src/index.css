@@ -2,21 +2,95 @@
 below margin and padding 0 removes whitespace at the top of the page
 that is not part of the body
 */
+:root {
+  /* Main Colors */
+  --primary-color: #2ecc71;  /* Keep the green */
+  --secondary-color: #27ae60;  /* Darker green */
+  --accent-color: #00ff9d;  /* Bright green for highlights */
+  
+  /* Background Colors */
+  --background-color: #121212;  /* Dark background */
+  --surface-color: #1e1e1e;  /* Slightly lighter dark */
+  --card-background: #2d2d2d;  /* Card background */
+  
+  /* Text Colors */
+  --text-primary: #ffffff;  /* White text */
+  --text-secondary: #e0e0e0;  /* Light grey text */
+  --text-light: #ffffff;  /* White text for contrast */
+  
+  /* Border Colors */
+  --border-color: #404040;  /* Dark grey borders */
+  
+  /* Shadow Colors */
+  --shadow-color: rgba(0, 0, 0, 0.3);  /* Dark shadows */
+  
+  /* Status colors */
+  --success-color: #22c55e;
+  --error-color: #ef4444;
+  --warning-color: #f59e0b;
+}
+
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+p {
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: 'Fira Code', source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+  color: var(--text-primary);
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Selection styling */
+::selection {
+  background-color: var(--primary-color);
+  color: var(--text-light);
 }

@@ -38,22 +38,26 @@ function NavBar() {
     <Sidebar
       rootStyles={{
         [`.${sidebarClasses.container}`]: {
-          backgroundColor: '#444444',
-          color: '#dddddd',
+          backgroundColor: 'var(--sidebar-color)',
+          color: 'var(--text-light)',
           height: '100vh',
           position: 'fixed',
-          width: '26vh'
+          width: '26vh',
+          borderRight: 'none',
+          boxShadow: '2px 0 8px var(--shadow-color)',
         },
       }}
     >
       <Link to="/" onClick={() => setSelectedMenuItem('home')} className={styles.link}>
         <Box className={styles.companyInfo}>
           <FaBuilding size={30} />
-          <Typography variant="h6">NBAnalytics</Typography>
+          <Typography variant="h6" sx={{ fontWeight: 600, letterSpacing: '0.5px' }}>
+            NBAnalytics
+          </Typography>
         </Box>
       </Link>
       <Box className={styles.menuSubtitle}>
-        <Typography variant="subtitle1">Menu</Typography>
+        <Typography variant="subtitle2">Navigation</Typography>
       </Box>
       <Menu>
         <MenuItem 
