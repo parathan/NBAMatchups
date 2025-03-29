@@ -10,6 +10,7 @@ import (
 	predictions "github.com/parathan/NBAMatchups/Microservices/predictions/prediction-service"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/credentials/insecure"
 )
 
@@ -37,19 +38,70 @@ func CreatePredictionsGrpcClient(address string) (predictions.PredictionServiceC
     return predictions.NewPredictionServiceClient(conn), nil
 }
 
+// CreateSecureTeamsGrpcClient creates a new secure gRPC client connection to the Teams Service.
+//
+// The address parameter specifies the address of the Teams Service.
+// Returns a TeamsServiceClient instance and an error if the connection fails.
+// The connection is secured using TLS with the default TLS credentials.
+func CreateSecureTeamsGrpcClient(address string) (teamspb.TeamsServiceClient, error) {
+    creds := credentials.NewTLS(nil)
+
+    conn, err := grpc.Dial(address, grpc.WithTransportCredentials(creds))
+    if err != nil {
+        return nil, err
+    }
+    return teamspb.NewTeamsServiceClient(conn), nil
+}
+
+// CreateSecurePredictionsGrpcClient creates a new secure gRPC client connection to the Prediction Service.
+//
+// The address parameter specifies the address of the Prediction Service.
+// Returns a PredictionServiceClient instance and an error if the connection fails.
+// The connection is secured using TLS with the default TLS credentials.
+func CreateSecurePredictionsGrpcClient(address string) (predictions.PredictionServiceClient, error) {
+    creds := credentials.NewTLS(nil)
+
+    conn, err := grpc.Dial(address, grpc.WithTransportCredentials(creds))
+    if err != nil {
+        return nil, err
+    }
+    return predictions.NewPredictionServiceClient(conn), nil
+}
+
 
 // EnvTeamsService loads the environment variable for the Teams Service from the .env file.
 // If the environment variable is not set, it returns the default value of "localhost:50051".
 // Returns the value of the environment variable as a string.
-func EnvTeamsService() string {
-    return loadEnvVariable("TEAMS_SERVICE", "localhost:50051")
+func EnvLocalTeamsService() string {
+    return loadEnvVariable("LOCAL_TEAMS_SERVICE", "localhost:50051")
 }
 
 // EnvPredictionsService loads the environment variable for the Prediction Service from the .env file.
 // If the environment variable is not set, it returns the default value of "localhost:50052".
 // Returns the value of the environment variable as a string.
-func EnvPredictionsService() string {
-    return loadEnvVariable("PREDICTION_SERVICE", "localhost:50052")
+func EnvLocalPredictionsService() string {
+    return loadEnvVariable("LOCAL_PREDICTION_SERVICE", "localhost:50052")
+}
+
+// EnvRemoteTeamsService loads the environment variable for the remote Teams Service from the .env file.
+// If the environment variable is not set, it returns the default value of "localhost:50051".
+// Returns the value of the environment variable as a string.
+func EnvRemoteTeamsService() string {
+    return loadEnvVariable("REMOTE_TEAMS_SERVICE", "localhost:50051")
+}
+
+// EnvRemotePredictionsService loads the environment variable for the remote Prediction Service from the .env file.
+// If the environment variable is not set, it returns the default value of "localhost:50052".
+// Returns the value of the environment variable as a string.
+func EnvRemotePredictionsService() string {
+    return loadEnvVariable("REMOTE_PREDICTION_SERVICE", "localhost:50052")
+}
+
+// EnvProd returns true if the environment variable PROD is set to "true".
+// Otherwise, it returns false.
+// The PROD environment variable is used to determine whether the API Gateway is running in production or development mode.
+func EnvProd() bool {
+    return loadEnvVariable("PROD", "false") == "true"
 }
 
 // EnvGatewayPort loads the environment variable for the API Gateway port from the .env file.

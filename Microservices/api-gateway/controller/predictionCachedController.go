@@ -45,7 +45,15 @@ func PredictCachedController(w http.ResponseWriter, r *http.Request) {
 	res, err := redisClient.Get(context.Background(), cacheKey).Result()
 	if err == redis.Nil {
 		// If the response is not cached, get the response from the teams service
-		predictionsClient, err := config.CreatePredictionsGrpcClient(config.EnvPredictionsService())
+		var predictionsClient predictions.PredictionServiceClient
+		var err error // Declare err once to avoid shadowing
+
+		if config.EnvProd() {
+			predictionsClient, err = config.CreateSecurePredictionsGrpcClient(config.EnvRemotePredictionsService())
+		} else {
+			predictionsClient, err = config.CreatePredictionsGrpcClient(config.EnvLocalPredictionsService())
+		}
+
 		if err != nil {
 			http.Error(w, constants.FAILED_TO_CONNECT_TO_GRPC, http.StatusInternalServerError)
 			return
@@ -74,7 +82,15 @@ func PredictCachedController(w http.ResponseWriter, r *http.Request) {
 		w.Write(resJson)
 	} else if err != nil {
 		// Redis error, get response from the predictions service
-		predictionsClient, err := config.CreatePredictionsGrpcClient(config.EnvPredictionsService())
+		var predictionsClient predictions.PredictionServiceClient
+		var err error // Declare err once to avoid shadowing
+
+		if config.EnvProd() {
+			predictionsClient, err = config.CreateSecurePredictionsGrpcClient(config.EnvRemotePredictionsService())
+		} else {
+			predictionsClient, err = config.CreatePredictionsGrpcClient(config.EnvLocalPredictionsService())
+		}
+		
 		if err != nil {
 			http.Error(w, constants.FAILED_TO_CONNECT_TO_GRPC, http.StatusInternalServerError)
 			return
