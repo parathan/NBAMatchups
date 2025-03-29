@@ -14,6 +14,8 @@ RUN pip install -r requirements.txt
 # Copy the source code to the container.
 COPY . .
 
+COPY .env .
+
 # Expose port 50051 for external access.
 EXPOSE 50051
 
