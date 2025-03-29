@@ -11,6 +11,7 @@ import { Alert, CircularProgress, Grid } from '@mui/material';
 import { orderedPerentileMicroservice } from '../../constants/routes';
 
 import { motion } from "framer-motion";
+import { getAPIURL } from '../../config/config';
 
 
 const variant = {
@@ -73,7 +74,7 @@ function Matchups() {
     setFormVisible(false)
     setProgressVisible(true)
     setErrorVisible(false)
-    axios.post(process.env.REACT_APP_API_URL_MICRO + orderedPerentileMicroservice, {
+    axios.post(getAPIURL() + orderedPerentileMicroservice, {
       team1: team1,
       team2: team2,
       year: parseInt(year)

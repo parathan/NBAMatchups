@@ -23,6 +23,7 @@ import {
 import { statsMap } from '../../constants/statDictionary';
 import { allTeamsMicroservice } from '../../constants/routes';
 import colours from '../../constants/colours';
+import { getAPIURL } from '../../config/config';
 
 const testData: ChartFormat = {
     labels: ["2019", "2020", "2021", "2022", "2023"],
@@ -116,7 +117,7 @@ function Dashboard() {
     useEffect(() => {
         // Gets data from route that uses redis cache. If it fails it uses route that doesnt have cache
         const getCachedData = async () => {
-            axios.post(process.env.REACT_APP_API_URL_MICRO + allTeamsMicroservice, {
+            axios.post(getAPIURL() + allTeamsMicroservice, {
                 startYear: startYear,
                 endYear: endYear
             })

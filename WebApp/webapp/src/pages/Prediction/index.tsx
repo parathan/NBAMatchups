@@ -8,6 +8,7 @@ import { Alert, CircularProgress, Grid } from '@mui/material';
 import { predictionMicroservice } from '../../constants/routes';
 import { multby100 } from '../../util/Math/math';
 import CircularPercentage from '../../components/CircularPercentage';
+import { getAPIURL } from '../../config/config';
 
 
 /**
@@ -72,7 +73,7 @@ function Prediction() {
     setFormVisible(false)
     setProgressVisible(true)
     setErrorVisible(false)
-    axios.post(process.env.REACT_APP_API_URL_MICRO + predictionMicroservice, {
+    axios.post(getAPIURL() + predictionMicroservice, {
       team1: team1,
       team2: team2,
       year: 2023
