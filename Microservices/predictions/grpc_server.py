@@ -49,6 +49,7 @@ class PredictionService(predict_pb2_grpc.PredictionServiceServicer):
                 channel = grpc.secure_channel(teamsserviceEndpoint, credentials)
                 stub = teams.teams_pb2_grpc.TeamsServiceStub(channel)
             else:
+                logging.info("Dev mode")
                 teamsserviceEndpoint = os.environ.get('LOCAL_TEAMS_SERVICE', 'teamsservice:50051')
 
                 channel = grpc.insecure_channel(teamsserviceEndpoint)
