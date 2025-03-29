@@ -46,12 +46,12 @@ function Home() {
             </Grid>
             <Grid item xs={1}></Grid>
             <Grid item xs={4}>
-              <img src='/Assets/Screenshots/matchupsPage.png' alt={"MatchupsPage"} className={styles.screenshot}/>
+              <img src='/static/Screenshots/matchupsPage.png' alt={"MatchupsPage"} className={styles.screenshot}/>
             </Grid>
             <Grid item xs={1.5}></Grid>
             <Grid item xs={1.5}></Grid>
             <Grid item xs={4}>
-              <img src='/Assets/Screenshots/predictionsPage.png' alt={"PredictionsPage"} className={styles.screenshot}/>
+              <img src='/static/Screenshots/predictionsPage.png' alt={"PredictionsPage"} className={styles.screenshot}/>
             </Grid>
             <Grid item xs={1}></Grid>
             <Grid item xs={4}>
@@ -79,7 +79,7 @@ function Home() {
             </Grid>
             <Grid item xs={1}></Grid>
             <Grid item xs={4}>
-              <img src='/Assets/Screenshots/dashboardPage.png' alt={"DashboardPage"} className={styles.screenshot}/>
+              <img src='/static/Screenshots/dashboardPage.png' alt={"DashboardPage"} className={styles.screenshot}/>
             </Grid>
             <Grid item xs={1.5}></Grid>
             <Grid item xs={4}></Grid>
