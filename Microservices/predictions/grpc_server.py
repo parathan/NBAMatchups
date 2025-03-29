@@ -38,6 +38,7 @@ class PredictionService(predict_pb2_grpc.PredictionServiceServicer):
             grpc.StatusCode.INTERNAL: If an unexpected error occurs.
         """
         print("Received request")
+        logging.info("Received predict request")
         try:
             prodFlag = os.environ.get('PROD', 'false')
             logging.info(prodFlag)
