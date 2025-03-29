@@ -1,29 +1,25 @@
 .layout {
+    min-height: 100vh;
     display: flex;
-    min-height: 100vh;
+    flex-direction: column;
+    background: var(--background-color);
+}
+
+.main {
+    margin-top: 80px;  /* Increased from 64px to match new navbar height */
+    min-height: calc(100vh - 80px);  /* Updated to match new navbar height */
     background-color: var(--background-color);
-}
-
-.navbar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    height: 100vh;
-    z-index: 1000;
-    box-shadow: 2px 0 8px var(--shadow-color);
-}
-
-.children {
-    flex: 1;
-    margin-left: 26vh;
     padding: 2rem;
-    background-color: var(--background-color);
-    min-height: 100vh;
+    width: 100%;
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 @media (max-width: 768px) {
-    .children {
-        margin-left: 0;
-        padding: 1rem;
+    .main {
+        margin-top: 72px;  /* Increased from 56px to match new mobile navbar height */
+        min-height: calc(100vh - 72px);  /* Updated to match new mobile navbar height */
+        padding: 1.5rem;
     }
 }

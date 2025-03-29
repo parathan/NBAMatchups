@@ -1,12 +1,15 @@
 .homePage {
   animation: fade-in 2s;
-  min-height: 100vh;
-  background: linear-gradient(135deg, var(--background-color) 0%, var(--surface-color) 100%);
+  min-height: calc(100vh - 64px);
+  background: var(--background-color);
   padding: 2rem;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
 }
 
 .header {
-  margin-top: 4vh;
+  margin-top: 10vh;
   margin-bottom: 8vh;
   text-align: center;
   position: relative;
@@ -200,24 +203,20 @@
 
 @media (max-width: 768px) {
   .homePage {
-    padding: 1rem;
-  }
-  
-  .header {
-    margin-top: 2vh;
-    margin-bottom: 6vh;
-  }
-  
-  .description {
     padding: 1.5rem;
-    font-size: 1rem;
+    min-height: calc(100vh - 56px);
   }
 
-  .screenshot {
-    margin-top: 1rem;
+  .header {
+    margin-top: 4vh;
+    margin-bottom: 4vh;
+  }
+
+  .description {
+    padding: 1.5rem;
   }
 
   .acknowledgmenet {
-    margin-top: 8rem;
+    margin-top: 6rem;
   }
 }

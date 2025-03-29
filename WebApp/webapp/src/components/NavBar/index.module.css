@@ -1,88 +1,197 @@
-.collapsedOverlay {
-    transition: opacity 0.3s ease;
+.appBar {
+  background: var(--surface-color) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  backdrop-filter: blur(10px);
+  background: rgba(30, 30, 30, 0.8) !important;
+}
+
+.logoSection {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  margin-right: 2rem;
+  transition: all 0.3s ease;
+}
+
+.logoSection:hover {
+  transform: translateY(-2px);
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+}
+
+.companyName {
+  font-weight: 700 !important;
+  letter-spacing: -0.5px !important;
+  background: linear-gradient(45deg, var(--text-primary), var(--accent-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0 !important;
+}
+
+.menuSubtitle {
+  color: var(--text-secondary) !important;
+  font-size: 0.75rem !important;
+  letter-spacing: 0.5px !important;
+  margin: 0 !important;
+}
+
+.navLinks {
+  display: flex;
+  gap: 1rem;
+  margin-left: auto;
+}
+
+.navButton {
+  color: var(--text-secondary) !important;
+  text-transform: none !important;
+  font-weight: 500 !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 6px !important;
+  transition: all 0.3s ease !important;
+  position: relative !important;
+  min-width: auto !important;
+}
+
+.navButton::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--accent-color);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.navButton:hover {
+  color: var(--text-primary) !important;
+  background: rgba(46, 204, 113, 0.1) !important;
+}
+
+.navButton:hover::after {
+  width: 80%;
+}
+
+.active {
+  color: var(--accent-color) !important;
+  background: rgba(46, 204, 113, 0.1) !important;
+}
+
+.active::after {
+  width: 80%;
+}
+
+.menuButton {
+  color: var(--text-primary) !important;
+  margin-left: auto !important;
+}
+
+/* Mobile Styles */
+.mobileLogo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.mobileNavItem {
+  color: var(--text-secondary) !important;
+  text-decoration: none !important;
+  padding: 1rem !important;
+  transition: all 0.3s ease !important;
+}
+
+.mobileNavItem:hover {
+  color: var(--text-primary) !important;
+  background: rgba(46, 204, 113, 0.1) !important;
+}
+
+.mobileNavItem.active {
+  color: var(--accent-color) !important;
+  background: rgba(46, 204, 113, 0.1) !important;
+}
+
+@media (max-width: 768px) {
+  .logoSection {
+    margin-right: 0;
   }
-  
-  .expandedOverlay {
-    transition: opacity 0.3s ease;
-  }
-  
-  .companyInfo {
-    display: flex;
-    align-items: center;
-    padding: 1.5rem;
-    gap: 1rem;
-    color: var(--text-light);
-    border-bottom: 1px solid var(--border-color);
-    margin-bottom: 1rem;
-    background: linear-gradient(to right, var(--sidebar-color), var(--surface-color));
-  }
-  
-  .companyInfo svg {
-    color: var(--accent-color);
-    filter: drop-shadow(0 0 4px var(--accent-color));
-  }
-  
-  .companyInfo h6 {
-    color: var(--text-light);
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    text-shadow: 0 2px 4px var(--shadow-color);
-  }
-  
+
   .menuSubtitle {
+    display: none;
+  }
+}
+
+.navbar {
+  background-color: var(--navbar-background);
+  padding: 1rem 2rem;
+  height: 80px;  /* Increased from 64px */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px var(--shadow-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.companyInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.logo {
+  width: 48px;  /* Increased from 40px */
+  height: 48px;  /* Increased from 40px */
+}
+
+.menuTitle {
+  font-size: 1.5rem;  /* Increased from 1.25rem */
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.menuSubtitle {
+  font-size: 0.9rem;  /* Increased from 0.8rem */
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 768px) {
+  .navbar {
     padding: 0.75rem 1.5rem;
-    color: var(--text-light);
-    font-size: 0.875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    opacity: 0.7;
-    font-weight: 600;
-  }
-  
-  .activeMenuItem {
-    background-color: var(--surface-color);
-    color: var(--text-light);
-    border-left: 4px solid var(--accent-color);
-    font-weight: 600;
-    box-shadow: 0 2px 4px var(--shadow-color);
+    height: 72px;  /* Increased from 56px */
   }
 
-  .activeMenuItem svg {
-    color: var(--accent-color);
-    filter: drop-shadow(0 0 4px var(--accent-color));
+  .logo {
+    width: 40px;  /* Increased from 32px */
+    height: 40px;  /* Increased from 32px */
   }
 
-  .link {
-    text-decoration: none;
-    display: block;
+  .menuTitle {
+    font-size: 1.25rem;  /* Increased from 1rem */
   }
 
-  /* Menu item hover effect */
-  :global(.ps-menu-button:hover) {
-    background-color: var(--surface-color);
-    color: var(--text-light);
-    font-weight: 500;
-    box-shadow: 0 2px 4px var(--shadow-color);
+  .menuSubtitle {
+    font-size: 0.8rem;  /* Increased from 0.7rem */
   }
 
-  :global(.ps-menu-button:hover svg) {
-    color: var(--accent-color);
-    filter: drop-shadow(0 0 4px var(--accent-color));
+  .logoSection {
+    margin-right: 0;
   }
 
-  /* Icon styling */
-  :global(.ps-menu-button svg) {
-    transition: all 0.3s ease;
+  .menuSubtitle {
+    display: none;
   }
-
-  /* Menu item transition */
-  :global(.ps-menu-button) {
-    transition: all 0.3s ease;
-    color: var(--text-light);
-    opacity: 0.9;
-    font-weight: 400;
-  }
-
-  :global(.ps-menu-button:hover) {
-    opacity: 1;
-  }
+}

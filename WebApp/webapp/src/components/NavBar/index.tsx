@@ -1,107 +1,142 @@
-import { useState, useEffect } from 'react';
-import { Sidebar, Menu, MenuItem, sidebarClasses } from 'react-pro-sidebar';
-import { Box, Typography } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
-import { FaHome, FaClipboardList, FaChartBar, FaTachometerAlt, FaBuilding, FaInfoCircle  } from 'react-icons/fa';
 import styles from './index.module.css';
-
-type MenuItemType = 'home' | 'matchups' | 'predictions' | 'dashboard' | 'about';
+import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
+import { 
+  AppBar, 
+  Toolbar, 
+  Button, 
+  Box, 
+  Typography, 
+  Container,
+  useTheme,
+  useMediaQuery,
+  IconButton,
+  Menu,
+  MenuItem,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon
+} from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import { useState } from 'react';
 
 function NavBar() {
-  const [selectedMenuItem, setSelectedMenuItem] = useState<MenuItemType>('home');
   const location = useLocation();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  // Update the selected menu item based on the current path
-  useEffect(() => {
-    switch (location.pathname) {
-      case '/':
-        setSelectedMenuItem('home');
-        break;
-      case '/matchups':
-        setSelectedMenuItem('matchups');
-        break;
-      case '/predictions':
-        setSelectedMenuItem('predictions');
-        break;
-      case '/dashboard':
-        setSelectedMenuItem('dashboard');
-        break;
-      case '/about':
-        setSelectedMenuItem('about');
-        break;
-      default:
-        setSelectedMenuItem('home');
-    }
-  }, [location.pathname]);
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const navItems = [
+    { name: 'Home', path: '/' },
+    { name: 'Matchups', path: '/matchups' },
+    { name: 'Predictions', path: '/predictions' },
+    { name: 'Dashboard', path: '/dashboard' },
+    { name: 'About', path: '/about' }
+  ];
+
+  const drawer = (
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+      <Box className={styles.mobileLogo}>
+        <SportsBasketballIcon sx={{ fontSize: '2rem', color: 'var(--accent-color)' }} />
+        <Typography variant="h6" className={styles.companyName}>
+          NBAnalytics
+        </Typography>
+      </Box>
+      <List>
+        {navItems.map((item) => (
+          <ListItem 
+            key={item.name} 
+            component={Link} 
+            to={item.path}
+            className={`${styles.mobileNavItem} ${location.pathname === item.path ? styles.active : ''}`}
+          >
+            <ListItemText primary={item.name} />
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
 
   return (
-    <Sidebar
-      rootStyles={{
-        [`.${sidebarClasses.container}`]: {
-          backgroundColor: 'var(--sidebar-color)',
-          color: 'var(--text-light)',
-          height: '100vh',
-          position: 'fixed',
-          width: '26vh',
-          borderRight: 'none',
-          boxShadow: '2px 0 8px var(--shadow-color)',
-        },
-      }}
+    <AppBar 
+      position="fixed" 
+      className={styles.appBar}
+      elevation={0}
     >
-      <Link to="/" onClick={() => setSelectedMenuItem('home')} className={styles.link}>
-        <Box className={styles.companyInfo}>
-          <FaBuilding size={30} />
-          <Typography variant="h6" sx={{ fontWeight: 600, letterSpacing: '0.5px' }}>
-            NBAnalytics
-          </Typography>
-        </Box>
-      </Link>
-      <Box className={styles.menuSubtitle}>
-        <Typography variant="subtitle2">Navigation</Typography>
-      </Box>
-      <Menu>
-        <MenuItem 
-          icon={<FaHome size={20} />} 
-          component={<Link to="/" />} 
-          className={selectedMenuItem === 'home' ? styles.activeMenuItem : ''}
-          onClick={() => setSelectedMenuItem('home')}
-        >
-          Home
-        </MenuItem>
-        <MenuItem 
-          icon={<FaClipboardList size={20} />} 
-          component={<Link to="/matchups" />} 
-          className={selectedMenuItem === 'matchups' ? styles.activeMenuItem : ''}
-          onClick={() => setSelectedMenuItem('matchups')}
-        >
-          Team Matchups
-        </MenuItem>
-        <MenuItem 
-          icon={<FaChartBar size={20} />} 
-          component={<Link to="/predictions" />} 
-          className={selectedMenuItem === 'predictions' ? styles.activeMenuItem : ''}
-          onClick={() => setSelectedMenuItem('predictions')}
-        >
-          Win/Loss Prediction
-        </MenuItem>
-        <MenuItem 
-          icon={<FaTachometerAlt size={20} />} 
-          component={<Link to="/dashboard" />} 
-          className={selectedMenuItem === 'dashboard' ? styles.activeMenuItem : ''}
-          onClick={() => setSelectedMenuItem('dashboard')}
-        >
-          Dashboard
-        </MenuItem>
-        <MenuItem 
-          icon={<FaInfoCircle size={20} />} 
-          component={<Link to="/about" />} 
-          className={selectedMenuItem === 'about' ? styles.activeMenuItem : ''}
-          onClick={() => setSelectedMenuItem('about')}
-        >
-          About
-        </MenuItem>
-      </Menu>
-    </Sidebar>
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          {/* Logo Section */}
+          <Link to="/" className={styles.logoSection}>
+            <SportsBasketballIcon sx={{ fontSize: '2rem', color: 'var(--accent-color)' }} />
+            <Box className={styles.logoText}>
+              <Typography variant="h6" className={styles.companyName}>
+                NBAnalytics
+              </Typography>
+              <Typography variant="caption" className={styles.menuSubtitle}>
+                Advanced NBA Statistics
+              </Typography>
+            </Box>
+          </Link>
+
+          {/* Desktop Navigation */}
+          {!isMobile && (
+            <Box className={styles.navLinks}>
+              {navItems.map((item) => (
+                <Button
+                  key={item.name}
+                  component={Link}
+                  to={item.path}
+                  className={`${styles.navButton} ${location.pathname === item.path ? styles.active : ''}`}
+                >
+                  {item.name}
+                </Button>
+              ))}
+            </Box>
+          )}
+
+          {/* Mobile Menu Button */}
+          {isMobile && (
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              className={styles.menuButton}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
+        </Toolbar>
+      </Container>
+
+      {/* Mobile Drawer */}
+      <Drawer
+        variant="temporary"
+        anchor="right"
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        ModalProps={{
+          keepMounted: true, // Better open performance on mobile.
+        }}
+        sx={{
+          display: { xs: 'block', md: 'none' },
+          '& .MuiDrawer-paper': { 
+            boxSizing: 'border-box', 
+            width: 240,
+            backgroundColor: 'var(--surface-color)',
+            borderLeft: '1px solid var(--border-color)'
+          },
+        }}
+      >
+        {drawer}
+      </Drawer>
+    </AppBar>
   );
 }
 

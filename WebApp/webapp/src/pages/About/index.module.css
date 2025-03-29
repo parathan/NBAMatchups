@@ -1,73 +1,172 @@
-.homePage {
-    animation: fade-in 2s;
-    
+.aboutPage {
+  min-height: calc(100vh - 96px);
+  background: var(--background-color);
+  padding: 2rem;
+  color: var(--text-primary);
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-top: 10vh;
+  margin-bottom: 4rem;
+  position: relative;
+}
+
+.header h1 {
+  font-size: calc(24px + 3vmin);
+  font-weight: 800;
+  margin-bottom: 1rem;
+  letter-spacing: -0.5px;
+  color: var(--text-primary);
+  text-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+.section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero {
+  max-width: 800px;
+  margin: 0 auto 4rem;
+  text-align: center;
+}
+
+.description {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
+.features {
+  margin: 4rem 0;
+  padding: 0 2rem;
+}
+
+.featureCard {
+  background: var(--card-background);
+  border-radius: 12px;
+  padding: 2rem;
+  height: 100%;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px var(--shadow-color);
+  margin: 0 1rem;
+}
+
+.featureCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px var(--shadow-color);
+  border-color: var(--accent-color);
+}
+
+.iconWrapper {
+  width: 60px;
+  height: 60px;
+  background: var(--primary-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.featureCard:hover .iconWrapper {
+  background: var(--accent-color);
+  transform: scale(1.1);
+}
+
+.icon {
+  font-size: 2rem !important;
+  color: var(--text-light);
+}
+
+.featureCard h6 {
+  color: var(--text-primary);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  letter-spacing: -0.3px;
+}
+
+.featureCard p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.acknowledgment {
+  max-width: 800px;
+  margin: 4rem auto 0;
+  text-align: center;
+  padding: 2rem;
+  background: var(--card-background);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 6px var(--shadow-color);
+}
+
+.acknowledgment h6 {
+  color: var(--text-primary);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  letter-spacing: -0.3px;
+}
+
+.acknowledgment p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .aboutPage {
+    padding: 1.5rem;
+    min-height: calc(100vh - 88px);
   }
-  
+
   .header {
-    margin-top: 15vh;
-    margin-bottom: 10vh;
-    text-align: center;
-    font-size: calc(10px + 2vmin);
-    color: var(--header-font-colour);
+    margin-top: 4vh;
+    margin-bottom: 3rem;
   }
-  
-  .features {
-    text-align: center;
-    margin: 3vh;
-  }
-  
-  .featureButton {
-    margin: 5vh auto;
-  
-    background-color: var(--secondary-colour);
-    border-radius: 4px;
-    border-style: none;
-    box-sizing: border-box;
-    color: var(--p-font-colour);
-    cursor: pointer;
-    display: block;
-    font-family: "Farfetch Basis","Helvetica Neue",Arial,sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 1.5;
-    outline: none;
-    overflow: hidden;
-    padding: 9px 20px 8px;
-    text-align: center;
-    text-transform: none;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-  }
-  
-  .featureButton:hover,
-  .featureButton:focus {
-    opacity: .75;
-  }
-  
-  @keyframes fade-in {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 100;
-    }
-  }
-  
+
   .description {
-    margin-top: 3vh;
-    color: var(--p-font-colour);
-    text-align: justify;
+    font-size: 1rem;
   }
-  
-  .acknowledgmenet {
-    margin-top: 10%;
-    font-size: calc(5px + 2vmin);
-    color: var(--header-font-colour);
+
+  .features {
+    padding: 0 1rem;
   }
-  
-  .screenshot {
-    width: 100%;
-    height: auto;
-    box-shadow: 0 4px 4px 0 rgba(255, 255, 255, 0.521), 0 0px 25px 0 rgba(190, 187, 187, 0.788);
+
+  .featureCard {
+    padding: 1.5rem;
+    margin: 0 0.5rem;
   }
+
+  .iconWrapper {
+    width: 50px;
+    height: 50px;
+  }
+
+  .icon {
+    font-size: 1.5rem !important;
+  }
+}
