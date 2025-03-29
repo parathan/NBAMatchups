@@ -7,6 +7,14 @@ import teams_python as teams
 
 from ML import lr_predict
 from ML import constants
+
+import logging
+from dotenv import load_dotenv
+
+load_dotenv()
+
+logging.basicConfig(level=logging.DEBUG)
+logging.info("Prediction service started")
 print("Starting gRPC server")
 class PredictionService(predict_pb2_grpc.PredictionServiceServicer):
     def Predict(self, request, context):
@@ -31,8 +39,20 @@ class PredictionService(predict_pb2_grpc.PredictionServiceServicer):
         """
         print("Received request")
         try:
-            channel = grpc.insecure_channel(os.environ.get('TEAMS_SERVICE', 'localhost:50051'))
-            stub = teams.teams_pb2_grpc.TeamsServiceStub(channel)
+            prodFlag = os.environ.get('PROD', 'false')
+            logging.info(prodFlag)
+            if prodFlag == 'true':
+                logging.info("Prod mode")
+                teamsserviceEndpoint = os.environ.get('REMOTE_TEAMS_SERVICE', 'teamsservice:50051')
+
+                credentials = grpc.ssl_channel_credentials()
+                channel = grpc.secure_channel(teamsserviceEndpoint, credentials)
+                stub = teams.teams_pb2_grpc.TeamsServiceStub(channel)
+            else:
+                teamsserviceEndpoint = os.environ.get('LOCAL_TEAMS_SERVICE', 'teamsservice:50051')
+
+                channel = grpc.insecure_channel(teamsserviceEndpoint)
+                stub = teams.teams_pb2_grpc.TeamsServiceStub(channel)
 
             twoTeamRequest = teams.teams_pb2.TwoTeamsRequest(
                 team1=request.team1,
