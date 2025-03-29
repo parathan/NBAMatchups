@@ -156,11 +156,11 @@ function Prediction() {
               </Grid>
               <Grid container spacing={2} className={styles.input}>
                 <Grid item xs={6}>
-                  <img src={'/Assets/NBALogos/' + team1image} alt={team1} className={styles.logo} />
+                  <img src={'/static/NBALogos/' + team1image} alt={team1} className={styles.logo} />
                   <div className={styles.teamName}>{team1}</div>
                 </Grid>
                 <Grid item xs={6}>
-                  <img src={'/Assets/NBALogos/' + team2image} alt={team2} className={styles.logo} />
+                  <img src={'/static/NBALogos/' + team2image} alt={team2} className={styles.logo} />
                   <div className={styles.teamName}>{team2}</div>
                 </Grid>
               </Grid>
@@ -188,7 +188,7 @@ function Prediction() {
             <Grid item xs={3} className={styles.results}>
               <div className={styles.individualResults}>
                 <p className={styles.individualResultsHeader}>Winner</p>
-                <img src={'/Assets/NBALogos/' + winnerImage} alt={winner} className={styles.logoResult}/><br/>
+                <img src={'/static/NBALogos/' + winnerImage} alt={winner} className={styles.logoResult}/><br/>
                 <p>{winner} are expected to win!</p>
               </div>
             </Grid>

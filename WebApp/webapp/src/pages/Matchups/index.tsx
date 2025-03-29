@@ -173,13 +173,13 @@ function Matchups() {
           <Grid container spacing={2} className={imageClass}>
             <Grid item xs={4}>
               {team1}<br/>
-              <img src={'/Assets/NBALogos/' + team1image} alt={team1} className={styles.logo}/>
+              <img src={'/static/NBALogos/' + team1image} alt={team1} className={styles.logo}/>
             </Grid>
             <Grid item xs={4}>
             </Grid>
             <Grid item xs={4}>
               {team2}<br/>
-              <img src={'/Assets/NBALogos/' + team2image} alt={team2} className={styles.logo}/>
+              <img src={'/static/NBALogos/' + team2image} alt={team2} className={styles.logo}/>
             </Grid>
           </Grid>
           :
