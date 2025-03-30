@@ -3,6 +3,18 @@ import Home from '.'
 import { MemoryRouter } from 'react-router-dom'
 import '@testing-library/jest-dom'
 
+class IntersectionObserver {
+    observe = jest.fn()
+    disconnect = jest.fn()
+    unobserve = jest.fn()
+  }
+  
+Object.defineProperty(window, 'IntersectionObserver', {
+    writable: true,
+    configurable: true,
+    value: IntersectionObserver,
+});
+
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
     useNavigate: () => jest.fn(),
@@ -15,7 +27,7 @@ describe('Home Page', () => {
                 <Home />
             </MemoryRouter>
         )
-        const header = await screen.findByText(/Welcome to NBAnalytics/i);
+        const header = await screen.findByText(/Welcome to NBAMatchups/i);
         expect(header).toBeInTheDocument();
     })
 
@@ -68,7 +80,7 @@ describe('Home Page', () => {
             </MemoryRouter>
         )
 
-        fireEvent.click(await screen.findByText('Go to Dashboard'));
+        fireEvent.click(await screen.findByText('Go to Statistical Dashboard'));
         expect(navigate).toHaveBeenCalledWith('/dashboard');
     })
 })

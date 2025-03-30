@@ -20,7 +20,7 @@ function Home() {
     <Layout>
       <div className={styles.homePage}>
         <div className={styles.header}>
-          <h1>NBAMatchups</h1>
+          <h1>Welcome to NBAMatchups</h1>
           <p>Explore team statistics, compare matchups, and predict game outcomes</p>
         </div>
 
