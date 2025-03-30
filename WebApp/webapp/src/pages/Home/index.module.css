@@ -175,24 +175,12 @@
   transition: all 0.3s ease;
   border: 1px solid var(--border-color);
   margin-top: 2rem;
-  object-fit: cover;
-  aspect-ratio: 16/9;
-  opacity: 0;
-  transform: translateX(50px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-.screenshot.visible {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.screenshot:nth-child(odd) {
-  transform: translateX(-50px);
-}
-
-.screenshot:nth-child(odd).visible {
-  transform: translateX(0);
+  object-fit: contain;
+  max-height: 500px;
+  width: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .screenshot:hover {
