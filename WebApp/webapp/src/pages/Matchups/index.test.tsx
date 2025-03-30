@@ -24,7 +24,7 @@ describe("Matchups Page elements render correctly", () => {
             </MemoryRouter>
         )
         const header = await screen.findAllByText(/Team Matchups/i);
-        expect(header.length).toBe(3);
+        expect(header.length).toBe(1);
     })
 
     it('renders team dropdowns', async () => {

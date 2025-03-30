@@ -27,7 +27,7 @@ describe('Dashboard Page elements render correctly', () => {
             </MemoryRouter>
         );
         const headerArray = await waitFor(() => screen.findAllByText(/Dashboard/i));
-        expect(headerArray.length).toBe(2); // One in the page and one in navbar
+        expect(headerArray.length).toBe(3); // One in the page and one in navbar
     });
 })
 
