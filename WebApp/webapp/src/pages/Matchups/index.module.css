@@ -1,59 +1,190 @@
 .matchups {
-    padding: 10vh;
+    padding: 2rem;
     text-align: center;
-    animation: fade-in 2s;
+    animation: fade-in 0.5s ease-out;
+    min-height: calc(100vh - 80px);
+    background: var(--background-color);
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    margin-top: 6vh;
 }
 
-.fadeout {
-    animation: fade-out 2.5s;
+.headerContainer {
+    margin-bottom: 8vh;
+    position: relative;
+    padding-bottom: 2rem;
 }
 
 .header {
-    color: var(--header-font-colour);
-    font-size: calc(10px + 3vmin);;
-    padding-bottom: 2vh;
-    margin-top: 8%;
+    color: var(--text-primary);
+    font-size: 2.5rem;
+    font-weight: 700;
+    position: relative;
+    display: inline-block;
+}
+
+.header::after {
+    content: '';
+    position: absolute;
+    bottom: -1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: var(--accent-color);
+    border-radius: 2px;
 }
 
 .description {
-    color: var(--p-font-colour);
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .input {
-    padding-top: 5vh;
+    margin-bottom: 3rem;
+    background: var(--surface-color);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    margin-top: 4vh;
+    width: 100%;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.inputContainer {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .dropdown {
-    text-align: center;
-    padding-left: 2vw;
-    padding-right: 2vw;
-    background-color: var(--secondary-colour);
-    width: 20em;
-    height: 3em;
-    border-radius: .25em;
-    overflow: hidden;
-    font-size: large;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--input-background);
+    color: var(--text-primary);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .dropdown:hover {
-    opacity: .75;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px var(--accent-color-transparent);
 }
 
-.slider {
-    padding-top: 5vh;
-    padding-right: 10vh;
-    padding-left: 10vh;
+.dropdown:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px var(--accent-color-transparent);
+}
+
+.dropdown option {
+    background-color: var(--surface-color);
+    color: var(--text-primary);
+    padding: 0.75rem;
+    font-size: 1rem;
+}
+
+.dropdown option:hover {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.submit {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.submit:hover {
+    background: var(--accent-color-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.submit:active {
+    transform: translateY(0);
+}
+
+.errMessage {
+    margin: 2rem auto;
+    max-width: 800px;
 }
 
 .teamName {
-    color: var(--p-font-colour);
-    font-size: calc(10px + 2vmin);;
-    animation: fade-in 2s;
+    margin: 2rem auto;
+    max-width: 800px;
+    background: var(--surface-color);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px var(--shadow-color);
 }
 
 .logo {
-    width: 30%;
-    height: auto;
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    margin: 1rem 0;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .matchups {
+        padding: 1rem;
+        margin-top: 4vh;
+    }
+
+    .headerContainer {
+        margin-bottom: 6vh;
+        padding-bottom: 1.5rem;
+    }
+
+    .header {
+        font-size: 2rem;
+    }
+
+    .description {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+        padding: 0 1rem;
+    }
+
+    .input {
+        padding: 1.5rem;
+        margin-top: 3vh;
+    }
+
+    .teamName {
+        padding: 1.5rem;
+    }
+
+    .logo {
+        width: 100px;
+        height: 100px;
+    }
 }
 
 @keyframes fade-in {
@@ -68,48 +199,14 @@
 select {
     /* Reset Select */
     appearance: none;
-    outline: 10px red;
+    outline: none;
     border: 0;
     box-shadow: none;
     /* Personalize */
     flex: 1;
     padding: 0 1em;
-    color: var(--p-font-colour);
-    background-color: var(--darkgray);
+    color: var(--text-primary);
+    background-color: var(--input-background);
     background-image: none;
     cursor: pointer;
-}
-
-/* CSS */
-.submit {
-    margin-top: 3vh;
-    background-color: var(--secondary-colour);
-    border-radius: 4px;
-    border-style: none;
-    box-sizing: border-box;
-    color: var(--p-font-colour);
-    cursor: pointer;
-    display: inline-block;
-    font-family: "Farfetch Basis","Helvetica Neue",Arial,sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 1.5;
-    outline: none;
-    overflow: hidden;
-    padding: 9px 20px 8px;
-    text-align: center;
-    text-transform: none;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-}
-
-.submit:hover {
-    opacity: .75;
-}
-
-.errMessage {
-    width: fit-content;
-    margin: 0 auto;
-    margin-top: 3%;
 }

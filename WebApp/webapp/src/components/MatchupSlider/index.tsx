@@ -8,21 +8,24 @@ import { perc2color } from '../../util/Color/color';
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
-  margin: theme.spacing(4, 0),
+  margin: theme.spacing(2, 0),
   backgroundColor: 'var(--secondary-background-colour)',
   color: 'var(--font-colour)',
+  borderRadius: '8px',
+  boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
 }));
 
 const StatBox = styled(Box)(({ theme }) => ({
   textAlign: 'center',
   padding: theme.spacing(2),
-  borderRadius: theme.shape.borderRadius,
+  borderRadius: '4px',
   backgroundColor: 'var(--tertiary-colour)',
   color: 'var(--font-colour)',
 }));
 
 const SliderContainer = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(2),
+  padding: theme.spacing(0, 2),
 }));
 
 const SliderLabels = styled(Box)(({ theme }) => ({
@@ -32,6 +35,20 @@ const SliderLabels = styled(Box)(({ theme }) => ({
   color: 'var(--p-font-colour)',
 }));
 
+const DifferenceBox = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'center',
+  gap: theme.spacing(2),
+  marginTop: theme.spacing(2),
+  padding: theme.spacing(1),
+  backgroundColor: 'var(--tertiary-colour)',
+  borderRadius: '4px',
+}));
+
+const DifferenceItem = styled(Box)(({ theme }) => ({
+  textAlign: 'center',
+  padding: theme.spacing(1),
+}));
 
 const MatchupSlider = (props: MatchupData) => {
   const value = [
@@ -95,7 +112,7 @@ const MatchupSlider = (props: MatchupData) => {
         <Typography variant="h6" align="center" gutterBottom fontWeight="bold" color="var(--header-font-colour)">
           {field1} vs {field2}
         </Typography>
-        <Grid container spacing={4} alignItems="center">
+        <Grid container spacing={3} alignItems="center">
           <Grid item xs={12} md={3}>
             <StatBox>
               <Typography variant="subtitle1" fontWeight="medium" color="var(--header-font-colour)">
@@ -113,6 +130,7 @@ const MatchupSlider = (props: MatchupData) => {
                 value={value}
                 step={0.1}
                 valueLabelDisplay="on"
+                valueLabelFormat={(value) => `${value}%`}
               />
               <SliderLabels>
                 <Typography variant="caption">0%</Typography>
@@ -131,6 +149,24 @@ const MatchupSlider = (props: MatchupData) => {
             </StatBox>
           </Grid>
         </Grid>
+        <DifferenceBox>
+          <DifferenceItem>
+            <Typography variant="caption" color="var(--p-font-colour)">
+              Percentile Difference
+            </Typography>
+            <Typography variant="body1" color={sliderColor}>
+              {props.percentile_difference ? (props.percentile_difference * 100).toFixed(1) : '0.0'}%
+            </Typography>
+          </DifferenceItem>
+          <DifferenceItem>
+            <Typography variant="caption" color="var(--p-font-colour)">
+              Traditional Difference
+            </Typography>
+            <Typography variant="body1" color="var(--font-colour)">
+              {props.trad_difference ? props.trad_difference.toFixed(1) : '0.0'}
+            </Typography>
+          </DifferenceItem>
+        </DifferenceBox>
       </StyledPaper>
     </ThemeProvider>
   );
