@@ -40,7 +40,9 @@
     color: var(--text-secondary);
     font-size: 1.1rem;
     margin-bottom: 3rem;
-    line-height: 1.6;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .input {
@@ -352,6 +354,12 @@
     }
 
     .predHeader {
+        padding: 0 1rem;
+    }
+
+    .description {
+        font-size: 1rem;
+        margin-bottom: 2rem;
         padding: 0 1rem;
     }
 }

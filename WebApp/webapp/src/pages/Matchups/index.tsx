@@ -118,7 +118,11 @@ function Matchups() {
         </div>
         
         {formVisible ? 
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
             <div className={styles.description}>
               <p>
                 Compare two teams based on their statistics and see how they stack up against each other. 
@@ -129,36 +133,61 @@ function Matchups() {
               <div className={styles.inputContainer}>
                 <Grid container spacing={2}>
                   <Grid item xs={12} md={4}>
-                    <select onChange={changeTeam1} className={styles.dropdown}>
-                      <option value="">Pick a Team</option>
-                      {teamsNames.map(teamName =>
-                        <option data-testid="team1-options" key={teamName} value={teamName}>{teamName}</option>
-                      )}
-                    </select>
+                    <motion.div
+                      initial={{ scale: 0.9, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: 0.3 }}
+                    >
+                      <select onChange={changeTeam1} className={styles.dropdown}>
+                        <option value="">Pick a Team</option>
+                        {teamsNames.map(teamName =>
+                          <option data-testid="team1-options" key={teamName} value={teamName}>{teamName}</option>
+                        )}
+                      </select>
+                    </motion.div>
                   </Grid>
                   <Grid item xs={12} md={4}>
-                    <select onChange={changeTeam2} className={styles.dropdown}>
-                      <option value="">Pick a Team</option>
-                      {teamsNames.map(teamName =>
-                        <option data-testid="team2-options" key={teamName} value={teamName}>{teamName}</option>
-                      )}
-                    </select>
+                    <motion.div
+                      initial={{ scale: 0.9, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: 0.4 }}
+                    >
+                      <select onChange={changeTeam2} className={styles.dropdown}>
+                        <option value="">Pick a Team</option>
+                        {teamsNames.map(teamName =>
+                          <option data-testid="team2-options" key={teamName} value={teamName}>{teamName}</option>
+                        )}
+                      </select>
+                    </motion.div>
                   </Grid>
                   <Grid item xs={12} md={4}>
-                    <select onChange={changeYear} className={styles.dropdown}>
-                      <option value="">Pick a Year</option>
-                      {years.map(year =>
-                        <option data-testid="year-options" key={year} value={year}>{year}</option>
-                      )}
-                    </select>
+                    <motion.div
+                      initial={{ scale: 0.9, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: 0.5 }}
+                    >
+                      <select onChange={changeYear} className={styles.dropdown}>
+                        <option value="">Pick a Year</option>
+                        {years.map(year =>
+                          <option data-testid="year-options" key={year} value={year}>{year}</option>
+                        )}
+                      </select>
+                    </motion.div>
                   </Grid>
                   <Grid item xs={12}>
-                    <button onClick={onSubmit} className={styles.submit}>Check Matchup</button>
+                    <motion.button 
+                      onClick={onSubmit} 
+                      className={styles.submit}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      Check Matchup
+                    </motion.button>
                   </Grid>
                 </Grid>
               </div>
             </div>
-          </div>
+          </motion.div>
           : null
         }
         {progressVisible ? 
