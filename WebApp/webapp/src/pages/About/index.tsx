@@ -48,7 +48,7 @@ function About() {
           <Typography variant="body1" className={styles.description}>
             NBAMatchups is a comprehensive platform designed to provide deep insights into NBA team statistics,
             performance metrics, and predictive analytics. Our platform combines historical data analysis with
-            modern statistical methods to offer unique perspectives on team matchups and performance trends.
+            modern statistical methods to offer unique perspectives on team matchups and performance trends. <br />
             This application was created by Parathan Vakeesan and Jaakulan Subeethakumar.
           </Typography>
         </section>
