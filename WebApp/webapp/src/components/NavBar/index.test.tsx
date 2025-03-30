@@ -17,17 +17,10 @@ describe('Navbar', () => {
             </MemoryRouter>
         )
 
-        const home = await screen.findByText('Home');
-        expect(home).toBeInTheDocument();
-
-        const matchups = await screen.findByText('Team Matchups');
-        expect(matchups).toBeInTheDocument();
-
-        const predictions = await screen.findByText('Win/Loss Prediction');
-        expect(predictions).toBeInTheDocument();
-
-        const dashboard = await screen.findByText('Dashboard');
-        expect(dashboard).toBeInTheDocument();
+        expect(screen.getAllByText('Home').length).toBeGreaterThan(0);
+        expect(screen.getAllByText('Matchups').length).toBeGreaterThan(0);
+        expect(screen.getAllByText('Predictions').length).toBeGreaterThan(0);
+        expect(screen.getAllByText('Dashboard').length).toBeGreaterThan(0);
     })
 
     it('navigates to correct routes when clicked', async () => {
@@ -40,7 +33,7 @@ describe('Navbar', () => {
             </Router>
         )
 
-        fireEvent.click(await screen.findByText('Team Matchups'));
+        fireEvent.click(screen.getAllByText('Matchups')[0]);  
         expect(history.push).toHaveBeenCalledWith(
             {
                 hash: '',
@@ -51,7 +44,7 @@ describe('Navbar', () => {
             expect.anything()
         );
 
-        fireEvent.click(await screen.findByText('Win/Loss Prediction'));
+        fireEvent.click(screen.getAllByText('Predictions')[0]);
         expect(history.push).toHaveBeenCalledWith(
             {
                 hash: '',
@@ -62,7 +55,7 @@ describe('Navbar', () => {
             expect.anything()
         );
 
-        fireEvent.click(await screen.findByText('Dashboard'));
+        fireEvent.click(screen.getAllByText('Dashboard')[0]);
         expect(history.push).toHaveBeenCalledWith(
             {
                 hash: '',

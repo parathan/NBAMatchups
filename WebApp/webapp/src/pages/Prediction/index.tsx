@@ -151,7 +151,7 @@ function Prediction() {
                             >
                                 <option value="">Choose a team</option>
                                 {teamsNames.map(teamName => (
-                                    <option key={teamName} value={teamName}>{teamName}</option>
+                                    <option key={teamName} value={teamName} data-testid="team1-options">{teamName}</option>
                                 ))}
                             </select>
                             <motion.div
@@ -173,7 +173,7 @@ function Prediction() {
                             >
                                 <option value="">Choose a team</option>
                                 {teamsNames.map(teamName => (
-                                    <option key={teamName} value={teamName}>{teamName}</option>
+                                    <option key={teamName} value={teamName} data-testid="team2-options">{teamName}</option>
                                 ))}
                             </select>
                             <motion.div

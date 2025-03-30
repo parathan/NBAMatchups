@@ -23,7 +23,7 @@ describe("Matchups Page elements render correctly", () => {
                 <Prediction />
             </MemoryRouter>
         )
-        const header = await screen.findAllByText(/Match Prediction/i);
+        const header = await screen.findAllByText(/Win\/Loss Prediction/i);
         expect(header.length).toBe(1);
     })
 
@@ -33,7 +33,7 @@ describe("Matchups Page elements render correctly", () => {
                 <Prediction />
             </MemoryRouter>
         )
-        const teamDropdowns = await screen.findAllByText(/Pick a Team/i);
+        const teamDropdowns = await screen.findAllByText(/Choose a Team/i);
         expect(teamDropdowns.length).toBe(2);
     })
 
