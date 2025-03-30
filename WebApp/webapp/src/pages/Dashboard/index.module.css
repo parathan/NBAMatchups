@@ -1,14 +1,35 @@
 .dashboard {
-    padding: 10vh;
+    padding: 2rem;
     text-align: center;
-    animation: fade-in 2s;
+    animation: fade-in 0.5s ease-out;
+    min-height: calc(100vh - 80px);
+    background: var(--background-color);
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    margin-top: 6vh;
 }
 
 .header {
-    color: var(--header-font-colour);
-    font-size: calc(10px + 3vmin);;
-    padding-bottom: 2vh;
-    margin-top: 8%;
+    color: var(--text-primary);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 8vh;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 2rem;
+}
+
+.header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: var(--accent-color);
+    border-radius: 2px;
 }
 
 .hidden {
@@ -21,37 +42,82 @@
 }
 
 .input {
-    padding-top: 5vh;
+    margin-bottom: 3rem;
+    background: var(--surface-color);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    margin-top: 15vh;
 }
 
 .dropdown {
     text-align: center;
-    padding-left: 2vw;
-    padding-right: 2vw;
-    background-color: var(--secondary-colour);
-    width: 20em;
-    height: 3em;
-    border-radius: .25em;
-    overflow: hidden;
-    font-size: large;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--surface-color);
+    width: 100%;
+    height: 3.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .dropdown:hover {
-    opacity: .75;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.1);
 }
 
+.dropdown:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.2);
+}
+
+.chartContainer {
+    background: var(--surface-color);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    margin-top: 2rem;
+}
 
 @keyframes fade-in {
     from {
         opacity: 0;
+        transform: translateY(20px);
     }
     to {
-        opacity: 100;
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
 .errMessage {
-    width: fit-content;
-    margin: 0 auto;
-    margin-top: 3%;
+    width: 100%;
+    max-width: 600px;
+    margin: 2rem auto;
+}
+
+@media (max-width: 768px) {
+    .dashboard {
+        padding: 1rem;
+        margin-top: 4vh;
+    }
+
+    .header {
+        font-size: 2rem;
+        margin-bottom: 6vh;
+        padding-bottom: 1.5rem;
+    }
+
+    .input {
+        padding: 1.5rem;
+        margin-top: 12vh;
+    }
+
+    .chartContainer {
+        padding: 1.5rem;
+    }
 }

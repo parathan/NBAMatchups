@@ -1,7 +1,8 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import styles from './index.module.css';
 import Layout from "../../components/Layout/Layout";
-import { Alert, CircularProgress, Grid } from '@mui/material';
+import { Alert, CircularProgress, Grid, Typography, Box } from '@mui/material';
+import { motion } from 'framer-motion';
 
 import axios from 'axios';
 import { TotalTeamData, TeamData } from '../../interfaces/TotalTeamData';
@@ -61,7 +62,8 @@ const options = {
             labels: {
                 color: colours.P_FONT_COLOUR,
                 font: {
-                    size: 18
+                    size: 14,
+                    weight: 500
                 }
             }
         },
@@ -71,18 +73,28 @@ const options = {
     },
     scales: {
         x: {
+            grid: {
+                color: 'rgba(255, 255, 255, 0.1)',
+                drawBorder: false
+            },
             ticks: {
                 color: colours.P_FONT_COLOUR,
                 font: {
-                    size: 15
+                    size: 12,
+                    weight: 500
                 }
             },
         },
         y: {
+            grid: {
+                color: 'rgba(255, 255, 255, 0.1)',
+                drawBorder: false
+            },
             ticks: {
                 color: colours.P_FONT_COLOUR,
                 font: {
-                    size: 15
+                    size: 12,
+                    weight: 500
                 }
             },
         }
@@ -198,52 +210,82 @@ function Dashboard() {
 
     return (
         <Layout>
-            <div className={styles.dashboard}>
-                <div className={styles.header}>Dashboard</div>
-                {progress ? <CircularProgress /> : null}
-                {
-                    error ? 
+            <motion.div 
+                className={styles.dashboard}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+            >
+                <Typography variant="h2" className={styles.header}>
+                    Statistical Dashboard
+                </Typography>
+                
+                {progress && (
+                    <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
+                        <CircularProgress size={60} />
+                    </Box>
+                )}
+                
+                {error && (
                     <div className={styles.errMessage}>
-                        <Alert severity='error'>
+                        <Alert severity='error' sx={{ borderRadius: 2 }}>
                             {errMessage}
                         </Alert>
                     </div>
-                    : 
-                    null}
-                {
-                    error || progress ? 
-                    null
-                    :
-                    <div>
-                        <Grid container spacing={2} className={styles.input}>
-                            <Grid item xs={2}></Grid>
-                            <Grid item xs={4}>
-                            <select onChange={changeTeam} className={styles.dropdown}>
-                                <option key={""} value="">Pick a Team</option>
-                                {teamsNames.map( teamName =>
-                                    <option data-testid="team-options" key={teamName} value={teamName}>{teamName}</option>
-                                )};
-                            </select>
-                            </Grid>
-                            <Grid item xs={4}>
-                            <select onChange={changeField} className={styles.dropdown}>
-                                <option key={""} value="">Pick a Field</option>
-                                {statsArray.map( stat =>
-                                    <option data-testid="field-options" key={stat[0]} value={stat[0]}>{stat[1]}</option>
-                                )}
-                            </select>
-                            </Grid>
-                            <Grid item xs={2}></Grid>
-                            <Grid item xs={3}></Grid>
-                            <Grid item xs={6}>
-                                <Line options={options} data={chartData}/>
-                            </Grid>
-                            <Grid item xs={3}></Grid>
-                        </Grid>
-                    </div>
-                }
+                )}
                 
-            </div>
+                {!error && !progress && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                    >
+                        <Grid container spacing={3} className={styles.input}>
+                            <Grid item xs={12} md={6}>
+                                <Typography variant="subtitle1" gutterBottom sx={{ color: 'var(--text-secondary)' }}>
+                                    Select Team
+                                </Typography>
+                                <select 
+                                    onChange={changeTeam} 
+                                    className={styles.dropdown}
+                                    value={team}
+                                >
+                                    <option value="">Choose a team</option>
+                                    {teamsNames.map(teamName => (
+                                        <option key={teamName} value={teamName}>{teamName}</option>
+                                    ))}
+                                </select>
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                                <Typography variant="subtitle1" gutterBottom sx={{ color: 'var(--text-secondary)' }}>
+                                    Select Statistic
+                                </Typography>
+                                <select 
+                                    onChange={changeField} 
+                                    className={styles.dropdown}
+                                    value={field}
+                                >
+                                    <option value="">Choose a statistic</option>
+                                    {statsArray.map(stat => (
+                                        <option key={stat[0]} value={stat[0]}>{stat[1]}</option>
+                                    ))}
+                                </select>
+                            </Grid>
+                        </Grid>
+
+                        {team && field && (
+                            <motion.div 
+                                className={styles.chartContainer}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.4 }}
+                            >
+                                <Line options={options} data={chartData}/>
+                            </motion.div>
+                        )}
+                    </motion.div>
+                )}
+            </motion.div>
         </Layout>
     )
 }
