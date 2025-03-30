@@ -11,13 +11,10 @@ import {
   useTheme,
   useMediaQuery,
   IconButton,
-  Menu,
-  MenuItem,
   Drawer,
   List,
   ListItem,
   ListItemText,
-  ListItemIcon
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
@@ -76,7 +73,7 @@ function NavBar() {
             <SportsBasketballIcon sx={{ fontSize: '2rem', color: 'var(--accent-color)' }} />
             <Box className={styles.logoText}>
               <Typography variant="h6" className={styles.companyName}>
-                NBAnalytics
+                NBAMatchups
               </Typography>
               <Typography variant="caption" className={styles.menuSubtitle}>
                 Advanced NBA Statistics

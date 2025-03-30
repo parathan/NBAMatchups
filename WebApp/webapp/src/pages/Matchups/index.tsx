@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import styles from './index.module.css';
 import Layout from '../../components/Layout/Layout';
 import MatchupSlider from '../../components/MatchupSlider';
@@ -37,7 +37,6 @@ function Matchups() {
   const [data, setData] = useState<MatchupData[]>([])
   const [team1image, setTeam1Image] = useState("")
   const [team2image, setTeam2Image] = useState("")
-  const [imageClass, setImageClass] = useState(styles.nothing)
 
   function changeTeam1(e: ChangeEvent<HTMLSelectElement>) {
     let newTeam: string = e.target.value;
@@ -86,7 +85,6 @@ function Matchups() {
       
       setSuccessVisible(true)
       setData(response.data.statistics)
-      setImageClass(styles.teamName)
     })
     .catch((error) => {
       setProgressVisible(false)

@@ -175,12 +175,8 @@
   transition: all 0.3s ease;
   border: 1px solid var(--border-color);
   margin-top: 2rem;
-  object-fit: contain;
-  max-height: 500px;
-  width: auto;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+  object-fit: cover;
+  aspect-ratio: 16/9;
 }
 
 .screenshot:hover {

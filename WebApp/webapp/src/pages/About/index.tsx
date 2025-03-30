@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import styles from './index.module.css';
 import Layout from '../../components/Layout/Layout';
-import { Grid, Typography, Box, Paper } from '@mui/material';
+import { Grid, Typography, Box } from '@mui/material';
 import { motion } from 'framer-motion';
 import CodeIcon from '@mui/icons-material/Code';
 import StorageIcon from '@mui/icons-material/Storage';
@@ -9,19 +9,12 @@ import SpeedIcon from '@mui/icons-material/Speed';
 import SecurityIcon from '@mui/icons-material/Security';
 
 function About() {
-  const [visibleSections, setVisibleSections] = useState<number[]>([]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const index = parseInt(entry.target.getAttribute('data-index') || '0');
-            setVisibleSections(prev => {
-              const newSet = new Set(prev);
-              newSet.add(index);
-              return Array.from(newSet);
-            });
             entry.target.classList.add(styles.visible);
             observer.unobserve(entry.target);
           }
@@ -44,7 +37,7 @@ function About() {
       <div className={styles.aboutPage}>
         <header className={styles.header}>
           <Typography variant="h1" gutterBottom>
-            About NBAnalytics
+            About NBAMatchups
           </Typography>
           <Typography variant="h5" className={styles.subtitle}>
             Advanced NBA Statistics and Analysis Platform
@@ -94,8 +87,7 @@ function About() {
                 Comprehensive Data
               </Typography>
               <Typography variant="body2">
-                Access to extensive historical NBA data, including team statistics, player performance,
-                and game outcomes from multiple seasons.
+                Access to extensive historical NBA data on team statistics and performance metrics over various seasons.
               </Typography>
             </motion.div>
           </Grid>

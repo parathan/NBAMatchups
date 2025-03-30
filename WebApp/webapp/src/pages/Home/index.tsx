@@ -2,9 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import styles from './index.module.css';
 import Layout from '../../components/Layout/Layout';
 import { Grid, Typography, Box } from '@mui/material';
-import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
-import AnalyticsIcon from '@mui/icons-material/Analytics';
-import DashboardIcon from '@mui/icons-material/Dashboard';
 import { motion } from 'framer-motion';
 
 /**
@@ -23,7 +20,7 @@ function Home() {
     <Layout>
       <div className={styles.homePage}>
         <div className={styles.header}>
-          <h1>NBA Matchup Analysis</h1>
+          <h1>NBAMatchups</h1>
           <p>Explore team statistics, compare matchups, and predict game outcomes</p>
         </div>
 

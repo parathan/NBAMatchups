@@ -26,7 +26,6 @@ function Prediction() {
   const [team2, setTeam2] = useState("Waiting On Team 2 Choice")
   const [errMessage, setErrorMessage] = useState("Error")
   const [winner, setData] = useState("")
-  const [winnerImage, setWinImg] = useState("")
   const [winProb, setWinProb] = useState(0)
   const [team1image, setTeam1Image] = useState("nba-logo.png")
   const [team2image, setTeam2Image] = useState("nba-logo.png")
@@ -85,12 +84,10 @@ function Prediction() {
       setErrorVisible(false)
       if(response.data.prediction >= 0.50){
         setData(team1)
-        setWinImg(team1image)
         setWinProb(multby100(response.data.prediction))
       }
       else{
         setData(team2)
-        setWinImg(team2image)
         setWinProb(multby100(1 - response.data.prediction))
       }
     })
