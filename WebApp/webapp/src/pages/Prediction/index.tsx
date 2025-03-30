@@ -1,10 +1,10 @@
 import { ChangeEvent, useState } from 'react';
 import styles from './index.module.css';
 import Layout from '../../components/Layout/Layout';
-
+import { Alert, CircularProgress, Grid, Typography, Box } from '@mui/material';
+import { motion } from 'framer-motion';
 import { teamsNames } from '../../constants/teamNames';
 import axios from 'axios';
-import { Alert, CircularProgress, Grid } from '@mui/material';
 import { predictionMicroservice } from '../../constants/routes';
 import { multby100 } from '../../util/Math/math';
 import CircularPercentage from '../../components/CircularPercentage';
@@ -117,101 +117,196 @@ function Prediction() {
 
   return (
     <Layout>
-      <div className={styles.prediction}>
-        <div className={styles.header}>
-          <p>
-            Match Prediction
-          </p>
-        </div>
-        {formVisible ? 
-          <div>
-            <div className={styles.description}>
-              <p>
-                This is the Prediction feature <br/>
-                Please input both teams to see who the winner could be according to our models
-              </p>
+        <motion.div 
+            className={styles.prediction}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+        >
+            <div className={styles.headerContainer}>
+                <Typography variant="h2" className={styles.header}>
+                    Match Prediction
+                </Typography>
             </div>
-            <Grid container spacing={2} className={styles.input}>
-              <Grid container spacing={2} className={styles.input}>
-                <Grid item xs={6}>
-                  <select onChange={changeTeam1} className={styles.dropdown}>
-                    <option value="">Pick a Team</option>
-                      {teamsNames.map((teamName) => (
-                          <option data-testid="team1-options" key={teamName} value={teamName}>
-                            {teamName}
-                          </option>
-                      ))}
-                  </select>
-                </Grid>
-                <Grid item xs={6}>
-                  <select onChange={changeTeam2} className={styles.dropdown}>
-                    <option value="">Pick a Team</option>
-                      {teamsNames.map((teamName) => (
-                        <option data-testid="team2-options" key={teamName} value={teamName}>
-                          {teamName}
-                        </option>
-                      ))}
-                  </select>
-                </Grid>
-              </Grid>
-              <Grid container spacing={2} className={styles.input}>
-                <Grid item xs={6}>
-                  <img src={'/static/NBALogos/' + team1image} alt={team1} className={styles.logo} />
-                  <div className={styles.teamName}>{team1}</div>
-                </Grid>
-                <Grid item xs={6}>
-                  <img src={'/static/NBALogos/' + team2image} alt={team2} className={styles.logo} />
-                  <div className={styles.teamName}>{team2}</div>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={12}>
-                <button onClick={onSubmit} className={styles.submit}>Predict Winner</button>
-            </Grid>
-          </div>
-          :
-          null
-        }
-        {progressVisible ? <CircularProgress /> : null}
-        {errorVisible ? 
-          <div className={styles.errMessage}>
-            <Alert severity='error'>
-              {errMessage}
-            </Alert>
-          </div>
-          :
-          null
-        }
-        {successVisible ?
-          <Grid container spacing={1} className={styles.predHeader}>
-            <Grid item xs={2.75}></Grid>
-            <Grid item xs={3} className={styles.results}>
-              <div className={styles.individualResults}>
-                <p className={styles.individualResultsHeader}>Winner</p>
-                <img src={'/static/NBALogos/' + winnerImage} alt={winner} className={styles.logoResult}/><br/>
-                <p>{winner} are expected to win!</p>
-              </div>
-            </Grid>
-            <Grid item xs={0.5}></Grid>
-            <Grid item xs={3} className={styles.results}>
-              <div className={styles.individualResults}>
-                <p className={styles.individualResultsHeader}>Confidence Score</p>
-                <CircularPercentage percentage={winProb} />
-                <p>{winner} is predicted to win with a confidence of {winProb}%!</p>
-              </div>
-            </Grid>
-            <Grid item xs={2.75}></Grid>
-            <Grid item xs={12}>
-              <button onClick={handleRefresh} className={styles.submit}>
-                Try Another Prediction!
-              </button>
-            </Grid>
             
-          </Grid>
-          :
-          null
-        }
-      </div>
+            {formVisible && (
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                >
+                    <Grid container spacing={3} className={styles.input}>
+                        <Grid item xs={12}>
+                            <Typography variant="h6" className={styles.inputDescription}>
+                                Select two teams to see who our AI model predicts will win their matchup
+                            </Typography>
+                        </Grid>
+
+                        <Grid container spacing={4}>
+                            <Grid item xs={12} md={6}>
+                                <Typography variant="subtitle1" gutterBottom sx={{ color: 'var(--text-secondary)' }}>
+                                    First Team
+                                </Typography>
+                                <select 
+                                    onChange={changeTeam1} 
+                                    className={styles.dropdown}
+                                >
+                                    <option value="">Choose a team</option>
+                                    {teamsNames.map(teamName => (
+                                        <option key={teamName} value={teamName}>{teamName}</option>
+                                    ))}
+                                </select>
+                                <motion.div
+                                    initial={{ scale: 0.9, opacity: 0 }}
+                                    animate={{ scale: 1, opacity: 1 }}
+                                    transition={{ delay: 0.3 }}
+                                >
+                                    <img src={'/static/NBALogos/' + team1image} alt={team1} className={styles.logo} />
+                                    <div className={styles.teamName}>{team1}</div>
+                                </motion.div>
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                                <Typography variant="subtitle1" gutterBottom sx={{ color: 'var(--text-secondary)' }}>
+                                    Second Team
+                                </Typography>
+                                <select 
+                                    onChange={changeTeam2} 
+                                    className={styles.dropdown}
+                                >
+                                    <option value="">Choose a team</option>
+                                    {teamsNames.map(teamName => (
+                                        <option key={teamName} value={teamName}>{teamName}</option>
+                                    ))}
+                                </select>
+                                <motion.div
+                                    initial={{ scale: 0.9, opacity: 0 }}
+                                    animate={{ scale: 1, opacity: 1 }}
+                                    transition={{ delay: 0.3 }}
+                                >
+                                    <img src={'/static/NBALogos/' + team2image} alt={team2} className={styles.logo} />
+                                    <div className={styles.teamName}>{team2}</div>
+                                </motion.div>
+                            </Grid>
+                        </Grid>
+                        
+                        <Grid item xs={12}>
+                            <motion.button 
+                                onClick={onSubmit} 
+                                className={styles.submit}
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                            >
+                                Predict Winner
+                            </motion.button>
+                        </Grid>
+                    </Grid>
+                </motion.div>
+            )}
+            
+            {progressVisible && (
+                <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
+                    <CircularProgress size={60} />
+                </Box>
+            )}
+            
+            {errorVisible && (
+                <motion.div 
+                    className={styles.errMessage}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                >
+                    <Alert severity='error' sx={{ borderRadius: 2 }}>
+                        {errMessage}
+                    </Alert>
+                </motion.div>
+            )}
+            
+            {successVisible && (
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                >
+                    <Grid container spacing={4} className={styles.predHeader}>
+                        <Grid item xs={12}>
+                            <motion.div 
+                                className={styles.results}
+                                initial={{ scale: 0.95, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                transition={{ delay: 0.3 }}
+                            >
+                                <div className={styles.individualResults}>
+                                    <Typography variant="h4" className={styles.individualResultsHeader}>
+                                        Match Prediction Results
+                                    </Typography>
+                                    
+                                    <div className={styles.vsContainer}>
+                                        <motion.div
+                                            initial={{ x: -50, opacity: 0 }}
+                                            animate={{ x: 0, opacity: 1 }}
+                                            transition={{ delay: 0.5 }}
+                                        >
+                                            <img 
+                                                src={'/static/NBALogos/' + team1image} 
+                                                alt={team1} 
+                                                className={styles.teamLogo}
+                                                style={{ opacity: winner === team1 ? 1 : 0.6 }}
+                                            />
+                                        </motion.div>
+                                        
+                                        <Typography variant="h5" className={styles.vsText}>
+                                            VS
+                                        </Typography>
+                                        
+                                        <motion.div
+                                            initial={{ x: 50, opacity: 0 }}
+                                            animate={{ x: 0, opacity: 1 }}
+                                            transition={{ delay: 0.5 }}
+                                        >
+                                            <img 
+                                                src={'/static/NBALogos/' + team2image} 
+                                                alt={team2} 
+                                                className={styles.teamLogo}
+                                                style={{ opacity: winner === team2 ? 1 : 0.6 }}
+                                            />
+                                        </motion.div>
+                                    </div>
+
+                                    <motion.div 
+                                        className={styles.winnerCard}
+                                        initial={{ y: 20, opacity: 0 }}
+                                        animate={{ y: 0, opacity: 1 }}
+                                        transition={{ delay: 0.7 }}
+                                    >
+                                        <Typography variant="h5" sx={{ color: 'var(--text-secondary)' }}>
+                                            Predicted Winner
+                                        </Typography>
+                                        <Typography className={styles.winnerTeamName}>
+                                            {winner}
+                                        </Typography>
+                                        <CircularPercentage percentage={winProb} />
+                                        <Typography className={styles.confidenceValue}>
+                                            {winProb}% Confidence
+                                        </Typography>
+                                    </motion.div>
+                                </div>
+                            </motion.div>
+                        </Grid>
+                        
+                        <Grid item xs={12}>
+                            <motion.button 
+                                onClick={handleRefresh} 
+                                className={styles.submit}
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                            >
+                                Try Another Prediction
+                            </motion.button>
+                        </Grid>
+                    </Grid>
+                </motion.div>
+            )}
+        </motion.div>
     </Layout>
   );
 }

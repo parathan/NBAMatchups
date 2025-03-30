@@ -1,13 +1,73 @@
 .prediction {
-    padding: 4vh;
+    padding: 2rem;
     text-align: center;
-    animation: fade-in 2s;
+    animation: fade-in 0.5s ease-out;
+    min-height: calc(100vh - 80px);
+    background: var(--background-color);
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    margin-top: 6vh;
+}
+
+.headerContainer {
+    margin-bottom: 8vh;
+    position: relative;
+    padding-bottom: 2rem;
+}
+
+.header {
+    color: var(--text-primary);
+    font-size: 2.5rem;
+    font-weight: 700;
+    position: relative;
+    display: inline-block;
+}
+
+.header::after {
+    content: '';
+    position: absolute;
+    bottom: -1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: var(--accent-color);
+    border-radius: 2px;
+}
+
+.description {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+    line-height: 1.6;
+}
+
+.input {
+    margin-bottom: 3rem;
+    background: var(--surface-color);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    margin-top: 4vh;
+}
+
+.inputDescription {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 3rem;
+    padding: 0 1rem;
 }
 
 .predHeader {
-    margin-top: 5vh;
-    color: var(--header-font-colour);
-    animation: fadeInRight 2s;
+    margin-top: 2rem;
+    animation: fadeInRight 0.5s ease-out;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 2rem;
 }
 
 .predAgain {
@@ -22,136 +82,276 @@
     animation: fade-out 2.5s;
 }
 
-.header {
-    color: var(--header-font-colour);
-    font-size: calc(10px + 3vmin);;
-    padding-bottom: 2vh;
-    margin-top: 1%;
-}
-
-.description {
-    color: var(--p-font-colour);
-}
-
-.input {
-    padding-top: 7vh;
-}
-
 .dropdown {
     text-align: center;
-    padding-left: 2vw;
-    padding-right: 2vw;
-    background-color: var(--secondary-colour);
-    width: 20em;
-    height: 3em;
-    border-radius: .25em;
-    overflow: hidden;
-    font-size: large;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--surface-color);
+    width: 100%;
+    height: 3.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .dropdown:hover {
-    opacity: .75;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.1);
+}
+
+.dropdown:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.2);
 }
 
 .teamName {
-    color: var(--p-font-colour);
-    font-size: calc(10px + 2vmin);;
-    animation: fade-in 2s;
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    margin-top: 1rem;
+    font-weight: 500;
 }
 
 .logo {
-    width: 30%;
+    width: 120px;
     height: auto;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
 }
 
 .logoResult {
-    width: 50%;
+    width: 160px;
     height: auto;
-    padding-top: 10%;
+    margin: 2rem 0;
+    transition: transform 0.3s ease;
+}
+
+.logoResult:hover {
+    transform: scale(1.05);
+}
+
+.submit {
+    background-color: var(--accent-color);
+    border-radius: 8px;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-on-accent);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 2rem;
+    box-shadow: 0 2px 4px var(--shadow-color);
+    width: fit-content;
+}
+
+.submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.submit:active {
+    transform: translateY(0);
+}
+
+.errMessage {
+    width: 100%;
+    max-width: 600px;
+    margin: 2rem auto;
+}
+
+.results {
+    background: var(--surface-color);
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 8px 16px var(--shadow-color);
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.results::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--accent-color);
+    border-radius: 2px 2px 0 0;
+}
+
+.results:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px var(--shadow-color);
+}
+
+.individualResults {
+    padding: 1rem;
+    animation: fade-in 0.5s ease-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.individualResultsHeader {
+    color: var(--text-primary);
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
+}
+
+.winnerCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.winnerTeamName {
+    color: var(--accent-color);
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-top: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: 0.5px;
+    position: relative;
+    padding: 0.5rem 2rem;
+    border-radius: 8px;
+    background: var(--surface-color);
+    box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.confidenceValue {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    margin: 1rem 0;
+}
+
+.vsContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.vsText {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin: 0 1rem;
+}
+
+.teamLogo {
+    width: 180px;
+    height: auto;
+    transition: transform 0.3s ease;
+    filter: drop-shadow(0 4px 8px var(--shadow-color));
+}
+
+.teamLogo:hover {
+    transform: scale(1.1) rotate(5deg);
 }
 
 @keyframes fade-in {
     from {
         opacity: 0;
+        transform: translateY(20px);
     }
     to {
-        opacity: 100;
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
 @keyframes fadeInRight {
     0% {
-       opacity: 0;
-       transform: translateX(40px);
+        opacity: 0;
+        transform: translateX(20px);
     }
     100% {
-       opacity: 1;
-       transform: translateX(0);
+        opacity: 1;
+        transform: translateX(0);
     }
- }
-
-select {
-    /* Reset Select */
-    appearance: none;
-    outline: 10px red;
-    border: 0;
-    box-shadow: none;
-    /* Personalize */
-    flex: 1;
-    padding: 0 1em;
-    color: var(--p-font-colour);
-    background-color: var(--darkgray);
-    background-image: none;
-    cursor: pointer;
 }
 
-/* CSS */
-.submit {
-    margin-top: 10vh;
-    background-color: var(--secondary-colour);
-    border-radius: 4px;
-    border-style: none;
-    box-sizing: border-box;
-    color: var(--p-font-colour);
-    cursor: pointer;
-    display: inline-block;
-    font-family: "Farfetch Basis","Helvetica Neue",Arial,sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 1.5;
-    outline: none;
-    overflow: hidden;
-    padding: 9px 20px 8px;
-    text-align: center;
-    text-transform: none;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-}
+@media (max-width: 768px) {
+    .prediction {
+        padding: 1rem;
+        margin-top: 4vh;
+    }
 
-.submit:hover {
-    opacity: .75;
-}
+    .headerContainer {
+        margin-bottom: 6vh;
+        padding-bottom: 1.5rem;
+    }
 
-.errMessage {
-    width: fit-content;
-    margin: 0 auto;
-    margin-top: 3%;
-}
+    .header {
+        font-size: 2rem;
+    }
 
-.results {
-    background-color: var(--secondary-colour);
-    border-radius: 25px;
-    font-size: calc(10px + 1vmin);
-    
-}
+    .input {
+        padding: 1.5rem;
+        margin-top: 3vh;
+    }
 
-.individualResults {
-    padding: 10%;
-    font-size: calc(5px + 1vmin);;
-}
+    .inputDescription {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+        padding: 0;
+    }
 
-.individualResultsHeader {
-    color: var(--header-font-colour);
-    font-size: calc(5px + 2vmin);;
+    .logo {
+        width: 100px;
+    }
+
+    .logoResult {
+        width: 120px;
+    }
+
+    .results {
+        padding: 1.5rem;
+        width: 100%;
+        margin: 0 auto 2rem auto;
+    }
+
+    .individualResultsHeader {
+        font-size: 1.5rem;
+    }
+
+    .winnerTeamName {
+        font-size: 1.75rem;
+        padding: 0.5rem 1.5rem;
+    }
+
+    .confidenceValue {
+        font-size: 2rem;
+    }
+
+    .teamLogo {
+        width: 120px;
+    }
+
+    .vsText {
+        font-size: 1.25rem;
+    }
+
+    .predHeader {
+        padding: 0 1rem;
+    }
 }

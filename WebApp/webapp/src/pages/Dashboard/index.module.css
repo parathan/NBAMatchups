@@ -10,20 +10,24 @@
     margin-top: 6vh;
 }
 
+.headerContainer {
+    margin-bottom: 4vh;
+    position: relative;
+    padding-bottom: 2rem;
+}
+
 .header {
     color: var(--text-primary);
     font-size: 2.5rem;
     font-weight: 700;
-    margin-bottom: 8vh;
     position: relative;
     display: inline-block;
-    padding-bottom: 2rem;
 }
 
 .header::after {
     content: '';
     position: absolute;
-    bottom: 0;
+    bottom: -1rem;
     left: 50%;
     transform: translateX(-50%);
     width: 60px;
@@ -47,7 +51,23 @@
     padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 4px 6px var(--shadow-color);
-    margin-top: 15vh;
+    margin-top: 4vh;
+    width: 100%;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.inputContainer {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .dropdown {
@@ -106,15 +126,28 @@
         margin-top: 4vh;
     }
 
-    .header {
-        font-size: 2rem;
+    .headerContainer {
         margin-bottom: 6vh;
         padding-bottom: 1.5rem;
     }
 
+    .header {
+        font-size: 2rem;
+    }
+
     .input {
         padding: 1.5rem;
-        margin-top: 12vh;
+        margin-top: 3vh;
+        width: 100%;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .inputContainer {
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
     }
 
     .chartContainer {

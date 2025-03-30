@@ -210,15 +210,12 @@ function Dashboard() {
 
     return (
         <Layout>
-            <motion.div 
-                className={styles.dashboard}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-            >
-                <Typography variant="h2" className={styles.header}>
-                    Statistical Dashboard
-                </Typography>
+            <div className={styles.dashboard}>
+                <div className={styles.headerContainer}>
+                    <div className={styles.header}>
+                        Dashboard
+                    </div>
+                </div>
                 
                 {progress && (
                     <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
@@ -240,38 +237,42 @@ function Dashboard() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
                     >
-                        <Grid container spacing={3} className={styles.input}>
-                            <Grid item xs={12} md={6}>
-                                <Typography variant="subtitle1" gutterBottom sx={{ color: 'var(--text-secondary)' }}>
-                                    Select Team
-                                </Typography>
-                                <select 
-                                    onChange={changeTeam} 
-                                    className={styles.dropdown}
-                                    value={team}
-                                >
-                                    <option value="">Choose a team</option>
-                                    {teamsNames.map(teamName => (
-                                        <option key={teamName} value={teamName}>{teamName}</option>
-                                    ))}
-                                </select>
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                                <Typography variant="subtitle1" gutterBottom sx={{ color: 'var(--text-secondary)' }}>
-                                    Select Statistic
-                                </Typography>
-                                <select 
-                                    onChange={changeField} 
-                                    className={styles.dropdown}
-                                    value={field}
-                                >
-                                    <option value="">Choose a statistic</option>
-                                    {statsArray.map(stat => (
-                                        <option key={stat[0]} value={stat[0]}>{stat[1]}</option>
-                                    ))}
-                                </select>
-                            </Grid>
-                        </Grid>
+                        <div className={styles.input}>
+                            <div className={styles.inputContainer}>
+                                <Grid container spacing={2}>
+                                    <Grid item xs={12} md={6}>
+                                        <Typography variant="subtitle1" gutterBottom sx={{ color: 'var(--text-secondary)' }}>
+                                            Select Team
+                                        </Typography>
+                                        <select 
+                                            onChange={changeTeam} 
+                                            className={styles.dropdown}
+                                            value={team}
+                                        >
+                                            <option value="">Choose a team</option>
+                                            {teamsNames.map(teamName => (
+                                                <option key={teamName} value={teamName}>{teamName}</option>
+                                            ))}
+                                        </select>
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <Typography variant="subtitle1" gutterBottom sx={{ color: 'var(--text-secondary)' }}>
+                                            Select Statistic
+                                        </Typography>
+                                        <select 
+                                            onChange={changeField} 
+                                            className={styles.dropdown}
+                                            value={field}
+                                        >
+                                            <option value="">Choose a statistic</option>
+                                            {statsArray.map(stat => (
+                                                <option key={stat[0]} value={stat[0]}>{stat[1]}</option>
+                                            ))}
+                                        </select>
+                                    </Grid>
+                                </Grid>
+                            </div>
+                        </div>
 
                         {team && field && (
                             <motion.div 
@@ -285,7 +286,7 @@ function Dashboard() {
                         )}
                     </motion.div>
                 )}
-            </motion.div>
+            </div>
         </Layout>
     )
 }
