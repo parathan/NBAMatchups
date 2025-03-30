@@ -26,7 +26,7 @@ function About() {
       }
     );
 
-    const elements = document.querySelectorAll(`.${styles.section}`);
+    const elements = document.querySelectorAll("[data-section]");
     elements.forEach(el => observer.observe(el));
 
     return () => observer.disconnect();
@@ -44,7 +44,7 @@ function About() {
           </Typography>
         </header>
 
-        <section className={`${styles.section} ${styles.hero}`} data-index={0}>
+        <section data-section className={`${styles.section} ${styles.hero}`} data-index={0}>
           <Typography variant="body1" className={styles.description}>
             NBAMatchups is a comprehensive platform designed to provide deep insights into NBA team statistics,
             performance metrics, and predictive analytics. Our platform combines historical data analysis with
@@ -60,6 +60,7 @@ function About() {
               data-index={1}
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.2 }}
+              data-section
             >
               <Box className={styles.iconWrapper}>
                 <CodeIcon className={styles.icon} />
@@ -80,6 +81,7 @@ function About() {
               data-index={2}
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.2 }}
+              data-section
             >
               <Box className={styles.iconWrapper}>
                 <StorageIcon className={styles.icon} />
@@ -99,6 +101,7 @@ function About() {
               data-index={3}
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.2 }}
+              data-section
             >
               <Box className={styles.iconWrapper}>
                 <SpeedIcon className={styles.icon} />
@@ -119,6 +122,7 @@ function About() {
               data-index={4}
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.2 }}
+              data-section
             >
               <Box className={styles.iconWrapper}>
                 <SecurityIcon className={styles.icon} />
@@ -134,7 +138,11 @@ function About() {
           </Grid>
         </Grid>
 
-        <section className={`${styles.section} ${styles.acknowledgment}`} data-index={5}>
+        <section 
+          className={`${styles.section} ${styles.acknowledgment}`} 
+          data-index={5} 
+          data-section
+        >
           <Typography variant="h6" gutterBottom>
             Data Source
           </Typography>
