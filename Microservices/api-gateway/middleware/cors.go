@@ -13,6 +13,7 @@ func CorsMiddleware(next http.Handler) http.Handler {
         allowedOrigins := map[string]bool{
             "http://localhost:3000":       true,
             "https://nba-matchups-jade.vercel.app": true,
+            "https://nba-matchups-j7k6tiqtb-parathans-projects.vercel.app/": true,
         }
 
         // Check if the request origin is allowed
