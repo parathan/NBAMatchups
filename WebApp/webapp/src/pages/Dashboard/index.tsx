@@ -1,15 +1,9 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState, useCallback, useMemo } from 'react';
 import styles from './index.module.css';
 import Layout from "../../components/Layout/Layout";
 import { Alert, CircularProgress, Grid, Typography, Box } from '@mui/material';
 import { motion } from 'framer-motion';
-
 import axios from 'axios';
-import { TotalTeamData, TeamData } from '../../interfaces/TotalTeamData';
-import { ChartFormat } from '../../interfaces/ChartFormat';
-import { teamsNames } from '../../constants/teamNames';
-import { statsArray } from '../../constants/statArray';
-
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -19,31 +13,19 @@ import {
     Title,
     Tooltip,
     Legend,
-  } from 'chart.js';
-  import { Line } from 'react-chartjs-2';
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+
+import { TotalTeamData, TeamData } from '../../interfaces/TotalTeamData';
+import { ChartFormat } from '../../interfaces/ChartFormat';
+import { teamsNames } from '../../constants/teamNames';
+import { statsArray } from '../../constants/statArray';
 import { statsMap } from '../../constants/statDictionary';
 import { allTeamsMicroservice } from '../../constants/routes';
-import colours from '../../constants/colours';
 import { getAPIURL } from '../../config/config';
+import colours from '../../constants/colours';
 
-const testData: ChartFormat = {
-    labels: ["2019", "2020", "2021", "2022", "2023"],
-    datasets: [
-        {
-            label: "Data",
-            backgroundColor: colours.RED, // Setting up the background color for the dataset
-            borderColor: colours.RED,
-            data: []
-        },
-        {
-            label: "League Average",
-            backgroundColor: colours.BLUE, // Setting up the background color for the dataset
-            borderColor: colours.BLUE,
-            data: []
-        }
-    ]
-}
-
+// Register ChartJS components
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -54,7 +36,13 @@ ChartJS.register(
     Legend
 );
 
-const options = {
+// Constants
+const START_YEAR = 2019;
+const END_YEAR = 2023;
+const YEARS = ["2019", "2020", "2021", "2022", "2023"];
+
+// Chart options
+const chartOptions = {
     responsive: true,
     plugins: {
         legend: {
@@ -101,112 +89,121 @@ const options = {
     },
 };
 
+// Initial chart data
+const initialChartData: ChartFormat = {
+    labels: YEARS,
+    datasets: [
+        {
+            label: "Data",
+            backgroundColor: colours.RED,
+            borderColor: colours.RED,
+            data: []
+        },
+        {
+            label: "League Average",
+            backgroundColor: colours.BLUE,
+            borderColor: colours.BLUE,
+            data: []
+        }
+    ]
+};
 
 /**
- * This Dashboard page is used to show the trends of a team's stats over the past few years, and compare them to the league average for that 
- * stat over the same time period. It take an API call from the /teams/allTeams route to get the data, and use the ChartJS library to
- * display this data.
- * @returns 
+ * Dashboard component that displays team statistics over time and compares them to league averages.
+ * Uses ChartJS for data visualization and includes team and statistic selection dropdowns.
  */
 function Dashboard() {
+    // State management
+    const [data, setData] = useState<TotalTeamData[]>([]);
+    const [meanData, setMeanData] = useState<TotalTeamData>();
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<{ hasError: boolean; message: string }>({ hasError: false, message: "" });
+    const [selectedTeam, setSelectedTeam] = useState("");
+    const [selectedField, setSelectedField] = useState("");
+    const [chartData, setChartData] = useState<ChartFormat>(initialChartData);
 
-    const [data, setData] = useState<TotalTeamData[]>([]) // Total Data to be fetched
-    const [meanData, setMeanData] = useState<TotalTeamData>() // Mean Data will be saved seperately to be accessed more efficiently
-    const [progress, setProgress] = useState(true) // For progress bar
-    const [error, setError] = useState(false) // For Error message if error fetching data
-    const [errMessage, setErrorMessage] = useState("Error")
-    // TODO #5
-    const startYear: number = 2019;
-    const endYear: number = 2023;
-    const years: string[] = ["2019","2020","2021","2022","2023"]
-    const [team, setTeam] = useState("") // The team name who's data will be displayed
-    const [field, setField] = useState("") // The team's field name that will be displayed
-    const [chartData, setChartData] = useState<ChartFormat>(testData)
-
-    // Intended that useEffect runs once, as empty array given means that it only updates once when page renders.
-    // In development, it will run twice due to strict mode being on. This won't happen in production, however.
-    // https://byby.dev/useeffect-run-twice
+    // Fetch data on component mount
     useEffect(() => {
-        // Gets data from route that uses redis cache. If it fails it uses route that doesnt have cache
-        const getCachedData = async () => {
-            axios.post(getAPIURL() + allTeamsMicroservice, {
-                startYear: startYear,
-                endYear: endYear
-            })
-            .then((response) => {
-                setData(response.data.data)
-                setProgress(false)
-    
-                let meanData: TotalTeamData | undefined = response.data.data.find((givenTeam: { teamname: string; }) => {
-                    return givenTeam.teamname === "MEAN"
-                })
-                setMeanData(meanData)
-            })
-            .catch((error) => {
-                setProgress(false)
-                setError(true)
-                let errorMessage = "Error retrieving from Server\n"
-                setErrorMessage(errorMessage.concat(error))
-            })
-        }
+        const fetchData = async () => {
+            try {
+                const response = await axios.post(getAPIURL() + allTeamsMicroservice, {
+                    startYear: START_YEAR,
+                    endYear: END_YEAR
+                });
+                
+                setData(response.data.data);
+                const meanTeamData = response.data.data.find((team: TotalTeamData) => team.teamname === "MEAN");
+                setMeanData(meanTeamData);
+            } catch (err) {
+                setError({
+                    hasError: true,
+                    message: `Error retrieving data from server: ${err instanceof Error ? err.message : 'Unknown error'}`
+                });
+            } finally {
+                setIsLoading(false);
+            }
+        };
 
-        getCachedData();
-        
-    }, []) // empty array so this only updates once on render
+        fetchData();
+    }, []);
 
-    function establishData(team: string, field: string) {
-        let labelName = statsMap.get(field) || ""
-        let teamData: TotalTeamData | undefined = data.find(givenTeam => {
-            return givenTeam.teamname === team
-        })
+    // Memoized function to process chart data
+    const processChartData = useCallback((team: string, field: string) => {
+        const teamData = data.find(t => t.teamname === team);
+        if (!teamData || !meanData) return;
 
-        let fieldData: number[] = []
-        teamData?.stats.forEach(function (teamStat) {
-            fieldData.push(Number(teamStat[field as keyof TeamData]))
-            // setDisplayData(oldArray => [...oldArray, Number(yearlyStat.yearStats[field as keyof TeamData])])
-        })
+        const fieldData = teamData.stats.map(stat => Number(stat[field as keyof TeamData]));
+        const averageData = meanData.stats.map(stat => Number(stat[field as keyof TeamData]));
+        const labelName = statsMap.get(field) || "";
 
-        let averageData: number[] = []
-        meanData?.stats.forEach(function (meanStat) {
-            averageData.push(Number(meanStat[field as keyof TeamData]))
-            // setDisplayData(oldArray => [...oldArray, Number(yearlyStat.yearStats[field as keyof TeamData])])
-        })
-
-        let newChart: ChartFormat = {
-            labels: years,
+        setChartData({
+            labels: YEARS,
             datasets: [
                 {
                     label: labelName,
-                    backgroundColor: "rgb(255, 99, 132)", // Setting up the background color for the dataset
-                    borderColor: "rgb(255, 99, 132)",
+                    backgroundColor: colours.RED,
+                    borderColor: colours.RED,
                     data: fieldData
                 },
                 {
                     label: "League Average",
-                    backgroundColor: "rgb(53, 162, 235)", // Setting up the background color for the dataset
-                    borderColor: "rgba(53, 162, 235, 0.5)",
+                    backgroundColor: colours.BLUE,
+                    borderColor: colours.BLUE,
                     data: averageData
                 }
             ]
-        }
-        setChartData(newChart)
-    }
+        });
+    }, [data, meanData]);
 
-    function changeTeam(e: ChangeEvent<HTMLSelectElement>) {
-        let team = e.target.value // needs to be seperate as set functions are async, so can't use them in function
-        setTeam(team)
-        if (field !== "") {
-            establishData(team, field)
+    // Event handlers
+    const handleTeamChange = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
+        const team = e.target.value;
+        setSelectedTeam(team);
+        if (selectedField) {
+            processChartData(team, selectedField);
         }
-    }
-    
-    function changeField(e: ChangeEvent<HTMLSelectElement>) {
-        let field = e.target.value // needs to be seperate as set functions are async, so can't use them in function
-        setField(field)
-        if (team !== "") {
-            establishData(team, field)
+    }, [selectedField, processChartData]);
+
+    const handleFieldChange = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
+        const field = e.target.value;
+        setSelectedField(field);
+        if (selectedTeam) {
+            processChartData(selectedTeam, field);
         }
-    }
+    }, [selectedTeam, processChartData]);
+
+    // Memoized dropdown options
+    const teamOptions = useMemo(() => (
+        teamsNames.map(teamName => (
+            <option key={teamName} value={teamName}>{teamName}</option>
+        ))
+    ), []);
+
+    const statOptions = useMemo(() => (
+        statsArray.map(stat => (
+            <option key={stat[0]} value={stat[0]}>{stat[1]}</option>
+        ))
+    ), []);
 
     return (
         <Layout>
@@ -217,21 +214,21 @@ function Dashboard() {
                     </div>
                 </div>
                 
-                {progress && (
+                {isLoading && (
                     <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
                         <CircularProgress size={60} />
                     </Box>
                 )}
                 
-                {error && (
+                {error.hasError && (
                     <div className={styles.errMessage}>
                         <Alert severity='error' sx={{ borderRadius: 2 }}>
-                            {errMessage}
+                            {error.message}
                         </Alert>
                     </div>
                 )}
                 
-                {!error && !progress && (
+                {!error.hasError && !isLoading && (
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -245,14 +242,12 @@ function Dashboard() {
                                             Select Team
                                         </Typography>
                                         <select 
-                                            onChange={changeTeam} 
+                                            onChange={handleTeamChange} 
                                             className={styles.dropdown}
-                                            value={team}
+                                            value={selectedTeam}
                                         >
                                             <option value="">Choose a team</option>
-                                            {teamsNames.map(teamName => (
-                                                <option key={teamName} value={teamName}>{teamName}</option>
-                                            ))}
+                                            {teamOptions}
                                         </select>
                                     </Grid>
                                     <Grid item xs={12} md={6}>
@@ -260,35 +255,33 @@ function Dashboard() {
                                             Select Statistic
                                         </Typography>
                                         <select 
-                                            onChange={changeField} 
+                                            onChange={handleFieldChange} 
                                             className={styles.dropdown}
-                                            value={field}
+                                            value={selectedField}
                                         >
                                             <option value="">Choose a statistic</option>
-                                            {statsArray.map(stat => (
-                                                <option key={stat[0]} value={stat[0]}>{stat[1]}</option>
-                                            ))}
+                                            {statOptions}
                                         </select>
                                     </Grid>
                                 </Grid>
                             </div>
                         </div>
 
-                        {team && field && (
+                        {selectedTeam && selectedField && (
                             <motion.div 
                                 className={styles.chartContainer}
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.4 }}
                             >
-                                <Line options={options} data={chartData}/>
+                                <Line options={chartOptions} data={chartData} />
                             </motion.div>
                         )}
                     </motion.div>
                 )}
             </div>
         </Layout>
-    )
+    );
 }
 
 export default Dashboard;
