@@ -45,11 +45,11 @@
 
 .featureButton {
   margin: 2rem auto;
-  background-color: var(--primary-color);
+  background-color: var(--button-color);
   border-radius: 8px;
   border-style: none;
   box-sizing: border-box;
-  color: var(--text-light);
+  color: var(--text-on-accent);
   cursor: pointer;
   display: block;
   font-family: inherit;
@@ -72,7 +72,7 @@
 .featureButton:focus {
   transform: translateY(-2px);
   box-shadow: 0 6px 12px var(--shadow-color);
-  background-color: var(--secondary-color);
+  background-color: var(--button-hover-color);
 }
 
 @keyframes fade-in {

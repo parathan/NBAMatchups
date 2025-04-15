@@ -7,6 +7,8 @@ that is not part of the body
   --primary-color: #2ecc71;  /* Keep the green */
   --secondary-color: #27ae60;  /* Darker green */
   --accent-color: #00ff9d;  /* Bright green for highlights */
+  --button-color: #1a8c4a;  /* New darker green for buttons */
+  --button-hover-color: #157a3f;  /* Even darker green for button hover */
   
   /* Background Colors */
   --background-color: #121212;  /* Dark background */
@@ -17,6 +19,7 @@ that is not part of the body
   --text-primary: #ffffff;  /* White text */
   --text-secondary: #e0e0e0;  /* Light grey text */
   --text-light: #ffffff;  /* White text for contrast */
+  --text-on-accent: #ffffff;  /* Text color for buttons */
   
   /* Border Colors */
   --border-color: #404040;  /* Dark grey borders */

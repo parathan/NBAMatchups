@@ -103,22 +103,24 @@
 }
 
 .submit {
-    background: var(--accent-color);
-    color: white;
-    border: none;
-    padding: 0.75rem 2rem;
+    background-color: var(--button-color);
     border-radius: 8px;
-    font-size: 1rem;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
     font-weight: 600;
+    color: var(--text-on-accent);
     cursor: pointer;
     transition: all 0.3s ease;
-    margin-top: 1rem;
+    margin-top: 2rem;
+    box-shadow: 0 2px 4px var(--shadow-color);
+    width: fit-content;
 }
 
 .submit:hover {
-    background: var(--accent-color-hover);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px var(--shadow-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--shadow-color);
+    background-color: var(--button-hover-color);
 }
 
 .submit:active {
